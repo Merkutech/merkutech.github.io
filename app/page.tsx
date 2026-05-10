@@ -9,6 +9,9 @@ import {
   Layers, Zap
 } from "lucide-react";
 import { projects } from "@/lib/projects";
+import BotDetection from "@/components/ui/bot-detection";
+import SwarmNetwork from "@/components/ui/swarm-network";
+import AiVision from "@/components/ui/ai-vision";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -50,17 +53,38 @@ export default function Home() {
       {/* DRONE WAVE */}
       <DroneWave />
 
-      {/* MANIFESTO */}
-      <section className="relative py-32 md:py-44">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
-          <BlurFade>
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-8">Misyonumuz</p>
+      {/* TECH CARDS */}
+      <section className="relative py-24 md:py-32 border-y border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          <BlurFade className="mb-4">
+            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Teknolojiler</p>
           </BlurFade>
-          <BlurFade delay={0.15}>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-[1.15] tracking-tight text-white">
-              Teoriyi pratiğe döken, kodu canlı bir varlığa çeviren ve teknolojiyi geleceğin dili olarak gören bir topluluğuz.
+          <BlurFade className="mb-16" delay={0.1}>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+              Neler Yapıyoruz?
             </h2>
           </BlurFade>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <BlurFade delay={0.15}>
+              <BotDetection
+                cardTitle="Bot Detection"
+                cardDescription="AI destekli bot tespiti ile platform güvenliğini artırıyor, sahte kayıtları minimuma indiriyoruz."
+              />
+            </BlurFade>
+            <BlurFade delay={0.25}>
+              <SwarmNetwork
+                cardTitle="Swarm Network"
+                cardDescription="Çoklu drone koordinasyonu ve sürü algoritmaları ile gerçek zamanlı iletişim protokolleri geliştiriyoruz."
+              />
+            </BlurFade>
+            <BlurFade delay={0.35}>
+              <AiVision
+                cardTitle="AI Vision"
+                cardDescription="Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz."
+              />
+            </BlurFade>
+          </div>
         </div>
       </section>
 
