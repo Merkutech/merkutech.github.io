@@ -53,56 +53,65 @@ export default function Home() {
       {/* DRONE WAVE */}
       <DroneWave />
 
-      {/* BİZ KİMİZ — Ana Sayfa (animasyonlu) */}
-      <section className="relative py-24 md:py-32 border-y border-white/[0.06] overflow-hidden">
+      {/* BİZ KİMİZ — Ana Sayfa */}
+      <section className="relative py-24 md:py-32 border-y border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: easeOut }}
-            >
-              <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
+            <div>
+              <motion.span
+                initial={{ opacity: 0, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, ease: easeOut }}
+                className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase block"
+              >
                 Hakkımızda
-              </span>
-              <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4 mb-8">
+              </motion.span>
+              <motion.h2
+                initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
+                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4 mb-8"
+              >
                 Biz Kimiz?
-              </h2>
+              </motion.h2>
               <div className="space-y-5 text-neutral-400 leading-relaxed">
-                <p>
+                <motion.p
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: 0.25 }}
+                >
                   Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür.
                   Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında
                   kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.
-                </p>
-                <p>
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
+                >
                   Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler,
                   robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
-                </p>
+                </motion.p>
               </div>
-            </motion.div>
+            </div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: easeOut, delay: 0.2 }}
-              className="relative"
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, ease: easeOut, delay: 0.2 }}
             >
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-white/[0.02]">
-                  <img
-                    src="/4.jpg"
-                    alt="Merkutech Ekibi"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </motion.div>
-              {/* Dekoratif glow */}
-              <div className="absolute -inset-4 bg-white/[0.03] rounded-3xl blur-2xl -z-10" />
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-white/[0.02]">
+                <img
+                  src="/4.jpg"
+                  alt="Merkutech Ekibi"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
