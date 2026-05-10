@@ -187,62 +187,63 @@ export default function Home() {
   );
 }
 
-/* ─── Drone Section ─── */
+/* ─── Drone Section — Teknik Dalga Animasyonu ─── */
 
 function DroneSection() {
-  return (
-    <section className="relative py-20 overflow-hidden border-y border-white/[0.06]">
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-      
-      <div className="relative">
-        <div className="flex items-center gap-16 mb-8">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="flex items-center gap-3 shrink-0"
-              animate={{ x: ["0%", "-100%"] }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear",
-                delay: i * 3,
-              }}
-            >
-              <Radio className="h-6 w-6 text-neutral-600" />
-              <span className="text-lg font-mono text-neutral-700 tracking-wider">
-                DRONE_{String(i + 1).padStart(2, '0')}
-              </span>
-              <div className="w-24 h-px bg-gradient-to-r from-neutral-700 to-transparent" />
-            </motion.div>
-          ))}
-        </div>
+  const lines = [
+    { delay: 0, duration: 3, height: 40 },
+    { delay: 0.3, duration: 3.5, height: 70 },
+    { delay: 0.6, duration: 4, height: 50 },
+    { delay: 0.9, duration: 3.2, height: 90 },
+    { delay: 1.2, duration: 3.8, height: 60 },
+    { delay: 1.5, duration: 4.2, height: 80 },
+    { delay: 1.8, duration: 3.6, height: 45 },
+    { delay: 2.1, duration: 3.9, height: 75 },
+    { delay: 2.4, duration: 3.3, height: 55 },
+    { delay: 2.7, duration: 4.1, height: 85 },
+    { delay: 3.0, duration: 3.7, height: 65 },
+    { delay: 3.3, duration: 3.4, height: 95 },
+    { delay: 3.6, duration: 4.0, height: 50 },
+    { delay: 3.9, duration: 3.5, height: 70 },
+    { delay: 4.2, duration: 3.8, height: 80 },
+  ];
 
-        <div className="flex items-center gap-16">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="flex items-center gap-3 shrink-0"
-              animate={{ x: ["-100%", "0%"] }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear",
-                delay: i * 4,
-              }}
-            >
-              <div className="w-24 h-px bg-gradient-to-l from-neutral-700 to-transparent" />
-              <span className="text-lg font-mono text-neutral-700 tracking-wider">
-                MAV_{String(i + 1).padStart(2, '0')}
-              </span>
-              <Radio className="h-6 w-6 text-neutral-600" />
-            </motion.div>
-          ))}
-        </div>
+  return (
+    <section className="relative py-24 md:py-32 overflow-hidden border-y border-white/[0.06]">
+      {/* Başlık */}
+      <div className="text-center mb-16">
+        <p className="text-xs text-neutral-600 tracking-[0.3em] uppercase mb-3">Uçan Teknolojiler</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          Drone Teknolojisi
+        </h2>
       </div>
 
-      <div className="text-center mt-10">
-        <p className="text-xs text-neutral-700 tracking-widest uppercase">Uçan Teknolojiler</p>
+      {/* Dalga animasyonu */}
+      <div className="relative h-48 md:h-64 flex items-center justify-center gap-1 md:gap-1.5 px-4">
+        {lines.map((line, i) => (
+          <motion.div
+            key={i}
+            className="w-1 md:w-1.5 rounded-full bg-white/[0.08]"
+            animate={{
+              height: [`${line.height * 0.3}%`, `${line.height}%`, `${line.height * 0.3}%`],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: line.duration,
+              delay: line.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Alt metin */}
+      <div className="text-center mt-12 max-w-xl mx-auto px-5">
+        <p className="text-sm text-neutral-500 leading-relaxed">
+          Otonom uçuş algoritmaları, çoklu drone koordinasyonu ve sürü teknolojileri 
+          üzerine çalışıyoruz.
+        </p>
       </div>
     </section>
   );
