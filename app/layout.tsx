@@ -64,7 +64,7 @@ export default function RootLayout({
             >
               <Link href="/" className="flex-shrink-0">
                 <span className="font-semibold text-white tracking-tight text-xs">
-                  MCT SENSOR
+                  Merkutech
                 </span>
               </Link>
 
