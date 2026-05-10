@@ -1,44 +1,34 @@
 'use client'
 
 import { SplineScene } from "@/components/ui/splite";
-import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   ArrowRight, ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
-  Layers, Zap, Wrench
+  Layers, Zap
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: easeOut }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+/* ═══════════════════════════════════════
+   ANA SAYFA
+   ═══════════════════════════════════════ */
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const { scrollYProgress } = useScroll();
 
   return (
-    <div ref={containerRef} className="flex flex-col">
+    <div className="flex flex-col">
 
-      {/* ═══════════════════════════════════════
-          HERO — sadece robot, hiç metin yok
-         ═══════════════════════════════════════ */}
+      {/* Scroll Progress */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] bg-white/30 z-[100] origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      {/* HERO */}
       <section className="relative w-full h-screen overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
@@ -51,61 +41,40 @@ export default function Home() {
             className="w-full h-full"
           />
         </motion.div>
-        
-        {/* Altta gradient — header ile karışmasın diye */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
-        
-        {/* Sağ altta küçük ok — aşağı kaydır */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-8 right-8 z-20"
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center"
-          >
-            <ArrowRight className="h-4 w-4 text-neutral-500 rotate-90" />
-          </motion.div>
-        </motion.div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          DRONE FLYBY
-         ═══════════════════════════════════════ */}
-      <DroneSection />
+      {/* MARQUEE */}
+      <MarqueeSection />
 
-      {/* ═══════════════════════════════════════
-          MANİFESTO
-         ═══════════════════════════════════════ */}
+      {/* DRONE WAVE */}
+      <DroneWave />
+
+      {/* MANIFESTO */}
       <section className="relative py-32 md:py-44">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
-          <FadeUp>
+          <BlurFade>
             <p className="text-xs uppercase tracking-widest text-neutral-600 mb-8">Misyonumuz</p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
+          </BlurFade>
+          <BlurFade delay={0.15}>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold leading-[1.15] tracking-tight text-white">
               Teoriyi pratiğe döken, kodu canlı bir varlığa çeviren ve teknolojiyi geleceğin dili olarak gören bir topluluğuz.
             </h2>
-          </FadeUp>
+          </BlurFade>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          NE YAPIYORUZ — expandable list
-         ═══════════════════════════════════════ */}
+      {/* NE YAPIYORUZ */}
       <section className="relative py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <FadeUp className="mb-4">
+          <BlurFade className="mb-4">
             <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Çalışma Alanları</p>
-          </FadeUp>
-          <FadeUp className="mb-16">
+          </BlurFade>
+          <BlurFade className="mb-16" delay={0.1}>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
               Neler Yapıyoruz?
             </h2>
-          </FadeUp>
+          </BlurFade>
 
           <div className="border-t border-white/[0.08]">
             {[
@@ -116,20 +85,16 @@ export default function Home() {
               { num: "05", title: "3D Modelleme", desc: "CAD, simülasyon ve hızlı prototipleme ile fikirden ürüne geçiş süreci.", tags: ["SolidWorks", "AutoCAD", "Gazebo"], icon: <Layers className="h-5 w-5" /> },
               { num: "06", title: "Yarışmalar", desc: "Teknofest ve uluslararası robotik yarışmalarına aktif katılım ve hazırlık.", tags: ["Teknofest", "Robotaksi", "Uluslararası"], icon: <Zap className="h-5 w-5" /> },
             ].map((item, i) => (
-              <FadeUp key={item.num} delay={i * 0.05}>
-                <ExpandableRow {...item} />
-              </FadeUp>
+              <StaggerRow key={item.num} {...item} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          PROJELER
-         ═══════════════════════════════════════ */}
+      {/* PROJELER */}
       <section className="relative py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <FadeUp className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
               <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Projelerimiz</p>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
@@ -143,125 +108,112 @@ export default function Home() {
               Tümünü Gör
               <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
-          </FadeUp>
+          </BlurFade>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {projects.slice(0, 3).map((project, i) => (
-              <ProjectCard key={project.slug} project={project} index={i} />
+              <MaskCard key={project.slug} project={project} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          CTA
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.008] rounded-full blur-[150px]" />
-        <div className="max-w-2xl mx-auto px-5 sm:px-8 text-center relative z-10">
-          <FadeUp>
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-4">Aramıza Katıl</p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
-              Geleceği Birlikte İnşa Edelim
-            </h2>
-          </FadeUp>
-          <FadeUp delay={0.2}>
-            <p className="text-neutral-500 mb-8 leading-relaxed">
-              Robotik ve teknolojiye ilgi duyuyorsan, kendini geliştirmek istiyorsan Merkutech ailesine katıl.
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.3}>
-            <Link
-              href="/iletisim"
-              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-white text-black text-sm font-semibold hover:bg-neutral-200 transition-colors"
-            >
-              Hemen Başvur
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-          </FadeUp>
-        </div>
-      </section>
+      {/* SÜREÇ — nasıl katılınır */}
+      <ProcessSection />
     </div>
   );
 }
 
-/* ─── Drone Section — Teknik Dalga Animasyonu ─── */
+/* ═══════════════════════════════════════
+   ANİMASYON BİLEŞENLERİ
+   ═══════════════════════════════════════ */
 
-function DroneSection() {
-  const lines = [
-    { delay: 0, duration: 3, height: 40 },
-    { delay: 0.3, duration: 3.5, height: 70 },
-    { delay: 0.6, duration: 4, height: 50 },
-    { delay: 0.9, duration: 3.2, height: 90 },
-    { delay: 1.2, duration: 3.8, height: 60 },
-    { delay: 1.5, duration: 4.2, height: 80 },
-    { delay: 1.8, duration: 3.6, height: 45 },
-    { delay: 2.1, duration: 3.9, height: 75 },
-    { delay: 2.4, duration: 3.3, height: 55 },
-    { delay: 2.7, duration: 4.1, height: 85 },
-    { delay: 3.0, duration: 3.7, height: 65 },
-    { delay: 3.3, duration: 3.4, height: 95 },
-    { delay: 3.6, duration: 4.0, height: 50 },
-    { delay: 3.9, duration: 3.5, height: 70 },
-    { delay: 4.2, duration: 3.8, height: 80 },
-  ];
+/* Marquee */
+function MarqueeSection() {
+  const words = ["ROS", "OpenCV", "Python", "C++", "TensorFlow", "PyTorch", "MAVLink", "DroneKit", "LIDAR", "SLAM", "Gazebo", "SolidWorks", "AutoCAD", "Embedded C", "STM32", "Arduino"];
+  return (
+    <section className="relative py-14 overflow-hidden border-y border-white/[0.06]">
+      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
+      <div className="flex whitespace-nowrap">
+        {[...Array(2)].map((_, si) => (
+          <motion.div key={si} className="flex items-center gap-12 pr-12" animate={{ x: ["0%", "-100%"] }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }}>
+            {words.map((w, i) => <span key={i} className="text-sm md:text-base font-mono text-neutral-700 whitespace-nowrap">{w}</span>)}
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* Drone Wave */
+function DroneWave() {
+  const lines = Array.from({ length: 24 }, (_, i) => ({
+    height: 25 + Math.abs(Math.sin(i * 0.6)) * 55 + Math.random() * 15,
+    delay: i * 0.12,
+    duration: 2.5 + Math.random() * 0.8,
+  }));
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden border-y border-white/[0.06]">
-      {/* Başlık */}
-      <div className="text-center mb-16">
+    <section className="relative py-20 md:py-28 overflow-hidden border-b border-white/[0.06]">
+      <div className="text-center mb-12">
         <p className="text-xs text-neutral-600 tracking-[0.3em] uppercase mb-3">Uçan Teknolojiler</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-          Drone Teknolojisi
-        </h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Drone Teknolojisi</h2>
       </div>
 
-      {/* Dalga animasyonu */}
-      <div className="relative h-48 md:h-64 flex items-center justify-center gap-1 md:gap-1.5 px-4">
+      <div className="flex items-center justify-center gap-[3px] md:gap-1 h-36 md:h-48 px-8">
         {lines.map((line, i) => (
           <motion.div
             key={i}
-            className="w-1 md:w-1.5 rounded-full bg-white/[0.08]"
-            animate={{
-              height: [`${line.height * 0.3}%`, `${line.height}%`, `${line.height * 0.3}%`],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: line.duration,
-              delay: line.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            className="w-[3px] md:w-1 rounded-full bg-white/[0.06]"
+            animate={{ height: [`${line.height * 0.35}%`, `${line.height}%`, `${line.height * 0.35}%`] }}
+            transition={{ duration: line.duration, delay: line.delay, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </div>
 
-      {/* Alt metin */}
-      <div className="text-center mt-12 max-w-xl mx-auto px-5">
+      <div className="text-center mt-10 max-w-lg mx-auto px-5">
         <p className="text-sm text-neutral-500 leading-relaxed">
-          Otonom uçuş algoritmaları, çoklu drone koordinasyonu ve sürü teknolojileri 
-          üzerine çalışıyoruz.
+          Otonom uçuş algoritmaları, çoklu drone koordinasyonu ve sürü teknolojileri üzerine çalışıyoruz.
         </p>
       </div>
     </section>
   );
 }
 
-/* ─── Expandable Row ─── */
 
-function ExpandableRow({ num, title, desc, tags, icon }: {
-  num: string;
-  title: string;
-  desc: string;
-  tags: string[];
-  icon: React.ReactNode;
+
+/* Blur Fade */
+function BlurFade({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, filter: "blur(8px)", y: 12 }}
+      animate={isInView ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
+      transition={{ duration: 0.5, delay, ease: easeOut }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* Stagger Row */
+function StaggerRow({ num, title, desc, tags, icon, index }: {
+  num: string; title: string; desc: string; tags: string[]; icon: React.ReactNode; index: number;
 }) {
   const [hovered, setHovered] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
-    <div
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -15 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.4, delay: index * 0.06, ease: easeOut }}
       className="border-b border-white/[0.08] cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -269,105 +221,148 @@ function ExpandableRow({ num, title, desc, tags, icon }: {
       <div className="flex items-center justify-between py-6 md:py-8">
         <div className="flex items-center gap-6 md:gap-10">
           <span className="text-sm font-mono text-neutral-700 w-8">{num}</span>
-          <h3 className={`text-xl md:text-2xl font-semibold transition-colors duration-300 ${hovered ? 'gradient-text' : 'text-white'}`}>
-            {title}
-          </h3>
+          <h3 className={`text-xl md:text-2xl font-semibold transition-colors duration-300 ${hovered ? 'text-neutral-300' : 'text-white'}`}>{title}</h3>
         </div>
-        <div className="flex items-center gap-4">
-          <div className={`w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center text-neutral-500 transition-all duration-300 ${hovered ? 'bg-white/5 border-white/20 text-white rotate-45' : ''}`}>
-            <ArrowUpRight className="h-4 w-4" />
-          </div>
-        </div>
+        <motion.div animate={{ rotate: hovered ? 45 : 0 }} transition={{ duration: 0.25 }} className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center text-neutral-500">
+          <ArrowUpRight className="h-4 w-4" />
+        </motion.div>
       </div>
 
       <AnimatePresence>
         {hovered && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: easeOut }}
-            className="overflow-hidden"
-          >
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: easeOut }} className="overflow-hidden">
             <div className="pb-8 pl-14 md:pl-[4.5rem] flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="max-w-lg">
                 <p className="text-sm text-neutral-500 leading-relaxed mb-4">{desc}</p>
                 <div className="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 bg-white/[0.04] rounded-md text-[11px] font-mono text-neutral-500">
-                      {tag}
-                    </span>
-                  ))}
+                  {tags.map((tag) => <span key={tag} className="px-2.5 py-1 bg-white/[0.04] rounded-md text-[11px] font-mono text-neutral-500">{tag}</span>)}
                 </div>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-white/[0.04] flex items-center justify-center text-neutral-400 shrink-0">
-                {icon}
-              </div>
+              <div className="w-12 h-12 rounded-xl bg-white/[0.04] flex items-center justify-center text-neutral-400 shrink-0">{icon}</div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 
-/* ─── Project Card ─── */
-
-function ProjectCard({ project, index }: {
-  project: typeof projects[0];
-  index: number;
-}) {
+/* Mask Card */
+function MaskCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: easeOut }}
-    >
-      <Link
-        href={`/projelerimiz/${project.slug}`}
-        className="group block rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-white/[0.1] transition-all duration-300"
-      >
-        <div className="aspect-[16/10] overflow-hidden">
-          <img
+    <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: index * 0.1, ease: easeOut }}>
+      <Link href={`/projelerimiz/${project.slug}`} className="group block rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-white/[0.12] transition-all duration-500">
+        <div className="aspect-[16/10] overflow-hidden relative">
+          <motion.img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            animate={isInView ? { clipPath: "inset(0 0% 0 0)" } : {}}
+            transition={{ duration: 0.7, delay: index * 0.1 + 0.15, ease: easeOut }}
           />
         </div>
         <div className="p-5">
           <div className="flex items-center gap-2 mb-3">
-            <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium ${
-              project.status === 'Aktif'
-                ? 'bg-emerald-500/10 text-emerald-400'
-                : project.status === 'Tamamlandı'
-                ? 'bg-blue-500/10 text-blue-400'
-                : 'bg-amber-500/10 text-amber-400'
-            }`}>
-              <span className={`w-1 h-1 rounded-full ${
-                project.status === 'Aktif' ? 'bg-emerald-400' : project.status === 'Tamamlandı' ? 'bg-blue-400' : 'bg-amber-400'
-              }`} />
+            <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium ${project.status === 'Aktif' ? 'bg-emerald-500/10 text-emerald-400' : project.status === 'Tamamlandı' ? 'bg-blue-500/10 text-blue-400' : 'bg-amber-500/10 text-amber-400'}`}>
+              <span className={`w-1 h-1 rounded-full ${project.status === 'Aktif' ? 'bg-emerald-400' : project.status === 'Tamamlandı' ? 'bg-blue-400' : 'bg-amber-400'}`} />
               {project.status}
             </span>
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-sm text-neutral-500 leading-relaxed mb-4 line-clamp-2">
-            {project.description}
-          </p>
+          <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">{project.title}</h3>
+          <p className="text-sm text-neutral-500 leading-relaxed mb-4 line-clamp-2">{project.description}</p>
           <div className="flex flex-wrap gap-1.5">
-            {project.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="px-2 py-0.5 bg-white/[0.04] rounded text-[10px] font-mono text-neutral-600">
-                {tag}
-              </span>
-            ))}
+            {project.tags.slice(0, 3).map((tag) => <span key={tag} className="px-2 py-0.5 bg-white/[0.04] rounded text-[10px] font-mono text-neutral-600">{tag}</span>)}
           </div>
         </div>
       </Link>
     </motion.div>
+  );
+}
+
+/* Süreç — nasıl katılınır */
+function ProcessSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  const steps = [
+    {
+      num: "01",
+      title: "Keşfet",
+      desc: "Kulübümüzü ziyaret et, mevcut projeleri gör ve hangi alan sana uygun keşfet."
+    },
+    {
+      num: "02",
+      title: "Öğren",
+      desc: "Atölye çalışmaları, eğitimler ve mentorluk ile yeni beceriler kazan."
+    },
+    {
+      num: "03",
+      title: "Üret",
+      desc: "Kendi projeni başlat veya mevcut bir ekibe katıl. Beraber üret, beraber büyü."
+    },
+  ];
+
+  return (
+    <section ref={ref} className="relative py-24 md:py-32 border-t border-white/[0.06]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="text-center mb-16">
+          <BlurFade>
+            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Nasıl Başlarız</p>
+          </BlurFade>
+          <BlurFade delay={0.1}>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Süreç</h2>
+          </BlurFade>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.num}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.15, ease: easeOut }}
+              className="relative p-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] hover:bg-white/[0.03] transition-all duration-500 group"
+            >
+              {/* Numara */}
+              <span className="text-5xl font-bold text-white/[0.04] group-hover:text-white/[0.08] transition-colors duration-500 absolute top-6 right-6">
+                {step.num}
+              </span>
+
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-full border border-white/[0.1] flex items-center justify-center text-neutral-500 mb-6 group-hover:border-white/20 group-hover:text-white transition-all duration-500">
+                  <span className="text-xs font-mono">{step.num}</span>
+                </div>
+
+                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
+                <p className="text-sm text-neutral-500 leading-relaxed">{step.desc}</p>
+              </div>
+
+              {/* Alt çizgi */}
+              <motion.div
+                className="absolute bottom-0 left-8 right-8 h-px bg-white/[0.08]"
+                initial={{ scaleX: 0 }}
+                animate={isInView ? { scaleX: 1 } : {}}
+                transition={{ duration: 0.8, delay: i * 0.15 + 0.3, ease: easeOut }}
+                style={{ originX: 0 }}
+              />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Bağlantı çizgileri (sadece desktop) */}
+        <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-12rem)] pointer-events-none">
+          <motion.div
+            className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.2, delay: 0.5, ease: easeOut }}
+          />
+        </div>
+      </div>
+    </section>
   );
 }
