@@ -14,7 +14,7 @@ const gridPoints = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 const AiVision = ({
-  cardTitle = "AI Vision",
+  cardTitle = "Yapay Zeka Görüşü",
   cardDescription = "Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz.",
 }: AiVisionProps) => {
   const [scanLine, setScanLine] = useState(0);

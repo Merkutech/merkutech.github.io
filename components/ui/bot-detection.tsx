@@ -21,8 +21,8 @@ const positions = [
 ];
 
 const BotDetection = ({
-  cardTitle = "Bot Detection",
-  cardDescription = "Experience fewer fraudulent sign-ups with our sophisticated, AI-driven bot detection that constantly adapts, ensuring high accuracy and efficient platform protection.",
+  cardTitle = "Bot Algılama",
+  cardDescription = "AI destekli bot tespiti ile platform güvenliğini artırıyor, sahte kayıtları minimuma indiriyoruz.",
 }: BotDetectionProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 

@@ -68,19 +68,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <BlurFade delay={0.15}>
               <BotDetection
-                cardTitle="Bot Detection"
+                cardTitle="Bot Algılama"
                 cardDescription="AI destekli bot tespiti ile platform güvenliğini artırıyor, sahte kayıtları minimuma indiriyoruz."
               />
             </BlurFade>
             <BlurFade delay={0.25}>
               <SwarmNetwork
-                cardTitle="Swarm Network"
+                cardTitle="Sürü Ağı"
                 cardDescription="Çoklu drone koordinasyonu ve sürü algoritmaları ile gerçek zamanlı iletişim protokolleri geliştiriyoruz."
               />
             </BlurFade>
             <BlurFade delay={0.35}>
               <AiVision
-                cardTitle="AI Vision"
+                cardTitle="Yapay Zeka Görüşü"
                 cardDescription="Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz."
               />
             </BlurFade>

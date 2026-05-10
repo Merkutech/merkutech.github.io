@@ -27,7 +27,7 @@ const connections = [
 ];
 
 const SwarmNetwork = ({
-  cardTitle = "Swarm Network",
+  cardTitle = "Sürü Ağı",
   cardDescription = "Çoklu drone koordinasyonu ve sürü algoritmaları ile gerçek zamanlı iletişim protokolleri geliştiriyoruz.",
 }: SwarmNetworkProps) => {
   const [activeNode, setActiveNode] = useState(0);
