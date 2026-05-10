@@ -102,34 +102,49 @@ export default function ProjelerimizPage() {
 
       {/* Biz Kimiz */}
       <section className="relative border-t border-white/[0.06] py-28 md:py-36">
-        <div className="max-w-5xl mx-auto px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: easeOut }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
           >
-            <div>
+            <div className="order-2 lg:order-1">
               <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
                 Hakkımızda
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-8">
                 Biz Kimiz?
               </h2>
+              <div className="space-y-6 text-neutral-400 leading-relaxed">
+                <p>
+                  Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür.
+                  Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında
+                  kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.
+                </p>
+                <p>
+                  Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler,
+                  robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
+                  Her seviyeden öğrenciye açık olan kulübümüzde öğrenme, üretme ve büyüme kültürü hakim.
+                </p>
+              </div>
             </div>
-            <div className="space-y-6 text-neutral-400 leading-relaxed">
-              <p>
-                Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür. 
-                Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında 
-                kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.
-              </p>
-              <p>
-                Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler, 
-                robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz. 
-                Her seviyeden öğrenciye açık olan kulübümüzde öğrenme, üretme ve büyüme kültürü hakim.
-              </p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: easeOut }}
+              className="order-1 lg:order-2"
+            >
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-white/[0.02]">
+                <img
+                  src="/4.jpg"
+                  alt="Merkutech Ekibi"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>

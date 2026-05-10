@@ -61,6 +61,7 @@ export const projects: Project[] = [
     title: "T-Rone",
     description: "Otonom kontrol sistemleri ve akıllı hareket mekanizmasıyla donatılmış, inovasyon yarışmalarında finalist olan sistem.",
     longDescription: "T-Rone, Merkutech ekibi tarafından geliştirilen ve inovasyon yarışmalarında finalist olan otonom sistem projesidir. Proje; akıllı kontrol sistemleri, otonom hareket kabiliyeti ve gelişmiş mühendislik yaklaşımı üzerine kurulmuştur.",
+    image: "/2.jpeg",
     icon: "Cpu",
     features: [
       "Otonom kontrol sistemleri",
@@ -74,6 +75,7 @@ export const projects: Project[] = [
     title: "İnsanlık Yararına Teknoloji",
     description: "Afet yönetimi, veri analizi ve otonom sistemler alanlarında sosyal fayda odaklı teknoloji projeleri.",
     longDescription: "Merkutech ekibi, insanlık yararına teknoloji yaklaşımıyla çeşitli sosyal fayda projeleri geliştirmektedir. Bu projeler; afet yönetimi, veri analizi, görüntü işleme ve otonom sistemler gibi alanlarda çözümler üretmeyi hedeflemektedir. Takım, özellikle TEKNOFEST ve benzeri teknoloji yarışmalarında geliştirdiği yenilikçi projelerle çalışmalarını sürdürmektedir.",
+    image: "/5.jpg",
     icon: "Heart",
     features: [
       "Yapay zeka destekli sistemler",
