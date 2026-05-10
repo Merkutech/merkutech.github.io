@@ -54,32 +54,27 @@ export default function RootLayout({
           <SpotlightCursor size={250} className="from-white/10 via-white/5 to-white/2" />
         </div>
 
-        {/* Header — floating pill on scroll */}
+        {/* Header — sadece floating, scroll ile belirir */}
         <header className="fixed top-0 left-0 right-0 z-50">
-          <div className={`transition-all duration-500 ease-out ${scrolled ? 'pt-4 px-4' : 'pt-0 px-0'}`}>
+          <div className="pt-3 px-4">
             <motion.div
-              layout
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className={`mx-auto flex items-center justify-between transition-all duration-500 ${
-                scrolled
-                  ? 'max-w-2xl bg-white/[0.05] backdrop-blur-2xl border border-white/[0.12] rounded-full px-6 py-4 shadow-2xl shadow-black/50'
-                  : 'max-w-7xl bg-background/80 backdrop-blur-lg px-5 sm:px-8 lg:px-12 py-6'
-              }`}
+              initial={{ y: -60, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 350, damping: 32 }}
+              className="mx-auto max-w-lg h-12 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.1] rounded-full px-5 shadow-xl shadow-black/40 flex items-center justify-between overflow-hidden"
             >
-              {/* Logo — sadece yazı, ikon yok */}
-              <Link href="/" className="flex items-center gap-2 group">
-                <span className="font-semibold text-white tracking-tight text-sm">
+              <Link href="/" className="flex-shrink-0">
+                <span className="font-semibold text-white tracking-tight text-xs">
                   Merkutech
                 </span>
               </Link>
 
-              {/* Desktop Nav */}
-              <nav className="hidden md:flex items-center">
+              <nav className="hidden md:flex items-center gap-0.5">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
+                    className={`relative px-3.5 py-1.5 text-[11px] font-medium rounded-full transition-colors ${
                       pathname === link.href
                         ? "text-white"
                         : "text-neutral-500 hover:text-white"
@@ -89,25 +84,23 @@ export default function RootLayout({
                     {pathname === link.href && (
                       <motion.div
                         layoutId="nav-indicator"
-                        className="absolute inset-0 bg-white/10 rounded-full -z-10"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        className="absolute inset-0 bg-white/[0.08] rounded-full -z-10"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                       />
                     )}
                   </Link>
                 ))}
               </nav>
 
-              {/* Mobile Toggle */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors"
+                className="md:hidden p-1.5 rounded-md hover:bg-white/5 transition-colors"
               >
-                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
             </motion.div>
           </div>
 
-          {/* Mobile Menu */}
           <AnimatePresence>
             {mobileOpen && (
               <motion.div
