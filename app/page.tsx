@@ -37,116 +37,39 @@ export default function Home() {
     <div ref={containerRef} className="flex flex-col">
 
       {/* ═══════════════════════════════════════
-          HERO
+          HERO — sadece robot, hiç metin yok
          ═══════════════════════════════════════ */}
-      <section className="relative w-full min-h-screen overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-10" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 min-h-screen flex items-center">
-          <div className="w-full flex flex-col lg:flex-row items-center gap-8 lg:gap-4">
-            
-            {/* Sol — Metin */}
-            <div className="flex-1 w-full pt-20 lg:pt-0">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
-                className="text-sm text-neutral-500 mb-6 tracking-wide"
-              >
-                İstanbul Arel Üniversitesi — Robotik & Teknoloji Kulübü
-              </motion.p>
-
-              <h1 className="font-bold tracking-tighter leading-[0.95] mb-8">
-                <div className="overflow-hidden">
-                  <motion.span
-                    className="block text-[clamp(3rem,8vw,7rem)] text-white"
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.9, ease: easeOut, delay: 0.15 }}
-                  >
-                    Teknolojiyi
-                  </motion.span>
-                </div>
-                <div className="overflow-hidden">
-                  <motion.span
-                    className="block text-[clamp(3rem,8vw,7rem)] gradient-text"
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.9, ease: easeOut, delay: 0.25 }}
-                  >
-                    Şekillendiriyoruz
-                  </motion.span>
-                </div>
-              </h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
-                className="text-base md:text-lg text-neutral-500 max-w-md mb-10 leading-relaxed"
-              >
-                Robotik sistemler, otonom drone teknolojileri ve yapay zeka alanlarında 
-                kendini kanıtlamış bir öğrenci topluluğu.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: easeOut, delay: 0.5 }}
-                className="flex flex-wrap gap-3"
-              >
-                <Link
-                  href="/projelerimiz"
-                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-black text-sm font-semibold hover:bg-neutral-200 transition-colors"
-                >
-                  Projelerimiz
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-                <Link
-                  href="/iletisim"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-neutral-400 hover:bg-white/5 hover:border-white/20 transition-all"
-                >
-                  Bize Ulaşın
-                </Link>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.6 }}
-                className="flex gap-10 mt-14"
-              >
-                {[
-                  { num: "50+", label: "Proje" },
-                  { num: "200+", label: "Üye" },
-                  { num: "10+", label: "Ödül" },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <div className="text-2xl font-bold text-white">{s.num}</div>
-                    <div className="text-xs text-neutral-600 mt-0.5">{s.label}</div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Sağ — Robot */}
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: easeOut, delay: 0.3 }}
-              className="flex-1 w-full h-[50vh] lg:h-[80vh] relative"
-            >
-              <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-              <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
-              <div className="w-full h-full" style={{ touchAction: 'none' }}>
-                <SplineScene
-                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                  className="w-full h-full"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
+      <section className="relative w-full h-screen overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0"
+        >
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+          />
+        </motion.div>
+        
+        {/* Altta gradient — header ile karışmasın diye */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+        
+        {/* Sağ altta küçük ok — aşağı kaydır */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className="absolute bottom-8 right-8 z-20"
+        >
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center"
+          >
+            <ArrowRight className="h-4 w-4 text-neutral-500 rotate-90" />
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* ═══════════════════════════════════════
@@ -157,7 +80,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════
           MANİFESTO
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36">
+      <section className="relative py-32 md:py-44">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest text-neutral-600 mb-8">Misyonumuz</p>
