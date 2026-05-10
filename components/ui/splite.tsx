@@ -19,7 +19,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     <Suspense 
       fallback={
         <div className="w-full h-full flex items-center justify-center">
-          <span className="loader"></span>
+          <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
         </div>
       }
     >
@@ -27,6 +27,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         scene={scene}
         className={className}
         onLoad={onLoad}
+        style={{ width: '100%', height: '100%' }}
       />
     </Suspense>
   )
