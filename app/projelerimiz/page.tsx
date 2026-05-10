@@ -60,14 +60,16 @@ export default function ProjelerimizPage() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
 
-                  {/* Görsel */}
-                  <div className="aspect-[21/9] overflow-hidden rounded-xl bg-white/[0.02] mb-8">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
-                    />
-                  </div>
+                  {/* Görsel — sadece varsa göster */}
+                  {project.image && (
+                    <div className="aspect-[21/9] overflow-hidden rounded-xl bg-white/[0.02] mb-8">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                  )}
 
                   {/* İçerik */}
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">

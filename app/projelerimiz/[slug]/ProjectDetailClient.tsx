@@ -50,24 +50,52 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </div>
       </section>
 
-      {/* Image */}
-      <section className="py-10">
-        <div className="container max-w-5xl mx-auto px-4 md:px-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="rounded-3xl overflow-hidden glass"
-          >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-[300px] md:h-[500px] object-cover"
-            />
-          </motion.div>
-        </div>
-      </section>
+      {/* Kapak Görseli — varsa */}
+      {project.image && (
+        <section className="py-10">
+          <div className="container max-w-5xl mx-auto px-4 md:px-8">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="rounded-3xl overflow-hidden glass"
+            >
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-[300px] md:h-[500px] object-cover"
+              />
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Galeri — sadece warscope gibi projelerde */}
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="py-10">
+          <div className="container max-w-5xl mx-auto px-4 md:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {project.gallery.map((img, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]"
+                >
+                  <img
+                    src={img}
+                    alt={`${project.title} ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Description */}
       <section className="py-20">
