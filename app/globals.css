@@ -139,6 +139,33 @@
   background-size: 80px 80px;
 }
 
+/* Spline watermark gizleme */
+a[href*="spline.design"],
+a[href*="spline.software"],
+a[href*="spline"],
+body a[href*="spline"],
+[class*="spline-watermark"],
+[class*="spline-logo"],
+[class*="watermark"],
+[id*="watermark"],
+canvas ~ a,
+canvas ~ div a,
+canvas ~ div ~ a,
+canvas + div,
+body > a[href*="spline"],
+body > div > a[href*="spline"],
+body > div > div > a[href*="spline"],
+a[target="_blank"][href*="spline"],
+div:has(> a[href*="spline"]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
