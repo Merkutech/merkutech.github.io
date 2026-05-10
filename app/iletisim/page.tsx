@@ -8,15 +8,21 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const links = [
   {
+    name: "Takıma Başvur",
+    handle: "Google Form",
+    href: "https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform",
+    icon: <ArrowUpRight className="h-5 w-5" />,
+  },
+  {
     name: "Arel Savunma Sanayi Kulübü WhatsApp Grubu",
     handle: "WhatsApp Community",
-    href: "#",
+    href: "https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ",
     icon: <MessageCircle className="h-5 w-5" />,
   },
   {
     name: "Merkutech Instagram",
     handle: "@merkutech",
-    href: "#",
+    href: "https://www.instagram.com/merkutech/",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
@@ -27,8 +33,8 @@ const links = [
   },
   {
     name: "Arel Savunma Sanayi Kulübü Instagram",
-    handle: "@arel_savunma",
-    href: "#",
+    handle: "@arelsavunma",
+    href: "https://www.instagram.com/arelsavunma",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
@@ -40,7 +46,7 @@ const links = [
   {
     name: "Merkutech YouTube",
     handle: "Merkutech",
-    href: "#",
+    href: "https://www.youtube.com/@merkutech",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
@@ -51,7 +57,7 @@ const links = [
   {
     name: "Merkutech LinkedIn",
     handle: "Merkutech",
-    href: "#",
+    href: "https://www.linkedin.com/company/merkutech",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
