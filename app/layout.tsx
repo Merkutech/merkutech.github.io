@@ -147,14 +147,7 @@ export default function RootLayout({
               
               {/* Üst — Logo + Sosyal */}
               <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2m-3.5-6.5l-1.4 1.4m-9.8 9.8l-1.4 1.4m0-12.6l1.4 1.4m9.8 9.8l1.4 1.4"/>
-                    </svg>
-                  </div>
-                  <span className="text-base font-semibold text-white">Merkutech</span>
-                </div>
+                <span className="text-base font-semibold text-white">Merkutech</span>
 
                 <div className="flex items-center gap-2">
                   <SocialIcon href="#" label="Instagram">
