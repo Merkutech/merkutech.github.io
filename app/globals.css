@@ -102,6 +102,19 @@
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* ===== UTILİTY SINIFLAR ===== */
 
 .glass {

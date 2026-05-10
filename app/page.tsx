@@ -226,22 +226,36 @@ export default function Home() {
    ANİMASYON BİLEŞENLERİ
    ═══════════════════════════════════════ */
 
-/* Marquee */
+/* Marquee — sonsuz, seamless */
 function MarqueeSection() {
-  const words = ["🏆 Teknofest Şampiyonlar Ligi Şampiyonu", "🥈 Teknofest 2025 Turizm", "🥉 Teknofest 2024 İYT", "🎖️ AUVSI SUAS 2024 - USA"];
+  const achievements = [
+    "🏆 Teknofest Şampiyonlar Ligi Şampiyonu",
+    "🥈 Teknofest 2025 Turizm",
+    "🥉 Teknofest 2024 İYT",
+    "🎖️ AUVSI SUAS 2024 — USA",
+  ];
+
+  // Tek satırda ekranı dolduracak kadar tekrarla
+  const row = Array.from({ length: 4 }, () => achievements).flat();
+
   return (
-    <section className="relative py-10 overflow-hidden border-y border-white/[0.08] bg-white/[0.02]">
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
-      <div className="flex whitespace-nowrap">
-        {[...Array(2)].map((_, si) => (
-          <motion.div key={si} className="flex items-center gap-6 pr-6" animate={{ x: ["0%", "-100%"] }} transition={{ duration: 28, repeat: Infinity, ease: "linear" }}>
-            {words.map((w, i) => (
-              <span key={i} className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-sm md:text-base font-semibold tracking-tight whitespace-nowrap">
-                {w}
+    <section className="relative py-8 md:py-10 overflow-hidden border-y border-white/[0.08]">
+      <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+      <div className="flex animate-marquee whitespace-nowrap will-change-transform">
+        {/* İki aynı satır — CSS -50% animasyonu seamless döngü sağlar */}
+        {[0, 1].map((si) => (
+          <div key={si} className="flex items-center shrink-0">
+            {row.map((text, i) => (
+              <span key={`${si}-${i}`} className="flex items-center shrink-0">
+                <span className="text-base md:text-lg lg:text-xl font-medium text-neutral-400 tracking-tight whitespace-nowrap px-4 md:px-6">
+                  {text}
+                </span>
+                <span className="text-neutral-700 select-none">·</span>
               </span>
             ))}
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>
