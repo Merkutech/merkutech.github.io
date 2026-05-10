@@ -290,17 +290,8 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
           />
         </div>
         <div className="p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium ${project.status === 'Aktif' ? 'bg-emerald-500/10 text-emerald-400' : project.status === 'Tamamlandı' ? 'bg-blue-500/10 text-blue-400' : 'bg-amber-500/10 text-amber-400'}`}>
-              <span className={`w-1 h-1 rounded-full ${project.status === 'Aktif' ? 'bg-emerald-400' : project.status === 'Tamamlandı' ? 'bg-blue-400' : 'bg-amber-400'}`} />
-              {project.status}
-            </span>
-          </div>
           <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">{project.title}</h3>
-          <p className="text-sm text-neutral-500 leading-relaxed mb-4 line-clamp-2">{project.description}</p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.slice(0, 3).map((tag) => <span key={tag} className="px-2 py-0.5 bg-white/[0.04] rounded text-[10px] font-mono text-neutral-600">{tag}</span>)}
-          </div>
+          <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2">{project.description}</p>
         </div>
       </Link>
     </motion.div>

@@ -42,7 +42,7 @@ export default function ProjelerimizPage() {
         <div className="absolute bottom-0 right-0 w-52 h-16 bg-[#0a0a0a] z-50 pointer-events-none" />
       </div>
 
-      {/* Projeler — editorial liste, tek sütun */}
+      {/* Projeler — editorial liste */}
       <section className="relative z-10 -mt-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-8 pb-32">
           <div className="space-y-24 md:space-y-32">
@@ -55,26 +55,10 @@ export default function ProjelerimizPage() {
                 transition={{ duration: 0.7, ease: easeOut }}
               >
                 <Link href={`/projelerimiz/${project.slug}`} className="group block">
-                  {/* Numara + Meta */}
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-sm font-mono text-neutral-700">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium border ${
-                        project.status === 'Aktif' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                        project.status === 'Tamamlandı' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                        'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                      }`}>
-                        <span className={`w-1 h-1 rounded-full ${
-                          project.status === 'Aktif' ? 'bg-emerald-400' :
-                          project.status === 'Tamamlandı' ? 'bg-blue-400' : 'bg-amber-400'
-                        }`} />
-                        {project.status}
-                      </span>
-                      <span className="text-[10px] text-neutral-700 font-mono">{project.timeline}</span>
-                    </div>
-                  </div>
+                  {/* Numara */}
+                  <span className="text-sm font-mono text-neutral-700 block mb-6">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
 
                   {/* Görsel */}
                   <div className="aspect-[21/9] overflow-hidden rounded-xl bg-white/[0.02] mb-8">
@@ -96,13 +80,6 @@ export default function ProjelerimizPage() {
                       <p className="text-sm text-neutral-500 leading-relaxed">
                         {project.description}
                       </p>
-                      <div className="flex flex-wrap gap-2 mt-5">
-                        {project.tags.map((tag) => (
-                          <span key={tag} className="px-2.5 py-1 bg-white/[0.04] rounded-md text-[11px] font-mono text-neutral-600">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
                       <div className="mt-6 inline-flex items-center gap-2 text-sm text-white group-hover:text-neutral-300 transition-colors">
                         Detayları İncele
                         <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -118,6 +95,40 @@ export default function ProjelerimizPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Biz Kimiz */}
+      <section className="relative border-t border-white/[0.06] py-28 md:py-36">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: easeOut }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start"
+          >
+            <div>
+              <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
+                Hakkımızda
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4">
+                Biz Kimiz?
+              </h2>
+            </div>
+            <div className="space-y-6 text-neutral-400 leading-relaxed">
+              <p>
+                Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür. 
+                Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında 
+                kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.
+              </p>
+              <p>
+                Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler, 
+                robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz. 
+                Her seviyeden öğrenciye açık olan kulübümüzde öğrenme, üretme ve büyüme kültürü hakim.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
