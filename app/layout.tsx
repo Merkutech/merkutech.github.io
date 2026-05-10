@@ -54,14 +54,22 @@ export default function RootLayout({
           <SpotlightCursor size={250} className="from-white/10 via-white/5 to-white/2" />
         </div>
 
-        {/* Header */}
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled ? 'bg-background/90 backdrop-blur-xl border-b border-white/[0.06]' : 'bg-transparent'}`}>
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-            <div className="flex items-center justify-between h-16">
+        {/* Header — floating pill on scroll */}
+        <header className="fixed top-0 left-0 right-0 z-50">
+          <div className={`transition-all duration-500 ease-out ${scrolled ? 'pt-3 px-4' : 'pt-0 px-0'}`}>
+            <motion.div
+              layout
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className={`mx-auto flex items-center justify-between transition-all duration-500 ${
+                scrolled
+                  ? 'max-w-xl bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] rounded-full px-5 py-2.5 shadow-2xl shadow-black/50'
+                  : 'max-w-7xl border-b border-white/[0.06] px-5 sm:px-8 lg:px-12 py-4'
+              }`}
+            >
               {/* Logo */}
-              <Link href="/" className="flex items-center gap-2.5 group">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center group-hover:bg-white/15 transition-colors">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <Link href="/" className="flex items-center gap-2 group">
+                <div className={`flex items-center justify-center bg-white/[0.1] rounded-lg transition-all duration-500 ${scrolled ? 'w-6 h-6' : 'w-8 h-8'}`}>
+                  <svg viewBox="0 0 24 24" className={`text-white transition-all duration-500 ${scrolled ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1z"/>
                     <path d="M12 20a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1z"/>
                     <path d="M2 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2H3a1 1 0 0 1-1-1z"/>
@@ -73,26 +81,28 @@ export default function RootLayout({
                     <path d="m17.66 6.34 1.41-1.41"/>
                   </svg>
                 </div>
-                <span className="text-sm font-semibold text-white tracking-tight">Merkutech</span>
+                <span className={`font-semibold text-white tracking-tight transition-all duration-500 ${scrolled ? 'text-xs' : 'text-sm'}`}>
+                  Merkutech
+                </span>
               </Link>
 
               {/* Desktop Nav */}
-              <nav className="hidden md:flex items-center gap-1">
+              <nav className="hidden md:flex items-center">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                    className={`relative px-3 py-1 text-xs font-medium rounded-full transition-colors ${
                       pathname === link.href
                         ? "text-white"
-                        : "text-neutral-400 hover:text-white"
+                        : "text-neutral-500 hover:text-white"
                     }`}
                   >
                     {link.label}
                     {pathname === link.href && (
                       <motion.div
                         layoutId="nav-indicator"
-                        className="absolute bottom-0 left-3 right-3 h-0.5 bg-white/60 rounded-full"
+                        className="absolute inset-0 bg-white/10 rounded-full -z-10"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -107,7 +117,7 @@ export default function RootLayout({
               >
                 {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
-            </div>
+            </motion.div>
           </div>
 
           {/* Mobile Menu */}
@@ -118,9 +128,9 @@ export default function RootLayout({
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
-                className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-white/[0.06]"
+                className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-white/[0.06] mx-4 mt-2 rounded-2xl"
               >
-                <div className="px-5 py-4 space-y-1">
+                <div className="px-4 py-3 space-y-1">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
