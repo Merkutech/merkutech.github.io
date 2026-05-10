@@ -152,33 +152,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NE YAPIYORUZ */}
-      <section className="relative py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <BlurFade className="mb-4">
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Çalışma Alanları</p>
-          </BlurFade>
-          <BlurFade className="mb-16" delay={0.1}>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
-              Neler Yapıyoruz?
-            </h2>
-          </BlurFade>
-
-          <div className="border-t border-white/[0.08]">
-            {[
-              { num: "01", title: "Robotik Projeler", desc: "ROS tabanlı otonom sistemler, sensör füzyonu ve gerçek zamanlı kontrol algoritmaları ile robotlar geliştiriyoruz.", tags: ["ROS", "OpenCV", "Python"], icon: <Bot className="h-5 w-5" /> },
-              { num: "02", title: "Yapay Zeka", desc: "Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz.", tags: ["TensorFlow", "PyTorch", "Computer Vision"], icon: <Cpu className="h-5 w-5" /> },
-              { num: "03", title: "Drone Teknolojisi", desc: "Sürü algoritmaları, otonom uçuş ve çoklu drone koordinasyonu çalışmaları yürütüyoruz.", tags: ["MAVLink", "DroneKit", "Swarm AI"], icon: <Radio className="h-5 w-5" /> },
-              { num: "04", title: "Gömülü Sistemler", desc: "Mikrodenetleyiciler, PCB tasarımı ve gerçek zamanlı gömülü yazılım geliştirme.", tags: ["STM32", "Arduino", "Embedded C"], icon: <CircuitBoard className="h-5 w-5" /> },
-              { num: "05", title: "3D Modelleme", desc: "CAD, simülasyon ve hızlı prototipleme ile fikirden ürüne geçiş süreci.", tags: ["SolidWorks", "AutoCAD", "Gazebo"], icon: <Layers className="h-5 w-5" /> },
-              { num: "06", title: "Yarışmalar", desc: "Teknofest ve uluslararası robotik yarışmalarına aktif katılım ve hazırlık.", tags: ["Teknofest", "Robotaksi", "Uluslararası"], icon: <Zap className="h-5 w-5" /> },
-            ].map((item, i) => (
-              <StaggerRow key={item.num} {...item} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* PROJELER */}
       <section className="relative py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
@@ -201,6 +174,33 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {projects.slice(0, 3).map((project, i) => (
               <MaskCard key={project.slug} project={project} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NE YAPIYORUZ */}
+      <section className="relative py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          <BlurFade className="mb-4">
+            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Çalışma Alanları</p>
+          </BlurFade>
+          <BlurFade className="mb-16" delay={0.1}>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+              Neler Yapıyoruz?
+            </h2>
+          </BlurFade>
+
+          <div className="border-t border-white/[0.08]">
+            {[
+              { num: "01", title: "Robotik Projeler", desc: "ROS tabanlı otonom sistemler, sensör füzyonu ve gerçek zamanlı kontrol algoritmaları ile robotlar geliştiriyoruz.", tags: ["ROS", "OpenCV", "Python"], icon: <Bot className="h-5 w-5" /> },
+              { num: "02", title: "Yapay Zeka", desc: "Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz.", tags: ["TensorFlow", "PyTorch", "Computer Vision"], icon: <Cpu className="h-5 w-5" /> },
+              { num: "03", title: "Drone Teknolojisi", desc: "Sürü algoritmaları, otonom uçuş ve çoklu drone koordinasyonu çalışmaları yürütüyoruz.", tags: ["MAVLink", "DroneKit", "Swarm AI"], icon: <Radio className="h-5 w-5" /> },
+              { num: "04", title: "Gömülü Sistemler", desc: "Mikrodenetleyiciler, PCB tasarımı ve gerçek zamanlı gömülü yazılım geliştirme.", tags: ["STM32", "Arduino", "Embedded C"], icon: <CircuitBoard className="h-5 w-5" /> },
+              { num: "05", title: "3D Modelleme", desc: "CAD, simülasyon ve hızlı prototipleme ile fikirden ürüne geçiş süreci.", tags: ["SolidWorks", "AutoCAD", "Gazebo"], icon: <Layers className="h-5 w-5" /> },
+              { num: "06", title: "Yarışmalar", desc: "Teknofest ve uluslararası robotik yarışmalarına aktif katılım ve hazırlık.", tags: ["Teknofest", "Robotaksi", "Uluslararası"], icon: <Zap className="h-5 w-5" /> },
+            ].map((item, i) => (
+              <StaggerRow key={item.num} {...item} index={i} />
             ))}
           </div>
         </div>
