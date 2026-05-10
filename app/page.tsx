@@ -228,15 +228,19 @@ export default function Home() {
 
 /* Marquee */
 function MarqueeSection() {
-  const words = ["🏆 Teknofest Şampiyonlar Ligi Şampiyonu", "🥈 Teknofest 2025 Turizm", "🥉 Teknofest 2024 İYT", "🎖️ AUVSI SUAS 2024 - USA", "🏆 Teknofest Şampiyonlar Ligi Şampiyonu", "🥈 Teknofest 2025 Turizm", "🥉 Teknofest 2024 İYT", "🎖️ AUVSI SUAS 2024 - USA"];
+  const words = ["🏆 Teknofest Şampiyonlar Ligi Şampiyonu", "🥈 Teknofest 2025 Turizm", "🥉 Teknofest 2024 İYT", "🎖️ AUVSI SUAS 2024 - USA"];
   return (
-    <section className="relative py-14 overflow-hidden border-y border-white/[0.06]">
-      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
+    <section className="relative py-10 overflow-hidden border-y border-white/[0.08] bg-white/[0.02]">
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
       <div className="flex whitespace-nowrap">
         {[...Array(2)].map((_, si) => (
-          <motion.div key={si} className="flex items-center gap-12 pr-12" animate={{ x: ["0%", "-100%"] }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }}>
-            {words.map((w, i) => <span key={i} className="text-sm md:text-base font-mono text-neutral-700 whitespace-nowrap">{w}</span>)}
+          <motion.div key={si} className="flex items-center gap-6 pr-6" animate={{ x: ["0%", "-100%"] }} transition={{ duration: 28, repeat: Infinity, ease: "linear" }}>
+            {words.map((w, i) => (
+              <span key={i} className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-sm md:text-base font-semibold tracking-tight whitespace-nowrap">
+                {w}
+              </span>
+            ))}
           </motion.div>
         ))}
       </div>

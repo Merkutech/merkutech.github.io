@@ -45,7 +45,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <title>Merkutech - İstanbul Arel Üniversitesi Robotik Kulübü</title>
+        <title>MCT SENSOR Merkutech</title>
         <meta name="description" content="İstanbul Arel Üniversitesi Merkutech Robotik ve Teknoloji Kulübü" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-white/20">
@@ -64,7 +64,7 @@ export default function RootLayout({
             >
               <Link href="/" className="flex-shrink-0">
                 <span className="font-semibold text-white tracking-tight text-xs">
-                  Merkutech
+                  MCT SENSOR
                 </span>
               </Link>
 

@@ -16,7 +16,7 @@ export const projects: Project[] = [
     description: "Dünya genelindeki savaş ve kriz verilerini gerçek zamanlı analiz edip harita üzerinde görselleştiren web tabanlı platform.",
     longDescription: "Warscope, dünya genelindeki savaş ve kriz verilerini gerçek zamanlı olarak analiz edip harita üzerinde görselleştiren web tabanlı bir platformdur. Sistem; çatışma bölgeleri, insani krizler ve güncel olaylarla ilgili verileri kullanıcıya anlaşılır ve interaktif bir şekilde sunmayı amaçlar. Proje, sosyal farkındalık oluşturma ve veri odaklı analiz sağlama amacıyla geliştirilmiştir. TEKNOFEST Şampiyonlar Ligi'nde birincilik elde eden takımın öne çıkan projelerinden biridir.",
     image: "/1.jpeg",
-    gallery: ["/2.jpeg", "/4.jpg", "/5.jpg"],
+    gallery: ["/2.jpeg", "/3.jpeg", "/4.jpg", "/5.jpg"],
     icon: "Globe",
     features: [
       "Gerçek zamanlı veri görselleştirme",
