@@ -156,34 +156,87 @@ export default function RootLayout({
         {/* Floating Footer */}
         <div className="px-4 pb-6">
           <div className="max-w-7xl mx-auto">
-            <footer className="bg-white/[0.02] border border-white/[0.06] rounded-2xl px-6 py-8">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md bg-white/10 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1z"/>
-                      <path d="M12 20a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1z"/>
-                      <path d="M2 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2H3a1 1 0 0 1-1-1z"/>
-                      <path d="M20 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2h-2a1 1 0 0 1-1-1z"/>
-                      <circle cx="12" cy="12" r="4"/>
-                      <path d="m4.93 4.93 1.41 1.41"/>
-                      <path d="m17.66 17.66 1.41 1.41"/>
-                      <path d="m4.93 19.07 1.41-1.41"/>
-                      <path d="m17.66 6.34 1.41-1.41"/>
-                    </svg>
+            <footer className="relative bg-white/[0.02] backdrop-blur-xl border border-white/[0.08] rounded-2xl overflow-hidden">
+              {/* Glow efekti */}
+              <div className="absolute top-0 left-1/4 w-64 h-64 bg-white/[0.02] rounded-full blur-[100px]" />
+              <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-white/[0.015] rounded-full blur-[80px]" />
+
+              <div className="relative z-10 px-8 py-10 md:px-12 md:py-14">
+                {/* Üst kısım — 4 sütun */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                  {/* Logo + açıklama */}
+                  <div className="lg:col-span-1">
+                    <div className="flex items-center gap-2.5 mb-4">
+                      <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1z"/>
+                          <path d="M12 20a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1z"/>
+                          <path d="M2 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2H3a1 1 0 0 1-1-1z"/>
+                          <path d="M20 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2h-2a1 1 0 0 1-1-1z"/>
+                          <circle cx="12" cy="12" r="4"/>
+                          <path d="m4.93 4.93 1.41 1.41"/>
+                          <path d="m17.66 17.66 1.41 1.41"/>
+                          <path d="m4.93 19.07 1.41-1.41"/>
+                          <path d="m17.66 6.34 1.41-1.41"/>
+                        </svg>
+                      </div>
+                      <span className="text-base font-semibold text-white">Merkutech</span>
+                    </div>
+                    <p className="text-sm text-neutral-500 leading-relaxed">
+                      İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü. Geleceği kodlayan öğrenci topluluğu.
+                    </p>
                   </div>
-                  <span className="text-sm font-medium text-white">Merkutech</span>
+
+                  {/* Hızlı Linkler */}
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest text-neutral-600 mb-4 font-medium">Sayfalar</h4>
+                    <ul className="space-y-2.5">
+                      {navLinks.map((link) => (
+                        <li key={link.href}>
+                          <Link href={link.href} className="text-sm text-neutral-500 hover:text-white transition-colors">
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* İletişim */}
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest text-neutral-600 mb-4 font-medium">İletişim</h4>
+                    <ul className="space-y-2.5">
+                      <li className="text-sm text-neutral-500">İstanbul Arel Üniversitesi</li>
+                      <li className="text-sm text-neutral-500">merkutech@arel.edu.tr</li>
+                      <li className="text-sm text-neutral-500">+90 212 000 00 00</li>
+                    </ul>
+                  </div>
+
+                  {/* Sosyal Medya */}
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest text-neutral-600 mb-4 font-medium">Takip Et</h4>
+                    <div className="flex gap-2">
+                      {["Instagram", "Twitter", "LinkedIn", "GitHub"].map((social) => (
+                        <button
+                          key={social}
+                          className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-neutral-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.12] transition-all"
+                        >
+                          {social}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-8 text-sm text-neutral-500">
-                  {navLinks.slice(1).map((link) => (
-                    <Link key={link.href} href={link.href} className="hover:text-white transition-colors">
-                      {link.label}
-                    </Link>
-                  ))}
+
+                {/* Alt kısım — copyright */}
+                <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
+                  <p className="text-xs text-neutral-700">
+                    &copy; {new Date().getFullYear()} Merkutech. Tüm hakları saklıdır.
+                  </p>
+                  <div className="flex items-center gap-6 text-xs text-neutral-700">
+                    <span className="hover:text-neutral-500 cursor-pointer transition-colors">Gizlilik Politikası</span>
+                    <span className="hover:text-neutral-500 cursor-pointer transition-colors">Kullanım Şartları</span>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-6 pt-6 border-t border-white/[0.04] text-center text-xs text-neutral-700">
-                &copy; {new Date().getFullYear()} Merkutech
               </div>
             </footer>
           </div>
