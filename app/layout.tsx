@@ -22,6 +22,7 @@ const geistMono = Geist_Mono({
 const navLinks = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/projelerimiz", label: "Projelerimiz" },
+  { href: "/iletisim", label: "İletişim" },
 ];
 
 export default function RootLayout({
