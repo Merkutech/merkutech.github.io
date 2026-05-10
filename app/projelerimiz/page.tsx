@@ -128,6 +128,10 @@ export default function ProjelerimizPage() {
                   robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
                   Her seviyeden öğrenciye açık olan kulübümüzde öğrenme, üretme ve büyüme kültürü hakim.
                 </p>
+                <p className="text-neutral-300">
+                  🏆 Teknofest Şampiyonlar Ligi Şampiyonu, 🥈 Teknofest 2025 Turizm İkincisi,
+                  🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü ve 🎖️ AUVSI SUAS 2024 - USA ödüllerine sahibiz.
+                </p>
               </div>
             </div>
             <motion.div

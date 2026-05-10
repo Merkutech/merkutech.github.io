@@ -96,6 +96,16 @@ export default function Home() {
                   Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler,
                   robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
                 </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
+                  className="text-neutral-300"
+                >
+                  🏆 Teknofest Şampiyonlar Ligi Şampiyonu, 🥈 Teknofest 2025 Turizm İkincisi,
+                  🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü ve 🎖️ AUVSI SUAS 2024 - USA ödüllerine sahibiz.
+                </motion.p>
               </div>
             </div>
 
@@ -218,7 +228,7 @@ export default function Home() {
 
 /* Marquee */
 function MarqueeSection() {
-  const words = ["ROS", "OpenCV", "Python", "C++", "TensorFlow", "PyTorch", "MAVLink", "DroneKit", "LIDAR", "SLAM", "Gazebo", "SolidWorks", "AutoCAD", "Embedded C", "STM32", "Arduino"];
+  const words = ["🏆 Teknofest Şampiyonlar Ligi Şampiyonu", "🥈 Teknofest 2025 Turizm", "🥉 Teknofest 2024 İYT", "🎖️ AUVSI SUAS 2024 - USA", "🏆 Teknofest Şampiyonlar Ligi Şampiyonu", "🥈 Teknofest 2025 Turizm", "🥉 Teknofest 2024 İYT", "🎖️ AUVSI SUAS 2024 - USA"];
   return (
     <section className="relative py-14 overflow-hidden border-y border-white/[0.06]">
       <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
