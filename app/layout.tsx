@@ -56,32 +56,19 @@ export default function RootLayout({
 
         {/* Header — floating pill on scroll */}
         <header className="fixed top-0 left-0 right-0 z-50">
-          <div className={`transition-all duration-500 ease-out ${scrolled ? 'pt-3 px-4' : 'pt-0 px-0'}`}>
+          <div className={`transition-all duration-500 ease-out ${scrolled ? 'pt-4 px-4' : 'pt-0 px-0'}`}>
             <motion.div
               layout
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className={`mx-auto flex items-center justify-between transition-all duration-500 ${
                 scrolled
-                  ? 'max-w-xl bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] rounded-full px-5 py-2.5 shadow-2xl shadow-black/50'
-                  : 'max-w-7xl border-b border-white/[0.06] px-5 sm:px-8 lg:px-12 py-4'
+                  ? 'max-w-2xl bg-white/[0.05] backdrop-blur-2xl border border-white/[0.12] rounded-full px-6 py-4 shadow-2xl shadow-black/50'
+                  : 'max-w-7xl bg-background/80 backdrop-blur-lg px-5 sm:px-8 lg:px-12 py-6'
               }`}
             >
-              {/* Logo */}
+              {/* Logo — sadece yazı, ikon yok */}
               <Link href="/" className="flex items-center gap-2 group">
-                <div className={`flex items-center justify-center bg-white/[0.1] rounded-lg transition-all duration-500 ${scrolled ? 'w-6 h-6' : 'w-8 h-8'}`}>
-                  <svg viewBox="0 0 24 24" className={`text-white transition-all duration-500 ${scrolled ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1z"/>
-                    <path d="M12 20a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1z"/>
-                    <path d="M2 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2H3a1 1 0 0 1-1-1z"/>
-                    <path d="M20 12a1 1 0 0 1 1-1h2a1 1 0 0 1 0 2h-2a1 1 0 0 1-1-1z"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="m4.93 4.93 1.41 1.41"/>
-                    <path d="m17.66 17.66 1.41 1.41"/>
-                    <path d="m4.93 19.07 1.41-1.41"/>
-                    <path d="m17.66 6.34 1.41-1.41"/>
-                  </svg>
-                </div>
-                <span className={`font-semibold text-white tracking-tight transition-all duration-500 ${scrolled ? 'text-xs' : 'text-sm'}`}>
+                <span className="font-semibold text-white tracking-tight text-sm">
                   Merkutech
                 </span>
               </Link>
@@ -92,7 +79,7 @@ export default function RootLayout({
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+                    className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors ${
                       pathname === link.href
                         ? "text-white"
                         : "text-neutral-500 hover:text-white"
