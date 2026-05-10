@@ -1,111 +1,215 @@
+'use client'
+
 import { SplineScene } from "@/components/ui/splite";
-import { Card } from "@/components/ui/card"
 import { Spotlight } from "@/components/ui/spotlight"
-import { SpotlightCursor } from "@/components/ui/spotlight-cursor"
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Code2, Cpu, Lightbulb } from "lucide-react";
+import { ArrowRight, Bot, Cpu, CircuitBoard, Radio, Layers, Zap } from "lucide-react";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-100px" },
+  transition: { duration: 0.7, ease: [0, 0, 0.2, 1] as const }
+};
+
+const staggerContainer = {
+  initial: {},
+  whileInView: { transition: { staggerChildren: 0.15 } },
+  viewport: { once: true, margin: "-100px" }
+};
+
+const staggerItem = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as const }
+};
 
 export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative w-full">
-        <Card className="w-full min-h-[600px] bg-black/[0.96] relative overflow-hidden border-0 rounded-none">
-          <Spotlight
-            className="-top-40 left-0 md:left-60 md:-top-20"
-            fill="white"
-          />
-          
-          <div className="flex flex-col md:flex-row h-full min-h-[600px]">
+      <section className="relative w-full min-h-screen flex items-center overflow-hidden">
+        {/* Background ambient glow */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] animate-pulse-glow" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
+        
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20 opacity-30"
+          fill="white"
+        />
+        
+        <div className="container max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
             {/* Left content */}
-            <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
-              <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
-                Merkutech
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, ease: [0, 0, 0.2, 1] as const }}
+              className="flex-1 text-center lg:text-left"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-mono text-neutral-400 mb-8">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                İstanbul Arel Üniversitesi
+              </div>
+              
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-6">
+                <span className="block gradient-text">Robotik</span>
+                <span className="block text-neutral-500">ve</span>
+                <span className="block gradient-text-accent">Teknoloji</span>
               </h1>
-              <p className="mt-4 text-lg text-neutral-300 max-w-lg">
-                İstanbul Arel Üniversitesi&apos;nin teknoloji ve inovasyon kulübü. 
-                Geleceği birlikte şekillendiriyoruz.
+              
+              <p className="text-lg md:text-xl text-neutral-400 max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed">
+                Geleceği kodlayan, robotları hayata geçiren ve teknolojinin sınırlarını zorlayan öğrenci topluluğu.
               </p>
-              <div className="mt-8 flex flex-wrap gap-4">
+              
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                 <Link 
                   href="/projelerimiz"
-                  className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-neutral-200"
+                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-medium text-sm hover:bg-neutral-200 transition-all duration-300"
                 >
-                  Projelerimizi Keşfet
-                  <ArrowRight className="h-4 w-4" />
+                  Projeleri Keşfet
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link 
-                  href="/hakkimizda"
-                  className="inline-flex items-center gap-2 rounded-lg border border-neutral-700 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
+                  href="/iletisim"
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-xl glass text-white font-medium text-sm hover:bg-white/10 transition-all duration-300"
                 >
-                  Hakkımızda
+                  Aramıza Katıl
                 </Link>
               </div>
-            </div>
 
-            {/* Right content */}
-            <div className="flex-1 relative min-h-[400px]">
+              <div className="mt-16 flex items-center justify-center lg:justify-start gap-8 text-neutral-600">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">50+</div>
+                  <div className="text-xs">Proje</div>
+                </div>
+                <div className="w-px h-8 bg-white/10" />
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">200+</div>
+                  <div className="text-xs">Üye</div>
+                </div>
+                <div className="w-px h-8 bg-white/10" />
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">10+</div>
+                  <div className="text-xs">Ödül</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right content - Spline */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: [0, 0, 0.2, 1] as const, delay: 0.3 }}
+              className="flex-1 w-full max-w-xl lg:max-w-none h-[400px] md:h-[500px] lg:h-[600px] relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80 z-10 pointer-events-none" />
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                 className="w-full h-full"
               />
-            </div>
+            </motion.div>
           </div>
-        </Card>
+        </div>
       </section>
 
-      {/* Features Section */}
-      <section className="container mx-auto px-4 md:px-8 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Neler Yapıyoruz?
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Teknolojiyi takip etmekle kalmıyor, onu şekillendiriyoruz.
-          </p>
-        </div>
+      {/* What We Do Section */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/[0.015] rounded-full blur-[150px]" />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <FeatureCard 
-            icon={<Code2 className="h-8 w-8" />}
-            title="Yazılım Geliştirme"
-            description="Web, mobil ve yapay zeka projeleri geliştiriyoruz. Modern teknolojilerle çözümler üretiyoruz."
-          />
-          <FeatureCard 
-            icon={<Cpu className="h-8 w-8" />}
-            title="Teknoloji Etkinlikleri"
-            description="Hackathonlar, workshoplar ve seminerler düzenleyerek teknoloji tutkunlarını bir araya getiriyoruz."
-          />
-          <FeatureCard 
-            icon={<Lightbulb className="h-8 w-8" />}
-            title="İnovasyon"
-            description="Yaratıcı fikirleri hayata geçiriyor, geleceğin teknolojilerini bugünden keşfediyoruz."
-          />
+        <div className="container max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+          <motion.div {...fadeInUp} className="text-center mb-20">
+            <span className="text-xs font-mono text-neutral-500 tracking-widest uppercase">Ne Yapıyoruz?</span>
+            <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">
+              <span className="gradient-text">Robotik</span>{" "}
+              <span className="text-neutral-500">Dünyasına</span>{" "}
+              <span className="gradient-text">Adım At</span>
+            </h2>
+            <p className="text-neutral-400 max-w-xl mx-auto">
+              Yapay zeka, robotik sistemler ve gömülü yazılım alanlarında kendini geliştirmek isteyen herkesi aramıza bekliyoruz.
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <FeatureCard 
+              icon={<Bot className="h-7 w-7" />}
+              title="Robotik Projeler"
+              description="Arduino, Raspberry Pi ve ROS tabanlı robotlar tasarlıyor ve geliştiriyoruz. Otonom araçlardan insansı robotlara kadar geniş bir yelpazede çalışıyoruz."
+            />
+            <FeatureCard 
+              icon={<Cpu className="h-7 w-7" />}
+              title="Yapay Zeka"
+              description="Makine öğrenimi ve derin öğrenme modelleri geliştiriyoruz. Robotların çevrelerini algılaması ve karar vermesi için AI çözümleri üretiyoruz."
+            />
+            <FeatureCard 
+              icon={<CircuitBoard className="h-7 w-7" />}
+              title="Gömülü Sistemler"
+              description="Mikrodenetleyiciler, sensörler ve elektronik devrelerle çalışıyoruz. Donanım ve yazılımın birleştiği noktada inovatif çözümler üretiyoruz."
+            />
+            <FeatureCard 
+              icon={<Radio className="h-7 w-7" />}
+              title="IoT ve Otonomi"
+              description="Nesnelerin interneti ve otonom sistemler üzerine projeler geliştiriyoruz. Akıllı ev sistemlerinden endüstriyel otomasyona kadar."
+            />
+            <FeatureCard 
+              icon={<Layers className="h-7 w-7" />}
+              title="3D Modelleme"
+              description="Robot parçalarını tasarlamak için CAD yazılımlarını ve 3D baskı teknolojisini kullanıyoruz. Prototipleme sürecini hızlandırıyoruz."
+            />
+            <FeatureCard 
+              icon={<Zap className="h-7 w-7" />}
+              title="Yarışmalar"
+              description="Teknofest, Robotaksi ve uluslararası robotik yarışmalarına katılıyoruz. Takım ruhuyla birlikte ödüller kazanıyoruz."
+            />
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative bg-neutral-950 text-white py-20 overflow-hidden">
-        <SpotlightCursor 
-          size={300}
-          className="from-zinc-100/20 via-zinc-200/20 to-zinc-300/20"
-        />
-        <div className="container mx-auto px-4 md:px-8 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Aramıza Katıl
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.02] rounded-full blur-[120px] animate-pulse-glow" />
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="container max-w-4xl mx-auto px-4 md:px-8 text-center relative z-10"
+        >
+          <span className="text-xs font-mono text-neutral-500 tracking-widest uppercase">Seni Bekliyoruz</span>
+          <h2 className="text-4xl md:text-6xl font-bold mt-4 mb-6">
+            <span className="gradient-text">Geleceği</span>{" "}
+            <span className="text-neutral-500">Birlikte</span>{" "}
+            <span className="gradient-text">İnşa Edelim</span>
           </h2>
-          <p className="text-neutral-400 max-w-2xl mx-auto mb-8 text-lg">
-            Teknolojiye ilgi duyuyorsan, kendini geliştirmek istiyorsan ve harika projelerde yer almak istiyorsan 
-            Merkutech ailesine katıl.
+          <p className="text-neutral-400 max-w-xl mx-auto mb-10 text-lg leading-relaxed">
+            Robotik ve teknolojiye ilgi duyuyorsan, kendini geliştirmek istiyorsan ve harika projelerde yer almak istiyorsan Merkutech ailesine katıl.
           </p>
-          <Link 
-            href="/iletisim"
-            className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-sm font-medium text-black transition-colors hover:bg-neutral-200"
-          >
-            Bizimle İletişime Geç
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link 
+              href="/iletisim"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-medium text-sm hover:bg-neutral-200 transition-all duration-300"
+            >
+              Hemen Başvur
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link 
+              href="/hakkimizda"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl glass text-white font-medium text-sm hover:bg-white/10 transition-all duration-300"
+            >
+              Daha Fazla Bilgi
+            </Link>
+          </div>
+        </motion.div>
       </section>
     </div>
   )
@@ -117,10 +221,15 @@ function FeatureCard({ icon, title, description }: {
   description: string;
 }) {
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow">
-      <div className="mb-4 text-primary">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
-    </Card>
+    <motion.div 
+      variants={staggerItem}
+      className="group p-8 rounded-2xl glass hover:bg-white/[0.06] transition-all duration-500 hover:-translate-y-1"
+    >
+      <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 text-white mb-5 group-hover:bg-white/10 group-hover:scale-110 transition-all duration-500">
+        {icon}
+      </div>
+      <h3 className="text-lg font-semibold mb-3 text-white">{title}</h3>
+      <p className="text-neutral-400 text-sm leading-relaxed">{description}</p>
+    </motion.div>
   );
 }

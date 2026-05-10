@@ -1,116 +1,212 @@
-import { Card } from "@/components/ui/card";
-import { ExternalLink, Code2 } from "lucide-react";
+'use client'
+
+import { motion } from "framer-motion";
+import { ExternalLink, Code2, Bot, Cpu, CircuitBoard, Radio, Layers, Trophy } from "lucide-react";
 import Link from "next/link";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-100px" },
+  transition: { duration: 0.7, ease: [0, 0, 0.2, 1] as const }
+};
+
+const staggerContainer = {
+  initial: {},
+  whileInView: { transition: { staggerChildren: 0.1 } },
+  viewport: { once: true, margin: "-100px" }
+};
+
+const staggerItem = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as const }
+};
 
 const projects = [
   {
-    title: "Akıllı Kampüs Sistemi",
-    description: "Üniversite kampüsü için geliştirilen IoT tabanlı akıllı yönetim sistemi. Enerji verimliliği ve güvenlik çözümleri içerir.",
-    tags: ["IoT", "React", "Node.js"],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    title: "Otonom Robotaksi",
+    description: "Teknofest Robotaksi Binek Otonom Araç Yarışması için geliştirilen tam otonom araç projesi. LIDAR, kamera ve yapay zeka ile çevre algılama.",
+    tags: ["ROS", "Python", "OpenCV", "LIDAR"],
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80",
+    icon: <Bot className="h-5 w-5" />,
+    status: "Aktif",
     link: "#"
   },
   {
-    title: "Eğitim Platformu",
-    description: "Öğrenciler için interaktif online eğitim platformu. Video dersler, quizler ve canlı yayın özellikleri.",
-    tags: ["Next.js", "TypeScript", "PostgreSQL"],
-    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80",
+    title: "İnsansı Robot Kol",
+    description: "6 eksenli serbestlik derecesine sahip robotik kol. Görüntü işleme ile nesne tanıma ve manipülasyon yetenekleri.",
+    tags: ["Inverse Kinematics", "Computer Vision", "C++"],
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+    icon: <Cpu className="h-5 w-5" />,
+    status: "Tamamlandı",
     link: "#"
   },
   {
-    title: "Yapay Zeka Asistanı",
-    description: "Üniversite öğrencileri için tasarlanmış yapay zeka destekli kişisel asistan uygulaması.",
-    tags: ["Python", "OpenAI", "Flutter"],
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+    title: "Akıllı İlaç Dağıtım Sistemi",
+    description: "Hastaneler için otonom ilaç ve malzeme taşıma robotu. RFID tabanlı envanter yönetimi ve otonom navigasyon.",
+    tags: ["Arduino", "RFID", "IoT", "MQTT"],
+    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80",
+    icon: <CircuitBoard className="h-5 w-5" />,
+    status: "Aktif",
     link: "#"
   },
   {
-    title: "Sosyal Etkinlik Uygulaması",
-    description: "Kampüs içi etkinlikleri organize etmek ve katılımcıları bir araya getirmek için mobil uygulama.",
-    tags: ["React Native", "Firebase"],
-    image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80",
+    title: "Drone Sürüsü",
+    description: "Çoklu drone koordinasyonu ve sürü algoritmaları. Formasyon uçuşu ve ortak görev planlama sistemi.",
+    tags: ["DroneKit", "MAVLink", "Swarm AI"],
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80",
+    icon: <Radio className="h-5 w-5" />,
+    status: "Geliştirme",
     link: "#"
   },
   {
-    title: "Veri Analiz Platformu",
-    description: "Üniversite verilerini analiz eden ve görselleştiren kapsamlı bir platform.",
-    tags: ["Python", "Django", "D3.js"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    title: "3D Yazıcı Kontrol Sistemi",
+    description: "Özel tasarım 3D yazıcı için geliştirilen kontrol yazılımı ve uzaktan izleme sistemi.",
+    tags: ["Marlin", "React", "Node.js", "WebSockets"],
+    image: "https://images.unsplash.com/photo-1631541909061-71e349d1f203?w=800&q=80",
+    icon: <Layers className="h-5 w-5" />,
+    status: "Tamamlandı",
     link: "#"
   },
   {
-    title: "Güvenlik Araştırma Projesi",
-    description: "Siber güvenlik alanında yapılan araştırmalar ve geliştirilen güvenlik araçları.",
-    tags: ["Python", "Kali Linux", "Docker"],
-    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
+    title: "Çizgi İzleyen Robot",
+    description: "PID kontrol algoritmaları ile optimize edilmiş, sensör füzyonu kullanan yarışma robotu.",
+    tags: ["PID Control", "Embedded C", "Sensors"],
+    image: "https://images.unsplash.com/photo-1518314917860-60116010f935?w=800&q=80",
+    icon: <Trophy className="h-5 w-5" />,
+    status: "Tamamlandı",
     link: "#"
   }
 ];
 
 export default function ProjelerimizPage() {
   return (
-    <div className="container mx-auto px-4 md:px-8 py-16">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
-          Projelerimiz
-        </h1>
-        <p className="text-lg text-muted-foreground text-center mb-16 max-w-2xl mx-auto">
-          Merkutech olarak geliştirdiğimiz projelerle teknolojiye katkı sağlıyoruz.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
-          ))}
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] animate-pulse-glow" />
+        
+        <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10">
+          <motion.div {...fadeInUp} className="text-center">
+            <span className="text-xs font-mono text-neutral-500 tracking-widest uppercase">Projelerimiz</span>
+            <h1 className="text-5xl md:text-7xl font-bold mt-4 mb-6">
+              <span className="gradient-text">Robotik</span>{" "}
+              <span className="text-neutral-500">İnovasyon</span>
+            </h1>
+            <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+              Teoriyi pratiğe döküyor, fikirleri gerçek robotlara dönüştürüyoruz.
+            </p>
+          </motion.div>
         </div>
-      </div>
+      </section>
+
+      {/* Projects Grid */}
+      <section className="py-20">
+        <div className="container max-w-6xl mx-auto px-4 md:px-8">
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {projects.map((project, index) => (
+              <ProjectCard key={index} {...project} />
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20">
+        <div className="container max-w-4xl mx-auto px-4 md:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="p-12 rounded-3xl glass text-center relative overflow-hidden"
+          >
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none" />
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 relative z-10">
+              <span className="gradient-text">Senin Projen</span>{" "}
+              <span className="text-neutral-500">Ne Olacak?</span>
+            </h2>
+            <p className="text-neutral-400 mb-8 max-w-lg mx-auto relative z-10">
+              Yeni fikirlerin mi var? Merkutech&apos;te projeni hayata geçirmek için gerekli kaynakları ve desteği bulabilirsin.
+            </p>
+            <Link 
+              href="/iletisim"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-medium text-sm hover:bg-neutral-200 transition-all duration-300 relative z-10"
+            >
+              Proje Öner
+              <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }
 
-function ProjectCard({ title, description, tags, image, link }: {
+function ProjectCard({ title, description, tags, image, icon, status, link }: {
   title: string;
   description: string;
   tags: string[];
   image: string;
+  icon: React.ReactNode;
+  status: string;
   link: string;
 }) {
+  const statusColors: Record<string, string> = {
+    "Aktif": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    "Tamamlandı": "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    "Geliştirme": "bg-amber-500/10 text-amber-400 border-amber-500/20",
+  };
+
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow group">
-      <div className="aspect-video overflow-hidden bg-muted">
+    <motion.div 
+      variants={staggerItem}
+      className="group rounded-2xl glass overflow-hidden hover:bg-white/[0.06] transition-all duration-500"
+    >
+      <div className="aspect-[4/3] overflow-hidden relative">
         <img 
           src={image} 
           alt={title}
-          className="w-full h-full object-cover transition-transform group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute top-4 left-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[status] || statusColors["Geliştirme"]}`}>
+            {status}
+          </span>
+        </div>
+        <div className="absolute bottom-4 left-4 flex items-center gap-2">
+          <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center text-white">
+            {icon}
+          </div>
+        </div>
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-muted-foreground text-sm mb-4">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 text-white group-hover:gradient-text transition-all">{title}</h3>
+        <p className="text-neutral-400 text-sm mb-4 leading-relaxed line-clamp-3">{description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
           {tags.map((tag, i) => (
-            <span key={i} className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-xs font-medium">
+            <span key={i} className="px-2.5 py-1 bg-white/5 rounded-lg text-xs font-mono text-neutral-400 border border-white/5">
               {tag}
             </span>
           ))}
         </div>
-        <div className="flex gap-3">
-          <Link 
-            href={link}
-            className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-          >
-            <ExternalLink className="h-4 w-4" />
-            Detaylar
-          </Link>
-          <Link 
-            href={link}
-            className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-          >
-            <Code2 className="h-4 w-4" />
-            Kod
-          </Link>
-        </div>
+        <Link 
+          href={link}
+          className="inline-flex items-center gap-2 text-sm text-white hover:text-neutral-300 transition-colors"
+        >
+          <Code2 className="h-4 w-4" />
+          Detayları Gör
+        </Link>
       </div>
-    </Card>
+    </motion.div>
   );
 }
