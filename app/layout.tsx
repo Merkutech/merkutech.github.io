@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
 import "./globals.css";
@@ -23,7 +23,6 @@ const navLinks = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/projelerimiz", label: "Projelerimiz" },
-  { href: "/ekibimiz", label: "Ekibimiz" },
   { href: "/iletisim", label: "İletişim" },
 ];
 
@@ -33,7 +32,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 50);
+  });
 
   return (
     <html
@@ -44,7 +49,7 @@ export default function RootLayout({
         <title>Merkutech - İstanbul Arel Üniversitesi Robotik Kulübü</title>
         <meta name="description" content="İstanbul Arel Üniversitesi Merkutech Robotik ve Teknoloji Kulübü" />
       </head>
-      <body className="min-h-full flex flex-col bg-black text-white selection:bg-white/20">
+      <body className="min-h-full flex flex-col bg-neutral-950 text-white selection:bg-white/20">
         <div className="fixed inset-0 pointer-events-none z-0">
           <SpotlightCursor size={250} className="from-white/10 via-white/5 to-white/2" />
         </div>
@@ -56,7 +61,7 @@ export default function RootLayout({
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl"
         >
-          <div className="glass-strong rounded-2xl px-6 py-3 flex items-center justify-between">
+          <div className={`rounded-2xl px-6 py-3 flex items-center justify-between transition-all duration-500 ${scrolled ? 'glass-strong shadow-lg shadow-black/20' : 'glass'}`}>
             <Link href="/" className="flex items-center space-x-2 group">
               <span className="text-lg font-bold gradient-text group-hover:opacity-80 transition-opacity">
                 Merkutech

@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from "framer-motion";
-import { ExternalLink, Code2, Bot, Cpu, CircuitBoard, Radio, Layers, Trophy } from "lucide-react";
+import { ExternalLink, Code2, Bot, Cpu, CircuitBoard, Radio, Layers, Trophy, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { projects } from "@/lib/projects";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -24,62 +25,20 @@ const staggerItem = {
   transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as const }
 };
 
-const projects = [
-  {
-    title: "Otonom Robotaksi",
-    description: "Teknofest Robotaksi Binek Otonom Araç Yarışması için geliştirilen tam otonom araç projesi. LIDAR, kamera ve yapay zeka ile çevre algılama.",
-    tags: ["ROS", "Python", "OpenCV", "LIDAR"],
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80",
-    icon: <Bot className="h-5 w-5" />,
-    status: "Aktif",
-    link: "#"
-  },
-  {
-    title: "İnsansı Robot Kol",
-    description: "6 eksenli serbestlik derecesine sahip robotik kol. Görüntü işleme ile nesne tanıma ve manipülasyon yetenekleri.",
-    tags: ["Inverse Kinematics", "Computer Vision", "C++"],
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
-    icon: <Cpu className="h-5 w-5" />,
-    status: "Tamamlandı",
-    link: "#"
-  },
-  {
-    title: "Akıllı İlaç Dağıtım Sistemi",
-    description: "Hastaneler için otonom ilaç ve malzeme taşıma robotu. RFID tabanlı envanter yönetimi ve otonom navigasyon.",
-    tags: ["Arduino", "RFID", "IoT", "MQTT"],
-    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80",
-    icon: <CircuitBoard className="h-5 w-5" />,
-    status: "Aktif",
-    link: "#"
-  },
-  {
-    title: "Drone Sürüsü",
-    description: "Çoklu drone koordinasyonu ve sürü algoritmaları. Formasyon uçuşu ve ortak görev planlama sistemi.",
-    tags: ["DroneKit", "MAVLink", "Swarm AI"],
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80",
-    icon: <Radio className="h-5 w-5" />,
-    status: "Geliştirme",
-    link: "#"
-  },
-  {
-    title: "3D Yazıcı Kontrol Sistemi",
-    description: "Özel tasarım 3D yazıcı için geliştirilen kontrol yazılımı ve uzaktan izleme sistemi.",
-    tags: ["Marlin", "React", "Node.js", "WebSockets"],
-    image: "https://images.unsplash.com/photo-1631541909061-71e349d1f203?w=800&q=80",
-    icon: <Layers className="h-5 w-5" />,
-    status: "Tamamlandı",
-    link: "#"
-  },
-  {
-    title: "Çizgi İzleyen Robot",
-    description: "PID kontrol algoritmaları ile optimize edilmiş, sensör füzyonu kullanan yarışma robotu.",
-    tags: ["PID Control", "Embedded C", "Sensors"],
-    image: "https://images.unsplash.com/photo-1518314917860-60116010f935?w=800&q=80",
-    icon: <Trophy className="h-5 w-5" />,
-    status: "Tamamlandı",
-    link: "#"
-  }
-];
+const iconMap: Record<string, React.ReactNode> = {
+  Bot: <Bot className="h-5 w-5" />,
+  Cpu: <Cpu className="h-5 w-5" />,
+  CircuitBoard: <CircuitBoard className="h-5 w-5" />,
+  Radio: <Radio className="h-5 w-5" />,
+  Layers: <Layers className="h-5 w-5" />,
+  Trophy: <Trophy className="h-5 w-5" />,
+};
+
+const statusColors: Record<string, string> = {
+  "Aktif": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  "Tamamlandı": "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  "Geliştirme": "bg-amber-500/10 text-amber-400 border-amber-500/20",
+};
 
 export default function ProjelerimizPage() {
   return (
@@ -112,8 +71,8 @@ export default function ProjelerimizPage() {
             viewport={{ once: true, margin: "-100px" }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {projects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
+            {projects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
             ))}
           </motion.div>
         </div>
@@ -151,21 +110,7 @@ export default function ProjelerimizPage() {
   );
 }
 
-function ProjectCard({ title, description, tags, image, icon, status, link }: {
-  title: string;
-  description: string;
-  tags: string[];
-  image: string;
-  icon: React.ReactNode;
-  status: string;
-  link: string;
-}) {
-  const statusColors: Record<string, string> = {
-    "Aktif": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    "Tamamlandı": "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    "Geliştirme": "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  };
-
+function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   return (
     <motion.div 
       variants={staggerItem}
@@ -173,38 +118,39 @@ function ProjectCard({ title, description, tags, image, icon, status, link }: {
     >
       <div className="aspect-[4/3] overflow-hidden relative">
         <img 
-          src={image} 
-          alt={title}
+          src={project.image} 
+          alt={project.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="absolute top-4 left-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[status] || statusColors["Geliştirme"]}`}>
-            {status}
+          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[project.status] || statusColors["Geliştirme"]}`}>
+            {project.status}
           </span>
         </div>
         <div className="absolute bottom-4 left-4 flex items-center gap-2">
           <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center text-white">
-            {icon}
+            {iconMap[project.icon] || <Code2 className="h-5 w-5" />}
           </div>
         </div>
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2 text-white group-hover:gradient-text transition-all">{title}</h3>
-        <p className="text-neutral-400 text-sm mb-4 leading-relaxed line-clamp-3">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 text-white group-hover:gradient-text transition-all">{project.title}</h3>
+        <p className="text-neutral-400 text-sm mb-4 leading-relaxed line-clamp-3">{project.description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag, i) => (
+          {project.tags.map((tag, i) => (
             <span key={i} className="px-2.5 py-1 bg-white/5 rounded-lg text-xs font-mono text-neutral-400 border border-white/5">
               {tag}
             </span>
           ))}
         </div>
         <Link 
-          href={link}
+          href={`/projelerimiz/${project.slug}`}
           className="inline-flex items-center gap-2 text-sm text-white hover:text-neutral-300 transition-colors"
         >
           <Code2 className="h-4 w-4" />
           Detayları Gör
+          <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>
     </motion.div>

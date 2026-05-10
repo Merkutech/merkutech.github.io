@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useCallback } from 'react'
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 interface SplineSceneProps {
@@ -9,6 +9,12 @@ interface SplineSceneProps {
 }
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
+  const onLoad = useCallback((spline: any) => {
+    if (spline && spline.setBackgroundColor) {
+      spline.setBackgroundColor('#0a0a0a')
+    }
+  }, [])
+
   return (
     <Suspense 
       fallback={
@@ -20,6 +26,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       <Spline
         scene={scene}
         className={className}
+        onLoad={onLoad}
       />
     </Suspense>
   )
