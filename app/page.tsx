@@ -32,7 +32,7 @@ export default function Home() {
       />
 
       {/* HERO */}
-      <section className="relative w-full h-screen overflow-hidden">
+      <section className="home-hero relative w-full h-screen overflow-hidden bg-background">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -44,6 +44,7 @@ export default function Home() {
             className="w-full h-full"
           />
         </motion.div>
+        <div className="home-hero-light-wash absolute inset-0 pointer-events-none z-[1]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
       </section>
 
