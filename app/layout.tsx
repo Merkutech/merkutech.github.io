@@ -4,9 +4,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
+import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,32 +26,37 @@ const navLinks = [
   { href: "/iletisim", label: "İletişim" },
 ];
 
+const themeScript = `
+try {
+  var theme = localStorage.getItem('merkutech-theme') === 'light' ? 'light' : 'dark';
+  document.documentElement.classList.toggle('light', theme === 'light');
+  document.documentElement.classList.toggle('dark', theme === 'dark');
+  document.documentElement.style.colorScheme = theme;
+} catch (_) {}
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 60);
-  });
 
   return (
     <html
       lang="tr"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <title>MCT SENSOR Merkutech</title>
         <meta name="description" content="İstanbul Arel Üniversitesi Merkutech Robotik ve Teknoloji Kulübü" />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-white/20">
+      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 transition-colors duration-300">
         <div className="fixed inset-0 pointer-events-none z-0">
-          <SpotlightCursor size={250} className="from-white/10 via-white/5 to-white/2" />
+          <SpotlightCursor size={250} className="from-foreground/10 via-foreground/5 to-foreground/0" />
         </div>
 
         {/* Header — sadece floating, scroll ile belirir */}
@@ -60,7 +66,7 @@ export default function RootLayout({
               initial={{ y: -60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
-              className="mx-auto max-w-lg h-12 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.1] rounded-full px-5 shadow-xl shadow-black/40 flex items-center justify-between overflow-hidden"
+              className="mx-auto max-w-xl h-12 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.1] rounded-full px-5 shadow-xl shadow-black/40 flex items-center justify-between overflow-hidden"
             >
               <Link href="/" className="flex-shrink-0">
                 <span className="font-semibold text-white tracking-tight text-xs">
@@ -91,30 +97,37 @@ export default function RootLayout({
                 ))}
               </nav>
 
-              {/* Takıma Başvur — beyaz, animasyonlu */}
-              <motion.a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="hidden md:inline-flex items-center px-4 py-1.5 rounded-full bg-white text-black text-[11px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
-              >
-                <span className="relative z-10">Takıma Başvur</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                />
-              </motion.a>
+              <div className="hidden md:flex items-center gap-2">
+                <ThemeToggle />
+                {/* Takıma Başvur — beyaz, animasyonlu */}
+                <motion.a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center px-4 py-1.5 rounded-full bg-white text-black text-[11px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
+                >
+                  <span className="relative z-10">Takıma Başvur</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                  />
+                </motion.a>
+              </div>
 
-              <button
-                onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden p-1.5 rounded-md hover:bg-white/5 transition-colors"
-              >
-                {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-              </button>
+              <div className="flex md:hidden items-center gap-1.5">
+                <ThemeToggle />
+                <button
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                  className="p-1.5 rounded-md hover:bg-white/5 transition-colors"
+                  aria-label={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
+                >
+                  {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                </button>
+              </div>
             </motion.div>
           </div>
 
