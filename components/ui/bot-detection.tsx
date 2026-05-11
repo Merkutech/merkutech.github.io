@@ -24,10 +24,9 @@ const BotDetection = ({
   cardTitle = "Bot Algılama",
   cardDescription = "AI destekli bot tespiti ile platform güvenliğini artırıyor, sahte kayıtları minimuma indiriyoruz.",
 }: BotDetectionProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   useEffect(() => {
-    setCurrentIndex(1);
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % positions.length);
     }, 3000);
@@ -40,7 +39,7 @@ const BotDetection = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden",
+        "tech-demo-card relative overflow-hidden",
         "h-[30rem] w-full max-w-[350px]",
         "rounded-md border border-neutral-800 bg-black",
       )}
@@ -80,7 +79,7 @@ const BotDetection = ({
                   height={5}
                   rx={1}
                   ry={1}
-                  fill="#404040"
+                  fill="var(--tech-muted-node)"
                 />
               </g>
             ))}

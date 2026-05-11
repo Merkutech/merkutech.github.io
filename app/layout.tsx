@@ -66,10 +66,10 @@ export default function RootLayout({
               initial={{ y: -60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
-              className="mx-auto max-w-xl h-12 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.1] rounded-full px-5 shadow-xl shadow-black/40 flex items-center justify-between overflow-hidden"
+              className="site-header-panel mx-auto max-w-xl h-12 bg-white/[0.04] backdrop-blur-2xl border border-white/[0.1] rounded-full px-5 shadow-xl shadow-black/40 flex items-center justify-between overflow-hidden"
             >
               <Link href="/" className="flex-shrink-0">
-                <span className="font-semibold text-white tracking-tight text-xs">
+                <span className="site-header-brand font-semibold text-white tracking-tight text-xs">
                   Merkutech
                 </span>
               </Link>
@@ -89,7 +89,7 @@ export default function RootLayout({
                     {pathname === link.href && (
                       <motion.div
                         layoutId="nav-indicator"
-                        className="absolute inset-0 bg-white/[0.08] rounded-full -z-10"
+                        className="site-nav-indicator absolute inset-0 bg-white/[0.08] rounded-full -z-10"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                       />
                     )}
@@ -138,7 +138,7 @@ export default function RootLayout({
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
-                className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-white/[0.06] mx-4 mt-2 rounded-2xl"
+                className="site-mobile-menu md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-b border-white/[0.06] mx-4 mt-2 rounded-2xl"
               >
                 <div className="px-4 py-3 space-y-1">
                   {navLinks.map((link) => (

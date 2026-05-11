@@ -31,7 +31,7 @@ const AiVision = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden",
+        "tech-demo-card relative overflow-hidden",
         "h-[30rem] w-full max-w-[350px]",
         "rounded-md border border-neutral-800 bg-black",
       )}
@@ -58,7 +58,7 @@ const AiVision = ({
                 y1={20}
                 x2={20 + i * 70}
                 y2={260}
-                stroke="#0f291e"
+                stroke="var(--tech-green-line)"
                 strokeWidth="1"
               />
             ))}
@@ -70,7 +70,7 @@ const AiVision = ({
                 y1={20 + i * 70}
                 x2={300}
                 y2={20 + i * 70}
-                stroke="#0f291e"
+                stroke="var(--tech-green-line)"
                 strokeWidth="1"
               />
             ))}
@@ -80,7 +80,7 @@ const AiVision = ({
           <svg width="100%" height="100%" className="pointer-events-none absolute left-0 top-0">
             {gridPoints.map((pos, i) => (
               <g key={i}>
-                <circle cx={pos.x} cy={pos.y} r={3} fill="#14532d" />
+                <circle cx={pos.x} cy={pos.y} r={3} fill="var(--tech-green-node)" />
                 {activePoint === i && (
                   <>
                     <motion.circle

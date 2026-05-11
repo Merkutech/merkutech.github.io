@@ -3,9 +3,9 @@
 import { SplineScene } from "@/components/ui/splite";
 import { motion, useScroll, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import {
-  ArrowRight, ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
+  ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
   Layers, Zap
 } from "lucide-react";
 import { projects } from "@/lib/projects";
@@ -27,7 +27,7 @@ export default function Home() {
 
       {/* Scroll Progress */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-white/30 z-[100] origin-left"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-foreground/30 z-[100] origin-left"
         style={{ scaleX: scrollYProgress }}
       />
 
@@ -265,14 +265,19 @@ function MarqueeSection() {
 
 /* Drone Wave */
 function DroneWave() {
+  const seededWave = (index: number) => {
+    const value = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
+    return value - Math.floor(value);
+  };
+
   const lines = Array.from({ length: 24 }, (_, i) => ({
-    height: 25 + Math.abs(Math.sin(i * 0.6)) * 55 + Math.random() * 15,
+    height: 25 + Math.abs(Math.sin(i * 0.6)) * 55 + seededWave(i) * 15,
     delay: i * 0.12,
-    duration: 2.5 + Math.random() * 0.8,
+    duration: 2.5 + seededWave(i + 24) * 0.8,
   }));
 
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden border-b border-white/[0.06]">
+    <section className="drone-wave-section relative py-20 md:py-28 overflow-hidden border-b border-white/[0.06]">
       <div className="text-center mb-12">
         <p className="text-xs text-neutral-600 tracking-[0.3em] uppercase mb-3">Uçan Teknolojiler</p>
         <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Drone Teknolojisi</h2>
@@ -282,7 +287,7 @@ function DroneWave() {
         {lines.map((line, i) => (
           <motion.div
             key={i}
-            className="w-[3px] md:w-1 rounded-full bg-white/[0.06]"
+            className="drone-wave-bar w-[3px] md:w-1 rounded-full"
             animate={{ height: [`${line.height * 0.35}%`, `${line.height}%`, `${line.height * 0.35}%`] }}
             transition={{ duration: line.duration, delay: line.delay, repeat: Infinity, ease: "easeInOut" }}
           />

@@ -30,10 +30,9 @@ const SwarmNetwork = ({
   cardTitle = "Sürü Ağı",
   cardDescription = "Çoklu drone koordinasyonu ve sürü algoritmaları ile gerçek zamanlı iletişim protokolleri geliştiriyoruz.",
 }: SwarmNetworkProps) => {
-  const [activeNode, setActiveNode] = useState(0);
+  const [activeNode, setActiveNode] = useState(1);
 
   useEffect(() => {
-    setActiveNode(1);
     const interval = setInterval(() => {
       setActiveNode((prev) => (prev + 1) % nodePositions.length);
     }, 2500);
@@ -43,7 +42,7 @@ const SwarmNetwork = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden",
+        "tech-demo-card relative overflow-hidden",
         "h-[30rem] w-full max-w-[350px]",
         "rounded-md border border-neutral-800 bg-black",
       )}
@@ -69,7 +68,7 @@ const SwarmNetwork = ({
                 y1={nodePositions[a].cy}
                 x2={nodePositions[b].cx}
                 y2={nodePositions[b].cy}
-                stroke="#1e3a5f"
+                stroke="var(--tech-blue-line)"
                 strokeWidth="1"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -82,7 +81,7 @@ const SwarmNetwork = ({
           <svg width="100%" height="100%" className="pointer-events-none absolute left-0 top-0">
             {nodePositions.map((pos, i) => (
               <g key={i}>
-                <circle cx={pos.cx} cy={pos.cy} r={4} fill="#1e3a5f" />
+                <circle cx={pos.cx} cy={pos.cy} r={4} fill="var(--tech-blue-line)" />
                 {activeNode === i && (
                   <>
                     <motion.circle
