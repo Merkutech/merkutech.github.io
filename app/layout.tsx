@@ -165,7 +165,7 @@ export default function RootLayout({
 
         {/* Footer — floating, ikonlu, linkli */}
         <div className="px-4 pb-4">
-          <footer className="max-w-7xl mx-auto rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-5 py-4">
+          <footer className="max-w-4xl mx-auto rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-4 sm:px-5 py-4">
             {/* Üst satır: Logo + Sosyal İkonlar (sadece Merkutech IG, YT, LinkedIn) */}
             <div className="flex items-center justify-between mb-3">
               <span className="text-xl font-bold text-white tracking-tight">Merkutech</span>
