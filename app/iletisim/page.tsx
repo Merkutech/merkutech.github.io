@@ -84,7 +84,7 @@ export default function IletisimPage() {
       </div>
 
       {/* Sağ — Linkler */}
-      <div className="flex-1 flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 border-t lg:border-t-0 lg:border-l border-white/[0.06]">
+      <div className="flex-1 flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 border-t lg:border-t-0 border-white/[0.06]">
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
