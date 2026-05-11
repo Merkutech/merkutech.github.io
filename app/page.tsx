@@ -396,7 +396,7 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
   );
 }
 
-/* Süreç — dikey timeline */
+/* Süreç — bağlantılı yol (path/steps) */
 function ProcessSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -420,8 +420,8 @@ function ProcessSection() {
   ];
 
   return (
-    <section ref={ref} className="relative py-32 md:py-40 border-t border-white/[0.06]">
-      <div className="max-w-4xl mx-auto px-5 sm:px-8">
+    <section ref={ref} className="relative py-32 md:py-40 border-t border-white/[0.06] overflow-hidden">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-20">
           <BlurFade>
             <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Nasıl Başlarız</p>
@@ -431,48 +431,97 @@ function ProcessSection() {
           </BlurFade>
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Dikey çizgi */}
+        {/* Desktop: Yatay Path */}
+        <div className="hidden md:block relative h-[420px]">
+          {/* Yatal bağlantı çizgisi */}
           <motion.div
-            className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-white/[0.06]"
+            className="absolute top-1/2 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.2, ease: easeOut, delay: 0.2 }}
+            style={{ originX: 0 }}
+          />
+
+          <div className="flex justify-between items-center h-full px-[10%]">
+            {steps.map((step, i) => {
+              const isBottom = i === 1;
+              return (
+                <div key={step.num} className="relative flex-1 flex flex-col items-center h-full">
+                  {/* Node dairesi */}
+                  <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 z-10"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={isInView ? { scale: 1, opacity: 1 } : {}}
+                    transition={{ duration: 0.5, delay: i * 0.25 + 0.5, ease: easeOut }}
+                  >
+                    <div className="relative flex items-center justify-center w-12 h-12 rounded-full bg-neutral-900 border border-white/20 shadow-[0_0_0_4px_rgba(0,0,0,0.5)]">
+                      <span className="text-xs font-mono text-neutral-400">{step.num}</span>
+                      <motion.div
+                        className="absolute inset-0 rounded-full border border-white/10"
+                        animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
+                        transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* Kart */}
+                  <motion.div
+                    className={`absolute w-72 ${isBottom ? 'top-1/2 mt-10' : 'bottom-1/2 mb-10'}`}
+                    initial={{ opacity: 0, y: isBottom ? 30 : -30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: i * 0.25 + 0.6, ease: easeOut }}
+                  >
+                    <div className="group relative p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 text-center">
+                      <div className={`absolute left-1/2 -translate-x-1/2 w-px h-6 bg-white/10 ${isBottom ? '-top-6' : '-bottom-6'}`} />
+                      <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{step.title}</h3>
+                      <p className="text-sm text-neutral-500 leading-relaxed">{step.desc}</p>
+                    </div>
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile: Dikey Path */}
+        <div className="md:hidden relative pl-12">
+          {/* Dikey bağlantı çizgisi */}
+          <motion.div
+            className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent"
             initial={{ scaleY: 0 }}
             animate={isInView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.2, ease: easeOut }}
+            transition={{ duration: 1.2, ease: easeOut, delay: 0.2 }}
             style={{ originY: 0 }}
           />
 
-          <div className="space-y-16 md:space-y-24">
+          <div className="space-y-16">
             {steps.map((step, i) => (
               <motion.div
                 key={step.num}
-                initial={{ opacity: 0, x: -30 }}
+                className="relative"
+                initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: i * 0.25 + 0.3, ease: easeOut }}
-                className="relative pl-16 md:pl-24"
+                transition={{ duration: 0.6, delay: i * 0.25 + 0.4, ease: easeOut }}
               >
-                {/* Nokta */}
+                {/* Node */}
                 <motion.div
-                  className="absolute left-[19px] md:left-[27px] top-2 w-3.5 h-3.5 rounded-full bg-neutral-800 border border-white/[0.15]"
+                  className="absolute left-6 -translate-x-1/2 top-0 z-10"
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : {}}
-                  transition={{ duration: 0.4, delay: i * 0.25 + 0.5, ease: easeOut }}
-                />
+                  transition={{ duration: 0.4, delay: i * 0.25 + 0.6, ease: easeOut }}
+                >
+                  <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-neutral-900 border border-white/20 shadow-[0_0_0_4px_rgba(0,0,0,0.5)]">
+                    <span className="text-[10px] font-mono text-neutral-400">{step.num}</span>
+                  </div>
+                </motion.div>
 
-                {/* Numara */}
-                <span className="text-[11px] font-mono text-neutral-700 tracking-wider mb-3 block">
-                  Adım {step.num}
-                </span>
-
-                {/* Başlık */}
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-                  {step.title}
-                </h3>
-
-                {/* Açıklama */}
-                <p className="text-base md:text-lg text-neutral-500 max-w-lg leading-relaxed">
-                  {step.desc}
-                </p>
+                {/* Kart */}
+                <div className="pl-8">
+                  <div className="group p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500">
+                    <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{step.title}</h3>
+                    <p className="text-sm text-neutral-500 leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
