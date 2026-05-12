@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 type Theme = "dark" | "light";
 
-const storageKey = "merkutech-theme";
+function getSystemTheme(): Theme {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
 
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
@@ -15,21 +17,23 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "dark";
+    }
+
+    return getSystemTheme();
+  });
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(storageKey);
-    const resolved: Theme = stored === "light" ? "light" : "dark";
-    setTheme(resolved);
-    applyTheme(resolved);
-  }, []);
+    applyTheme(theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     const nextTheme: Theme = theme === "light" ? "dark" : "light";
 
     setTheme(nextTheme);
     applyTheme(nextTheme);
-    window.localStorage.setItem(storageKey, nextTheme);
   };
 
   return (

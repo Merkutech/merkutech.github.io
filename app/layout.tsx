@@ -28,7 +28,7 @@ const navLinks = [
 
 const themeScript = `
 try {
-  var theme = localStorage.getItem('merkutech-theme') === 'light' ? 'light' : 'dark';
+  var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   document.documentElement.classList.toggle('light', theme === 'light');
   document.documentElement.classList.toggle('dark', theme === 'dark');
   document.documentElement.style.colorScheme = theme;
