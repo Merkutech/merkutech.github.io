@@ -1,16 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const themeScript = `
 try {
@@ -30,7 +19,7 @@ export default function RootLayout({
     <html
       lang="tr"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <head>
         <title>MCT SENSOR Merkutech</title>
