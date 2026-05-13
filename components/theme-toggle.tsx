@@ -17,17 +17,14 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
-      return "dark";
-    }
-
-    return getSystemTheme();
-  });
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+    const systemTheme = getSystemTheme();
+
+    applyTheme(systemTheme);
+    queueMicrotask(() => setTheme(systemTheme));
+  }, []);
 
   const toggleTheme = () => {
     const nextTheme: Theme = theme === "light" ? "dark" : "light";
