@@ -97,16 +97,21 @@ export default function Home() {
                   Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler,
                   robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
                 </motion.p>
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
                   whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
                   className="text-neutral-300"
                 >
-                  🏆 Teknofest Şampiyonlar Ligi Şampiyonu, 🥈 Teknofest 2025 Turizm İkincisi,
-                  🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü ve 🎖️ AUVSI SUAS 2024 - USA ödüllerine sahibiz.
-                </motion.p>
+                  <p className="mb-3">Sahip olduğumuz başarılar:</p>
+                  <ul className="space-y-2 list-disc list-inside">
+                    <li>🏆 Teknofest Şampiyonlar Ligi Şampiyonu</li>
+                    <li>🥈 Teknofest 2025 Turizm İkincisi</li>
+                    <li>🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü</li>
+                    <li>🎖️ AUVSI SUAS 2024 - USA</li>
+                  </ul>
+                </motion.div>
               </div>
             </div>
 
