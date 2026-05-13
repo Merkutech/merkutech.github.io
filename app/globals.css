@@ -236,6 +236,7 @@
 }
 
 :root.light .site-header-panel,
+:root.light .site-mobile-header,
 :root.light .site-mobile-menu {
   background: linear-gradient(180deg, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.78)) !important;
   border-color: rgba(255, 255, 255, 0.18) !important;
@@ -258,13 +259,26 @@
   color: #dbe3ef !important;
 }
 
+:root.light .site-mobile-menu-button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #dbe3ef !important;
+}
+
 :root.light .theme-toggle-button:hover {
   background: rgba(255, 255, 255, 0.14) !important;
   border-color: rgba(255, 255, 255, 0.24) !important;
   color: #ffffff !important;
 }
 
+:root.light .site-mobile-menu-button:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+}
+
 :root.light .site-header-panel .site-header-brand,
+:root.light .site-mobile-header .site-header-brand,
 :root.light .site-header-panel nav a:hover,
 :root.light .site-header-panel nav a.text-white {
   color: #ffffff !important;
@@ -407,6 +421,7 @@ div:has(> a[href*="spline"]) {
 }
 
 :root.light body .site-header-panel,
+:root.light body .site-mobile-header,
 :root.light body .site-mobile-menu {
   background: linear-gradient(180deg, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.78)) !important;
   border-color: rgba(255, 255, 255, 0.18) !important;
@@ -416,6 +431,7 @@ div:has(> a[href*="spline"]) {
 }
 
 :root.light body .site-header-panel .site-header-brand,
+:root.light body .site-mobile-header .site-header-brand,
 :root.light body .site-header-panel nav a:hover,
 :root.light body .site-header-panel nav a.text-white,
 :root.light body .site-mobile-menu a.text-white,
