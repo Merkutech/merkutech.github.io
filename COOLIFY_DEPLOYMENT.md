@@ -37,7 +37,7 @@ Uygulama saglik kontrolu icin asagidaki endpoint'i sunar:
 /api/health
 ```
 
-Docker Compose healthcheck de bu endpoint'i kullanir. Coolify healthcheck URL'i isterse `http://localhost:3000/api/health` olarak girilebilir.
+Docker Compose healthcheck de bu endpoint'i kullanir. Coolify healthcheck URL'i isterse `http://127.0.0.1:3000/api/health` olarak girilebilir. Production Docker imajinda Coolify healthcheck icin `curl` bulunur.
 
 ## Lokal dogrulama
 
