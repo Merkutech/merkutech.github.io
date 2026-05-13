@@ -25,6 +25,8 @@ HOSTNAME=0.0.0.0
 NEXT_TELEMETRY_DISABLED=1
 ```
 
+Coolify'da `NODE_ENV=production` icin `Available at Buildtime` secenegini kapali tutun. Runtime'da production olmasi yeterlidir. Dockerfile build asamasinda `npm ci --include=dev` kullandigi icin Tailwind/PostCSS gibi build araclari kurulmaya devam eder, ancak build-time `NODE_ENV=production` uyarisi almamak icin bu degiskeni runtime-only birakin.
+
 Bu projede su an zorunlu gizli environment variable yoktur. Ileride client tarafinda kullanilacak degiskenler `NEXT_PUBLIC_` ile baslamali ve build sirasinda set edilmelidir; Next.js bu degerleri client bundle'a build aninda gomdugu icin sonradan degistirmek yeni deployment gerektirir.
 
 ## Health check
