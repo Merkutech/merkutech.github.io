@@ -35,67 +35,55 @@ export default function ProjelerimizPage() {
         </div>
       </div>
 
-      {/* Robot */}
-      <div className="w-full h-[45vh] sm:h-[50vh] lg:h-[55vh] relative overflow-hidden">
-        <InteractiveRobotSpline scene={ROBOT_SCENE_URL} className="w-full h-full" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
-        <div className="absolute bottom-0 right-0 w-52 h-16 bg-[#0a0a0a] z-50 pointer-events-none" />
-      </div>
-
-      {/* Projeler — editorial liste */}
-      <section className="relative z-10 -mt-12">
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 pb-32">
-          <div className="space-y-24 md:space-y-32">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.slug}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, ease: easeOut }}
-              >
-                <Link href={`/projelerimiz/${project.slug}`} className="group block">
-                  {/* Numara */}
-                  <span className="text-sm font-mono text-neutral-700 block mb-6">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-
-                  {/* Görsel — sadece varsa göster */}
-                  {project.image && (
-                    <div className="aspect-[21/9] overflow-hidden rounded-xl bg-white/[0.02] mb-8">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
-                      />
-                    </div>
-                  )}
-
-                  {/* İçerik */}
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
-                    <div className="md:col-span-7">
-                      <h2 className="text-3xl md:text-4xl font-bold text-white group-hover:text-neutral-200 transition-colors leading-tight tracking-tight">
-                        {project.title}
-                      </h2>
-                    </div>
-                    <div className="md:col-span-5">
-                      <p className="text-sm text-neutral-500 leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="mt-6 inline-flex items-center gap-2 text-sm text-white group-hover:text-neutral-300 transition-colors">
-                        Detayları İncele
-                        <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+      {/* Ana içerik — projeler solda, robot sağda (sticky) */}
+      <section className="relative">
+        <div className="flex flex-col lg:flex-row items-start">
+          {/* Sol — Projeler */}
+          <div className="w-full lg:w-2/3 px-4 sm:px-8 lg:px-12 pb-32 order-2 lg:order-1">
+            <div className="max-w-3xl mx-auto lg:mx-0 space-y-32 md:space-y-40">
+              {projects.map((project, i) => (
+                <motion.div
+                  key={project.slug}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.7, ease: easeOut }}
+                >
+                  <Link href={`/projelerimiz/${project.slug}`} className="group block">
+                    <span className="text-base font-mono text-neutral-700 block mb-8">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {project.image && (
+                      <div className="aspect-[16/9] overflow-hidden rounded-2xl bg-white/[0.02] mb-10">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
+                        />
                       </div>
+                    )}
+                    <h2 className="text-4xl md:text-5xl font-bold text-white group-hover:text-neutral-200 transition-colors leading-tight tracking-tight mb-6">
+                      {project.title}
+                    </h2>
+                    <p className="text-base text-neutral-400 leading-relaxed mb-8">
+                      {project.description}
+                    </p>
+                    <div className="inline-flex items-center gap-2 text-base text-white group-hover:text-neutral-300 transition-colors">
+                      Detayları İncele
+                      <ArrowUpRight className="h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
-                  </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
 
-                  {/* Divider (son projede yok) */}
-                  {i < projects.length - 1 && (
-                    <div className="h-px bg-white/[0.06] mt-24 md:mt-32" />
-                  )}
-                </Link>
-              </motion.div>
-            ))}
+          {/* Sağ — Robot (sticky) */}
+          <div className="w-full lg:w-1/3 order-1 lg:order-2 lg:sticky lg:top-24 lg:self-start z-20">
+            <div className="relative h-[55vh] lg:h-[calc(100vh-6rem)] overflow-hidden">
+              <InteractiveRobotSpline scene={ROBOT_SCENE_URL} className="w-full h-full" />
+              <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/95 to-transparent pointer-events-none z-10" />
+            </div>
           </div>
         </div>
       </section>
