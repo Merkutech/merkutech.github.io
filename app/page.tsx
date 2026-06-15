@@ -256,7 +256,7 @@ function MarqueeSection() {
       <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <div className="flex animate-marquee whitespace-nowrap will-change-transform">
+      <div className="flex animate-marquee whitespace-nowrap w-max will-change-transform">
         {/* İki aynı satır — CSS -50% animasyonu seamless döngü sağlar */}
         {[0, 1].map((si) => (
           <div key={si} className="flex items-center shrink-0">
