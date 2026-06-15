@@ -9,6 +9,7 @@ import {
   Layers, Zap
 } from "lucide-react";
 import { projects } from "@/lib/projects";
+import { sponsors } from "@/lib/sponsors";
 import BotDetection from "@/components/ui/bot-detection";
 import SwarmNetwork from "@/components/ui/swarm-network";
 import AiVision from "@/components/ui/ai-vision";
@@ -50,6 +51,9 @@ export default function Home() {
 
       {/* MARQUEE */}
       <MarqueeSection />
+
+      {/* SPONSORLAR */}
+      <SponsorsSection />
 
       {/* DRONE WAVE */}
       <DroneWave />
@@ -263,6 +267,45 @@ function MarqueeSection() {
             ))}
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* Sponsors */
+function SponsorsSection() {
+  return (
+    <section className="relative py-20 md:py-24 border-y border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="text-center mb-10 md:mb-14">
+          <BlurFade>
+            <p className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase mb-3">
+              Sponsorlarımız
+            </p>
+          </BlurFade>
+          <BlurFade delay={0.1}>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              Bize Destek Verenler
+            </h2>
+          </BlurFade>
+          <BlurFade delay={0.2}>
+            <p className="text-sm text-neutral-500 mt-4 max-w-md mx-auto leading-relaxed">
+              Çalışmalarımızı destekleyen kurum ve kuruluşlar.
+            </p>
+          </BlurFade>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+          {sponsors.map((sponsor, i) => (
+            <BlurFade key={sponsor.name} delay={0.15 + i * 0.05}>
+              <div className="group aspect-[5/3] rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 flex items-center justify-center px-4">
+                <span className="text-sm md:text-[15px] font-semibold text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 text-center leading-tight">
+                  {sponsor.name}
+                </span>
+              </div>
+            </BlurFade>
+          ))}
+        </div>
       </div>
     </section>
   );
