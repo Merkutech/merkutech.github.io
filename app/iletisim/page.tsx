@@ -80,9 +80,21 @@ const links = [
 
 export default function IletisimPage() {
   return (
-    <div className="min-h-screen lg:min-h-screen flex flex-col lg:flex-row">
-      {/* Sol — Linkler (mobilde üstte) */}
-      <div className="flex-[3] flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24 lg:order-2 order-1">
+    <div className="min-h-screen flex flex-col-reverse lg:flex-row">
+      {/* Globe — mobilde altta, masaüstünde solda */}
+      <div className="flex-1 flex items-end lg:items-center justify-center px-5 sm:px-8 pb-4 pt-2 sm:py-16 lg:py-0 min-h-0 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: easeOut }}
+          className="w-full max-w-[180px] sm:max-w-md lg:max-w-xl"
+        >
+          <GlobeFlights className="w-full" />
+        </motion.div>
+      </div>
+
+      {/* Linkler — mobilde üstte, masaüstünde sağda */}
+      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24 border-b lg:border-b-0 border-white/[0.06]">
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -95,7 +107,7 @@ export default function IletisimPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter mt-3 mb-3 sm:mb-4">
             Bize Ulaşın
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-500 mb-5 sm:mb-12 leading-relaxed lg:block hidden">
+          <p className="text-xs sm:text-sm text-neutral-500 mb-5 sm:mb-12 leading-relaxed hidden sm:block">
             Tüm sosyal medya hesaplarımız ve iletişim kanallarımız burada. Takip et, bize katıl.
           </p>
 
@@ -128,18 +140,6 @@ export default function IletisimPage() {
               </motion.a>
             ))}
           </div>
-        </motion.div>
-      </div>
-
-      {/* Sağ — Globe (mobilde altta) */}
-      <div className="flex-[2] flex items-end justify-center px-5 sm:px-8 pt-0 pb-3 sm:py-16 lg:py-0 lg:order-1 order-2 min-h-0 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: easeOut }}
-          className="w-full max-w-[180px] sm:max-w-md lg:max-w-xl"
-        >
-          <GlobeFlights className="w-full" />
         </motion.div>
       </div>
     </div>
