@@ -33,19 +33,52 @@ export default function Home() {
       />
 
       {/* HERO */}
-      <section className="home-hero relative w-full h-screen overflow-hidden bg-background">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          className="absolute inset-0"
-        >
-          <SplineScene
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full"
-          />
-        </motion.div>
-        <div className="home-hero-light-wash absolute inset-0 pointer-events-none z-[1]" />
+      <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
+        {/* Logo — sayfanın sol üst köşesi */}
+        <motion.img
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: easeOut }}
+          src="/merkutech.png"
+          alt="MCT Sensor Merkutech"
+          className="absolute top-20 left-5 sm:left-8 lg:left-12 z-20 h-20 md:h-28 lg:h-36 w-auto"
+        />
+
+        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-8 lg:gap-6 items-center py-24 lg:py-0">
+          {/* Sol — Başlık ve açıklama */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, ease: easeOut }}
+            className="order-2 lg:order-1 flex flex-col items-start max-w-xl"
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter">
+              MCT Sensor Merkutech
+            </h1>
+            <p className="text-lg md:text-xl text-neutral-400 mt-4 max-w-md">
+              İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü
+            </p>
+            <p className="text-sm md:text-base text-neutral-500 mt-6 leading-relaxed max-w-md">
+              Robotik, otonom sistemler, drone teknolojileri ve yapay zeka alanlarında
+              projeler üreten; Teknofest ve uluslararası yarışmalara katılan bir
+              öğrenci topluluğu.
+            </p>
+          </motion.div>
+
+          {/* Sağ — Robot */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5 }}
+            className="order-1 lg:order-2 relative h-[55vh] sm:h-[65vh] lg:h-screen"
+          >
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full"
+            />
+          </motion.div>
+        </div>
+
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
       </section>
 
@@ -249,7 +282,7 @@ function MarqueeSection() {
   const row = Array.from({ length: 4 }, () => achievements).flat();
 
   return (
-    <section className="relative py-8 md:py-10 overflow-hidden border-y border-white/[0.08]">
+    <section className="relative py-8 md:py-10 overflow-hidden">
       <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
