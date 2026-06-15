@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
@@ -238,9 +238,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   href={APPLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 flex items-center justify-center rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200"
+                  className="mt-2 group flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/[0.14] transition-all"
                 >
-                  {t.cta.apply}
+                  <span className="text-sm font-medium text-white">
+                    {t.cta.apply}
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
 
                 {/* Mobil — Tema ve dil satırı */}
