@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, Globe, Shield, Flame, Cpu, Heart, Layers, Code2, Check } from "lucide-react";
 import type { Project } from "@/lib/projects";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 const iconMap: Record<string, React.ReactNode> = {
   Globe: <Globe className="h-6 w-6" />,
@@ -15,6 +16,15 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function ProjectDetailClient({ project }: { project: Project }) {
+  const { language, t } = useLanguage();
+  const tr = project.translations[language];
+
+  const labels = {
+    back: language === "tr" ? "Tüm Projeler" : "All Projects",
+    about: language === "tr" ? "Proje Hakkında" : "About the Project",
+    features: language === "tr" ? "Öne Çıkan Özellikler" : "Key Features",
+  };
+
   return (
     <div className="flex flex-col">
       {/* Hero */}
@@ -31,7 +41,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mb-8"
             >
               <ArrowLeft className="h-4 w-4" />
-              Tüm Projeler
+              {labels.back}
             </Link>
 
             <div className="flex items-center gap-3 mb-6">
@@ -41,10 +51,10 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="gradient-text">{project.title}</span>
+              <span className="gradient-text">{tr.title}</span>
             </h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed">
-              {project.description}
+              {tr.description}
             </p>
           </motion.div>
         </div>
@@ -63,7 +73,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             >
               <img
                 src={project.image}
-                alt={project.title}
+                alt={tr.title}
                 className="w-full h-[300px] md:h-[500px] object-cover"
               />
             </motion.div>
@@ -87,7 +97,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 >
                   <img
                     src={img}
-                    alt={`${project.title} ${i + 1}`}
+                    alt={`${tr.title} ${i + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
@@ -106,9 +116,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-2xl font-bold mb-6 gradient-text">Proje Hakkında</h2>
+            <h2 className="text-2xl font-bold mb-6 gradient-text">{labels.about}</h2>
             <p className="text-neutral-400 leading-relaxed text-lg">
-              {project.longDescription}
+              {tr.longDescription}
             </p>
           </motion.div>
         </div>
@@ -123,9 +133,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-2xl font-bold mb-8 gradient-text">Öne Çıkan Özellikler</h2>
+            <h2 className="text-2xl font-bold mb-8 gradient-text">{labels.features}</h2>
             <div className="space-y-4">
-              {project.features.map((feature, i) => (
+              {tr.features.map((feature, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}

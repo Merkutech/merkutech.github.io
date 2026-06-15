@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -19,6 +20,7 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
+  const { t } = useLanguage();
 
   return (
     <div className="flex flex-col">
@@ -40,15 +42,13 @@ export default function Home() {
             className="order-2 lg:order-1 flex flex-col items-start max-w-xl text-center sm:text-left mx-auto lg:mx-0"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter">
-              MCT Sensor Merkutech
+              {t.home.brand}
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-neutral-400 mt-3 sm:mt-4 max-w-md">
-              İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü
+              {t.home.subtitle}
             </p>
             <p className="text-sm md:text-base text-neutral-500 mt-5 sm:mt-6 leading-relaxed max-w-md">
-              Robotik, otonom sistemler, drone teknolojileri ve yapay zeka alanlarında
-              projeler üreten; Teknofest ve uluslararası yarışmalara katılan bir
-              öğrenci topluluğu.
+              {t.home.description}
             </p>
 
             {/* Mobil — Hızlı erişim butonları */}
@@ -57,14 +57,14 @@ export default function Home() {
                 href="/projelerimiz"
                 className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-neutral-200 transition-colors"
               >
-                Projelerimiz
+                {t.home.heroCta.projects}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/iletisim"
                 className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition-colors"
               >
-                İletişim
+                {t.home.heroCta.contact}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
@@ -108,7 +108,7 @@ export default function Home() {
                 transition={{ duration: 0.6, ease: easeOut }}
                 className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase block"
               >
-                Hakkımızda
+                {t.home.about.label}
               </motion.span>
               <motion.h2
                 initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
@@ -117,7 +117,7 @@ export default function Home() {
                 transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
                 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4 mb-8"
               >
-                Biz Kimiz?
+                {t.home.about.title}
               </motion.h2>
               <div className="space-y-5 text-neutral-400 leading-relaxed">
                 <motion.p
@@ -126,9 +126,7 @@ export default function Home() {
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6, ease: easeOut, delay: 0.25 }}
                 >
-                  Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür.
-                  Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında
-                  kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.
+                  {t.home.about.p1}
                 </motion.p>
                 <motion.p
                   initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
@@ -136,8 +134,7 @@ export default function Home() {
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
                 >
-                  Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler,
-                  robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
+                  {t.home.about.p2}
                 </motion.p>
                 <motion.div
                   initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
@@ -146,12 +143,11 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
                   className="text-neutral-300"
                 >
-                  <p className="mb-3">Sahip olduğumuz başarılar:</p>
+                  <p className="mb-3">{t.home.about.achievements}</p>
                   <ul className="space-y-2 list-disc list-inside">
-                    <li>🏆 Teknofest Şampiyonlar Ligi Şampiyonu</li>
-                    <li>🥈 Teknofest 2025 Turizm İkincisi</li>
-                    <li>🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü</li>
-                    <li>🎖️ AUVSI SUAS 2024 - USA</li>
+                    {t.home.about.achievementsList.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
                   </ul>
                 </motion.div>
               </div>
@@ -180,16 +176,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
-              <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Projelerimiz</p>
+              <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.projects.label}</p>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
-                Öne Çıkanlar
+                {t.home.projects.title}
               </h2>
             </div>
             <Link
               href="/projelerimiz"
               className="group inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition-colors"
             >
-              Tümünü Gör
+              {t.home.projects.viewAll}
               <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </BlurFade>
@@ -206,25 +202,29 @@ export default function Home() {
       <section className="relative py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="mb-4">
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Çalışma Alanları</p>
+            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.areas.label}</p>
           </BlurFade>
           <BlurFade className="mb-16" delay={0.1}>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
-              Neler Yapıyoruz?
+              {t.home.areas.title}
             </h2>
           </BlurFade>
 
           <div className="border-t border-white/[0.08]">
-            {[
-              { num: "01", title: "Robotik Projeler", desc: "ROS tabanlı otonom sistemler, sensör füzyonu ve gerçek zamanlı kontrol algoritmaları ile robotlar geliştiriyoruz.", tags: ["ROS", "OpenCV", "Python"], icon: <Bot className="h-5 w-5" /> },
-              { num: "02", title: "Yapay Zeka", desc: "Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz.", tags: ["TensorFlow", "PyTorch", "Computer Vision"], icon: <Cpu className="h-5 w-5" /> },
-              { num: "03", title: "Drone Teknolojisi", desc: "Sürü algoritmaları, otonom uçuş ve çoklu drone koordinasyonu çalışmaları yürütüyoruz.", tags: ["MAVLink", "DroneKit", "Swarm AI"], icon: <Radio className="h-5 w-5" /> },
-              { num: "04", title: "Gömülü Sistemler", desc: "Mikrodenetleyiciler, PCB tasarımı ve gerçek zamanlı gömülü yazılım geliştirme.", tags: ["STM32", "Arduino", "Embedded C"], icon: <CircuitBoard className="h-5 w-5" /> },
-              { num: "05", title: "3D Modelleme", desc: "CAD, simülasyon ve hızlı prototipleme ile fikirden ürüne geçiş süreci.", tags: ["SolidWorks", "AutoCAD", "Gazebo"], icon: <Layers className="h-5 w-5" /> },
-              { num: "06", title: "Yarışmalar", desc: "Teknofest ve uluslararası robotik yarışmalarına aktif katılım ve hazırlık.", tags: ["Teknofest", "Robotaksi", "Uluslararası"], icon: <Zap className="h-5 w-5" /> },
-            ].map((item, i) => (
-              <StaggerRow key={item.num} {...item} index={i} />
-            ))}
+            {t.home.areas.items.map((item, i) => {
+              const icons = [<Bot className="h-5 w-5" key="bot"/>, <Cpu className="h-5 w-5" key="cpu"/>, <Radio className="h-5 w-5" key="radio"/>, <CircuitBoard className="h-5 w-5" key="cb"/>, <Layers className="h-5 w-5" key="layers"/>, <Zap className="h-5 w-5" key="zap"/>];
+              return (
+                <StaggerRow
+                  key={item.num}
+                  num={item.num}
+                  title={item.title}
+                  desc={item.desc}
+                  tags={item.tags}
+                  icon={icons[i]}
+                  index={i}
+                />
+              );
+            })}
           </div>
         </div>
       </section>
@@ -241,12 +241,8 @@ export default function Home() {
 
 /* Marquee — sonsuz, seamless */
 function MarqueeSection() {
-  const achievements = [
-    "🏆 Teknofest Şampiyonlar Ligi Şampiyonu",
-    "🥈 Teknofest 2025 Turizm",
-    "🥉 Teknofest 2024 İYT",
-    "🎖️ AUVSI SUAS 2024 — USA",
-  ];
+  const { t } = useLanguage();
+  const achievements = t.home.marquee;
 
   // Tek satırda ekranı dolduracak kadar tekrarla
   const row = Array.from({ length: 4 }, () => achievements).flat();
@@ -279,6 +275,7 @@ function MarqueeSection() {
 function SponsorsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useLanguage();
 
   return (
     <section
@@ -305,7 +302,7 @@ function SponsorsSection() {
             transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
             className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase mb-3"
           >
-            Sponsorlarımız
+            {t.sponsors.label}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 28, filter: "blur(14px)" }}
@@ -313,7 +310,7 @@ function SponsorsSection() {
             transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
             className="text-3xl md:text-4xl font-bold text-white tracking-tight"
           >
-            Bize Destek Verenler
+            {t.sponsors.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
@@ -321,7 +318,7 @@ function SponsorsSection() {
             transition={{ duration: 0.6, ease: easeOut, delay: 0.35 }}
             className="text-sm text-neutral-500 mt-4 max-w-md mx-auto leading-relaxed"
           >
-            Çalışmalarımızı destekleyen kurum ve kuruluşlar.
+            {t.sponsors.description}
           </motion.p>
         </div>
 
@@ -499,34 +496,19 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
 function ProcessSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useLanguage();
 
-  const steps = [
-    {
-      num: "01",
-      title: "Keşfet",
-      desc: "Kulübümüzü ziyaret et, mevcut projeleri gör ve hangi alan sana uygun keşfet."
-    },
-    {
-      num: "02",
-      title: "Öğren",
-      desc: "Atölye çalışmaları, eğitimler ve mentorluk ile yeni beceriler kazan."
-    },
-    {
-      num: "03",
-      title: "Üret",
-      desc: "Kendi projeni başlat veya mevcut bir ekibe katıl. Beraber üret, beraber büyü."
-    },
-  ];
+  const steps = t.home.process.steps;
 
   return (
     <section ref={ref} className="relative py-32 md:py-40 border-t border-white/[0.06] overflow-hidden">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-20">
           <BlurFade>
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Nasıl Başlarız</p>
+            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.process.label}</p>
           </BlurFade>
           <BlurFade delay={0.1}>
-            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">Süreç</h2>
+            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">{t.home.process.title}</h2>
           </BlurFade>
         </div>
 

@@ -1,13 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, CircuitBoard, Home, SearchX } from "lucide-react";
-
-const quickLinks = [
-  { href: "/", label: "Ana Sayfa", icon: Home },
-  { href: "/projelerimiz", label: "Projelerimiz", icon: CircuitBoard },
-  { href: "/iletisim", label: "İletişim", icon: ArrowUpRight },
-];
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export default function NotFound() {
+  const { t, language } = useLanguage();
+
+  const quickLinks = [
+    { href: "/", label: t.nav.home, icon: Home },
+    { href: "/projelerimiz", label: t.nav.projects, icon: CircuitBoard },
+    { href: "/iletisim", label: t.nav.contact, icon: ArrowUpRight },
+  ];
+
+  const labels = {
+    signal: language === "tr" ? "Sinyal kayboldu" : "Signal Lost",
+    desc: language === "tr"
+      ? "Aradığınız sayfa taşınmış, silinmiş ya da hiç oluşturulmamış olabilir. Ana sayfaya dönebilir veya projelerimizi inceleyerek devam edebilirsiniz."
+      : "The page you're looking for may have been moved, deleted, or never existed. You can return to the home page or browse our projects.",
+    home: t.notFound.home,
+    projects: language === "tr" ? "Projeleri Gör" : "View Projects",
+    routeScan: language === "tr" ? "Rota tarama" : "Route scan",
+  };
+
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden px-5 py-28 sm:px-8 lg:px-12">
       <div className="absolute inset-0 -z-10 grid-bg opacity-[0.035]" />
@@ -18,14 +33,13 @@ export default function NotFound() {
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
         <div>
           <p className="mb-5 text-xs font-mono uppercase tracking-[0.3em] text-neutral-600">
-            Sinyal kayboldu
+            {labels.signal}
           </p>
           <h1 className="text-5xl font-bold tracking-tighter text-white sm:text-7xl lg:text-8xl">
             404
           </h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-neutral-500 sm:text-lg">
-            Aradığınız sayfa taşınmış, silinmiş ya da hiç oluşturulmamış olabilir.
-            Ana sayfaya dönebilir veya projelerimizi inceleyerek devam edebilirsiniz.
+            {labels.desc}
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -34,13 +48,13 @@ export default function NotFound() {
               className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-black transition-colors hover:bg-neutral-200"
             >
               <ArrowLeft className="h-4 w-4" />
-              Ana Sayfaya Dön
+              {labels.home}
             </Link>
             <Link
               href="/projelerimiz"
               className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-5 text-sm font-semibold text-white transition-all hover:border-white/[0.18] hover:bg-white/[0.08]"
             >
-              Projeleri Gör
+              {labels.projects}
               <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -57,7 +71,7 @@ export default function NotFound() {
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
                 </div>
                 <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-700">
-                  Route scan
+                  {labels.routeScan}
                 </span>
               </div>
 

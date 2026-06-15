@@ -3,25 +3,20 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { GlobeFlights } from "@/components/ui/globe-flights";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-const links = [
+const linkConfigs = [
   {
-    name: "Takıma Başvur",
-    handle: "Google Form",
     href: "https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform",
     icon: <ArrowUpRight className="h-5 w-5" />,
   },
   {
-    name: "Arel Savunma Sanayi Kulübü WhatsApp Grubu",
-    handle: "WhatsApp Community",
     href: "https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ",
     icon: <MessageCircle className="h-5 w-5" />,
   },
   {
-    name: "Merkutech Instagram",
-    handle: "@merkutech",
     href: "https://www.instagram.com/merkutech/",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -32,8 +27,6 @@ const links = [
     ),
   },
   {
-    name: "Arel Savunma Sanayi Kulübü Instagram",
-    handle: "@arelsavunma",
     href: "https://www.instagram.com/arelsavunma",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -44,8 +37,6 @@ const links = [
     ),
   },
   {
-    name: "Merkutech YouTube",
-    handle: "Merkutech",
     href: "https://www.youtube.com/@merkutech",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -55,8 +46,6 @@ const links = [
     ),
   },
   {
-    name: "Merkutech LinkedIn",
-    handle: "Merkutech",
     href: "https://www.linkedin.com/company/merkutech",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -67,8 +56,6 @@ const links = [
     ),
   },
   {
-    name: "Merkutech GitHub",
-    handle: "Merkutech",
     href: "https://github.com/Merkutech",
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -79,6 +66,7 @@ const links = [
 ];
 
 export default function IletisimPage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen flex flex-col-reverse lg:flex-row">
       {/* Globe — mobilde altta, masaüstünde solda */}
@@ -102,20 +90,22 @@ export default function IletisimPage() {
           className="max-w-md mx-auto lg:mx-0 w-full"
         >
           <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
-            Merkutech
+            {t.contact.label}
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter mt-3 mb-3 sm:mb-4">
-            Bize Ulaşın
+            {t.contact.title}
           </h1>
           <p className="text-xs sm:text-sm text-neutral-500 mb-5 sm:mb-12 leading-relaxed hidden sm:block">
-            Tüm sosyal medya hesaplarımız ve iletişim kanallarımız burada. Takip et, bize katıl.
+            {t.contact.description}
           </p>
 
           <div className="space-y-0.5 sm:space-y-1">
-            {links.map((link, i) => (
+            {linkConfigs.map((config, i) => {
+              const tr = t.contact.links[i];
+              return (
               <motion.a
-                key={link.name}
-                href={link.href}
+                key={config.href}
+                href={config.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
@@ -125,20 +115,21 @@ export default function IletisimPage() {
               >
                 <div className="p-1.5 sm:p-2.5 rounded-lg bg-white/[0.04] text-neutral-500 group-hover:text-white group-hover:bg-white/[0.08] transition-all duration-300 shrink-0">
                   <div className="h-4 w-4 sm:h-5 sm:w-5 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">
-                    {link.icon}
+                    {config.icon}
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] sm:text-sm font-medium text-white truncate">
-                    {link.name}
+                    {tr.name}
                   </p>
                   <p className="text-[10px] sm:text-xs text-neutral-600 mt-0.5">
-                    {link.handle}
+                    {tr.handle}
                   </p>
                 </div>
                 <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-neutral-700 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
               </motion.a>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
       </div>

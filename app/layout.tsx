@@ -1,4 +1,5 @@
 import { SiteShell } from "@/components/site-shell";
+import { LanguageProvider } from "@/lib/i18n/language-context";
 import "./globals.css";
 
 const themeScript = `
@@ -27,7 +28,9 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 transition-colors duration-300">
-        <SiteShell>{children}</SiteShell>
+        <LanguageProvider>
+          <SiteShell>{children}</SiteShell>
+        </LanguageProvider>
       </body>
     </html>
   );

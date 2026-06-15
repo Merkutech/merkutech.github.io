@@ -5,12 +5,14 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { InteractiveRobotSpline } from "@/components/ui/interactive-3d-robot";
 import { projects } from "@/lib/projects";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 const ROBOT_SCENE_URL = "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 export default function ProjelerimizPage() {
+  const { t, language } = useLanguage();
   return (
     <div className="flex flex-col">
       {/* Üst — başlık */}
@@ -22,7 +24,7 @@ export default function ProjelerimizPage() {
             transition={{ duration: 0.6 }}
             className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase"
           >
-            Merkutech
+            {t.projects.label}
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -30,7 +32,7 @@ export default function ProjelerimizPage() {
             transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter mt-2"
           >
-            Projeler
+            {t.projects.title}
           </motion.h1>
         </div>
       </div>
@@ -41,7 +43,9 @@ export default function ProjelerimizPage() {
           {/* Sol — Projeler */}
           <div className="w-full lg:w-2/3 px-5 sm:px-8 lg:px-12 pb-12 sm:pb-32 order-1 lg:order-1">
             <div className="max-w-3xl mx-auto lg:mx-0 space-y-20 sm:space-y-32 md:space-y-40">
-              {projects.map((project, i) => (
+              {projects.map((project, i) => {
+                const tr = project.translations[language];
+                return (
                 <motion.div
                   key={project.slug}
                   initial={{ opacity: 0, y: 50 }}
@@ -57,24 +61,25 @@ export default function ProjelerimizPage() {
                       <div className="aspect-[16/9] overflow-hidden rounded-xl sm:rounded-2xl bg-white/[0.02] mb-6 sm:mb-10">
                         <img
                           src={project.image}
-                          alt={project.title}
+                          alt={tr.title}
                           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
                         />
                       </div>
                     )}
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white group-hover:text-neutral-200 transition-colors leading-tight tracking-tight mb-4 sm:mb-6">
-                      {project.title}
+                      {tr.title}
                     </h2>
                     <p className="text-sm sm:text-base text-neutral-400 leading-relaxed mb-6 sm:mb-8">
-                      {project.description}
+                      {tr.description}
                     </p>
                     <div className="inline-flex items-center gap-2 text-sm sm:text-base text-white group-hover:text-neutral-300 transition-colors">
-                      Detayları İncele
+                      {t.projects.detail}
                       <ArrowUpRight className="h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

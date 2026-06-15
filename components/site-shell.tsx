@@ -7,16 +7,51 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useLanguage } from "@/lib/i18n/language-context";
 
-const navLinks = [
-  { href: "/", label: "Ana Sayfa" },
-  { href: "/projelerimiz", label: "Projelerimiz" },
-  { href: "/iletisim", label: "İletişim" },
-];
+const APPLY_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform";
+
+function LanguageSwitcher() {
+  const { language, setLanguage, t } = useLanguage();
+  const other = language === "tr" ? "en" : "tr";
+  return (
+    <button
+      type="button"
+      onClick={() => setLanguage(other)}
+      aria-label={`${t.language[other]} diline geç`}
+      suppressHydrationWarning
+      className="inline-flex items-center justify-center h-9 w-9 md:h-9 md:w-9 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-500 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300 text-[10px] font-mono font-semibold tracking-wider"
+    >
+      {language === "tr" ? "EN" : "TR"}
+    </button>
+  );
+}
+
+function SocialIcon({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-neutral-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+    >
+      {children}
+    </a>
+  );
+}
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/projelerimiz", label: t.nav.projects },
+    { href: "/iletisim", label: t.nav.contact },
+  ];
 
   return (
     <>
@@ -35,11 +70,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <img
                 src="/logo-white.png"
-                alt="MCT SENSOR Merkutech"
+                alt={t.footer.brand}
                 className="h-10 w-auto object-contain"
               />
               <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
-                MCT SENSOR Merkutech
+                {t.footer.brand}
               </span>
             </Link>
 
@@ -67,16 +102,17 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </nav>
 
             <div className="flex items-center gap-2">
+              <LanguageSwitcher />
               <ThemeToggle />
               <motion.a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform"
+                href={APPLY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
                 className="site-header-cta inline-flex items-center px-4 py-1.5 rounded-full bg-white text-black text-[11px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
               >
-                <span className="relative z-10">Takıma Başvur</span>
+                <span className="relative z-10">{t.cta.apply}</span>
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   initial={{ x: "-100%" }}
@@ -102,17 +138,18 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             >
               <img
                 src="/logo-white.png"
-                alt="MCT SENSOR Merkutech"
+                alt={t.footer.brand}
                 className="h-9 w-auto shrink-0 object-contain"
               />
               <span className="min-w-0">
                 <span className="site-header-brand block truncate text-sm font-semibold leading-none text-white whitespace-nowrap">
-                  MCT SENSOR Merkutech
+                  {t.footer.brand}
                 </span>
               </span>
             </Link>
 
             <div className="flex shrink-0 items-center gap-2">
+              <LanguageSwitcher />
               <ThemeToggle />
               <button
                 type="button"
@@ -155,12 +192,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   </Link>
                 ))}
                 <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform"
+                  href={APPLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 flex items-center justify-center rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-neutral-200"
                 >
-                  Takıma Başvur
+                  {t.cta.apply}
                 </a>
               </div>
             </motion.div>
@@ -176,11 +213,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <img
                 src="/logo-white.png"
-                alt="MCT SENSOR Merkutech"
+                alt={t.footer.brand}
                 className="h-10 w-auto object-contain"
               />
               <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
-                MCT SENSOR Merkutech
+                {t.footer.brand}
               </span>
             </Link>
             <div className="flex items-center gap-2">
@@ -208,30 +245,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] text-neutral-500">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Takım Başvurusu</a>
+            <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.apply}</a>
             <span className="text-neutral-800">·</span>
-            <a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Arel Savunma Sanayi WhatsApp</a>
+            <a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.whatsapp}</a>
             <span className="text-neutral-800">·</span>
-            <a href="https://www.instagram.com/arelsavunma" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Arel Savunma Sanayi Instagram</a>
+            <a href="https://www.instagram.com/arelsavunma" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.instagram}</a>
             <span className="text-neutral-800">·</span>
             <span className="text-neutral-700">&copy; {new Date().getFullYear()}</span>
           </div>
         </footer>
       </div>
     </>
-  );
-}
-
-function SocialIcon({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-neutral-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
-    >
-      {children}
-    </a>
   );
 }
