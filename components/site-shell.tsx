@@ -34,8 +34,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             className="site-header-panel mx-auto flex h-12 w-full max-w-xl items-center justify-between overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] px-5 shadow-xl shadow-black/40 backdrop-blur-2xl"
           >
             <Link href="/" className="flex-shrink-0">
-              <span className="site-header-brand text-xs font-semibold tracking-tight text-white">
-                Merkutech
+              <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
+                MCT SENSOR Merkutech
               </span>
             </Link>
 
@@ -100,11 +100,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 M
               </span>
               <span className="min-w-0">
-                <span className="site-header-brand block truncate text-sm font-semibold leading-none text-white">
-                  Merkutech
-                </span>
-                <span className="mt-1 block truncate text-[10px] font-medium uppercase tracking-[0.18em] text-neutral-500">
-                  Robotik Kulübü
+                <span className="site-header-brand block truncate text-sm font-semibold leading-none text-white whitespace-nowrap">
+                  MCT SENSOR Merkutech
                 </span>
               </span>
             </Link>
