@@ -33,7 +33,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             transition={{ type: "spring", stiffness: 350, damping: 32 }}
             className="site-header-panel mx-auto flex h-14 w-full max-w-2xl items-center justify-between overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] px-6 shadow-xl shadow-black/40 backdrop-blur-2xl"
           >
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+              <img
+                src="/logo-white.png"
+                alt="MCT SENSOR Merkutech"
+                className="h-10 w-auto object-contain"
+              />
               <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
                 MCT SENSOR Merkutech
               </span>
@@ -96,9 +101,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               onClick={() => setMobileOpen(false)}
               className="flex min-w-0 items-center gap-3"
             >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-2xl border border-white/[0.1] bg-white/[0.07] text-[11px] font-bold text-white">
-                M
-              </span>
+              <img
+                src="/logo-white.png"
+                alt="MCT SENSOR Merkutech"
+                className="h-9 w-auto shrink-0 object-contain"
+              />
               <span className="min-w-0">
                 <span className="site-header-brand block truncate text-sm font-semibold leading-none text-white whitespace-nowrap">
                   MCT SENSOR Merkutech
