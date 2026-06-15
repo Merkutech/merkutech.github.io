@@ -12,6 +12,34 @@ import { useLanguage } from "@/lib/i18n/language-context";
 const APPLY_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform";
 
+function FlagTR() {
+  return (
+    <svg viewBox="0 0 30 20" width="16" height="12" className="rounded-[2px] overflow-hidden shrink-0">
+      <rect width="30" height="20" fill="#E30A17" />
+      <circle cx="11" cy="10" r="3.4" fill="#fff" />
+      <circle cx="12.4" cy="10" r="2.7" fill="#E30A17" />
+      <polygon
+        points="16,10 14.85,10.7 15.2,9.4 14.2,8.6 15.55,8.5 16,7.3 16.45,8.5 17.8,8.6 16.8,9.4 17.15,10.7"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
+function FlagEN() {
+  return (
+    <svg viewBox="0 0 30 20" width="16" height="12" className="rounded-[2px] overflow-hidden shrink-0">
+      <rect width="30" height="20" fill="#012169" />
+      <path d="M0,0 L30,20 M30,0 L0,20" stroke="#fff" strokeWidth="3" />
+      <path d="M0,0 L30,20 M30,0 L0,20" stroke="#C8102E" strokeWidth="1.4" />
+      <rect x="13" y="0" width="4" height="20" fill="#fff" />
+      <rect x="0" y="8" width="30" height="4" fill="#fff" />
+      <rect x="14" y="0" width="2" height="20" fill="#C8102E" />
+      <rect x="0" y="9" width="30" height="2" fill="#C8102E" />
+    </svg>
+  );
+}
+
 function LanguageSwitcher() {
   const { language, setLanguage, t } = useLanguage();
   const other = language === "tr" ? "en" : "tr";
@@ -21,9 +49,12 @@ function LanguageSwitcher() {
       onClick={() => setLanguage(other)}
       aria-label={`${t.language[other]} diline geç`}
       suppressHydrationWarning
-      className="inline-flex items-center justify-center h-9 w-9 md:h-9 md:w-9 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-500 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300 text-[10px] font-mono font-semibold tracking-wider"
+      className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
     >
-      {language === "tr" ? "EN" : "TR"}
+      {language === "tr" ? <FlagEN /> : <FlagTR />}
+      <span className="text-[10px] font-mono font-semibold tracking-wider">
+        {language === "tr" ? "EN" : "TR"}
+      </span>
     </button>
   );
 }
@@ -45,7 +76,7 @@ function SocialIcon({ href, label, children }: { href: string; label: string; ch
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const navLinks = [
     { href: "/", label: t.nav.home },
@@ -150,7 +181,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
             <div className="flex shrink-0 items-center gap-2">
               <LanguageSwitcher />
-              <ThemeToggle />
               <button
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -199,6 +229,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 >
                   {t.cta.apply}
                 </a>
+
+                {/* Mobil — Tema ve dil satırı */}
+                <div className="mt-2 flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.04]">
+                  <span className="text-sm font-medium text-neutral-300">
+                    {language === "tr" ? "Tema" : "Theme"}
+                  </span>
+                  <ThemeToggle />
+                </div>
               </div>
             </motion.div>
           )}
