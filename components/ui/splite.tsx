@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, lazy, useCallback, useEffect, useRef } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 interface SplineSceneProps {
@@ -22,6 +22,8 @@ function getThemeBackground() {
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const splineRef = useRef<SplineRuntime | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
 
   const syncBackground = useCallback(() => {
     splineRef.current?.setBackgroundColor?.(getThemeBackground())
@@ -44,20 +46,60 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     return () => observer.disconnect()
   }, [syncBackground])
 
+  useEffect(() => {
+    if (shouldLoad) return
+    const el = containerRef.current
+    if (!el) return
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setShouldLoad(true)
+      return
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShouldLoad(true)
+            io.disconnect()
+            break
+          }
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    io.observe(el)
+
+    return () => io.disconnect()
+  }, [shouldLoad])
+
   return (
-    <Suspense
-      fallback={
-        <div className="w-full h-full flex items-center justify-center bg-background">
-          <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground/60 rounded-full animate-spin" />
-        </div>
-      }
+    <div
+      ref={containerRef}
+      className="relative w-full h-full overflow-hidden"
+      style={{
+        contain: 'layout paint size',
+        transform: 'translateZ(0)',
+        willChange: 'transform',
+      }}
     >
-      <Spline
-        scene={scene}
-        className={className}
-        onLoad={onLoad}
-        style={{ width: '100%', height: '100%' }}
-      />
-    </Suspense>
+      <Suspense
+        fallback={
+          <div className="w-full h-full flex items-center justify-center bg-background">
+            <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground/60 rounded-full animate-spin" />
+          </div>
+        }
+      >
+        {shouldLoad ? (
+          <Spline
+            scene={scene}
+            className={className}
+            onLoad={onLoad}
+            renderOnDemand
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : null}
+      </Suspense>
+    </div>
   )
 }
