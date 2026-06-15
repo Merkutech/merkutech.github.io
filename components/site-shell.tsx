@@ -65,7 +65,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             initial={{ y: -60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 350, damping: 32 }}
-            className="site-header-panel mx-auto flex h-14 w-full max-w-2xl items-center justify-between overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] px-6 shadow-xl shadow-black/40 backdrop-blur-2xl"
+            className="site-header-panel mx-auto flex h-14 w-full max-w-3xl items-center justify-between overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] px-7 shadow-xl shadow-black/40 backdrop-blur-2xl"
           >
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <img
