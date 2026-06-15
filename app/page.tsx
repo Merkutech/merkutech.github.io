@@ -295,16 +295,58 @@ function SponsorsSection() {
           </BlurFade>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-          {sponsors.map((sponsor, i) => (
-            <BlurFade key={sponsor.name} delay={0.15 + i * 0.05}>
-              <div className="group aspect-[5/3] rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 flex items-center justify-center px-4">
-                <span className="text-sm md:text-[15px] font-semibold text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 text-center leading-tight">
-                  {sponsor.name}
-                </span>
-              </div>
-            </BlurFade>
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          {sponsors.map((sponsor, i) => {
+            const initials = sponsor.name
+              .split(/\s+/)
+              .map((w) => w[0])
+              .filter(Boolean)
+              .slice(0, 2)
+              .join("")
+              .toUpperCase();
+
+            const inner = (
+              <>
+                <div className="aspect-[5/3] flex items-center justify-center px-6">
+                  {sponsor.logo ? (
+                    <img
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      className="max-h-10 md:max-h-12 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    />
+                  ) : (
+                    <span className="text-2xl md:text-3xl font-mono font-bold text-neutral-600 group-hover:text-neutral-400 transition-colors duration-500 tracking-wider">
+                      {initials}
+                    </span>
+                  )}
+                </div>
+                <div className="border-t border-white/[0.06] group-hover:border-white/[0.12] transition-colors duration-500 px-4 py-3">
+                  <p className="text-[11px] md:text-xs text-neutral-500 group-hover:text-neutral-300 text-center font-medium transition-colors duration-500 truncate">
+                    {sponsor.name}
+                  </p>
+                </div>
+              </>
+            );
+
+            return (
+              <BlurFade key={sponsor.name} delay={0.15 + i * 0.05}>
+                {sponsor.url ? (
+                  <a
+                    href={sponsor.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 overflow-hidden h-full"
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div className="group flex flex-col rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 overflow-hidden h-full">
+                    {inner}
+                  </div>
+                )}
+              </BlurFade>
+            );
+          })}
         </div>
       </div>
     </section>
