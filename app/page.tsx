@@ -256,29 +256,64 @@ function MarqueeSection() {
 
 /* Sponsors */
 function SponsorsSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
-    <section className="relative py-20 md:py-24 border-b border-white/[0.06]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="text-center mb-10 md:mb-14">
-          <BlurFade>
-            <p className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase mb-3">
-              Sponsorlarımız
-            </p>
-          </BlurFade>
-          <BlurFade delay={0.1}>
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-              Bize Destek Verenler
-            </h2>
-          </BlurFade>
-          <BlurFade delay={0.2}>
-            <p className="text-sm text-neutral-500 mt-4 max-w-md mx-auto leading-relaxed">
-              Çalışmalarımızı destekleyen kurum ve kuruluşlar.
-            </p>
-          </BlurFade>
+    <section
+      ref={ref}
+      className="relative py-20 md:py-24 border-b border-white/[0.06] overflow-hidden"
+    >
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[60rem] h-[20rem] rounded-full"
+        style={{
+          background:
+            "radial-gradient(closest-side, color-mix(in srgb, var(--foreground) 6%, transparent), transparent 70%)",
+        }}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1.4, ease: easeOut }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="text-center mb-10 md:mb-14 overflow-hidden">
+          <motion.p
+            initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
+            className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase mb-3"
+          >
+            Sponsorlarımız
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 28, filter: "blur(14px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
+            className="text-3xl md:text-4xl font-bold text-white tracking-tight"
+          >
+            Bize Destek Verenler
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+            animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.6, ease: easeOut, delay: 0.35 }}
+            className="text-sm text-neutral-500 mt-4 max-w-md mx-auto leading-relaxed"
+          >
+            Çalışmalarımızı destekleyen kurum ve kuruluşlar.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {sponsors.map((sponsor, i) => {
+        <motion.div
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.08, delayChildren: 0.4 } },
+          }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+        >
+          {sponsors.map((sponsor) => {
             const initials = sponsor.name
               .split(/\s+/)
               .map((w) => w[0])
@@ -311,7 +346,20 @@ function SponsorsSection() {
             );
 
             return (
-              <BlurFade key={sponsor.name} delay={0.15 + i * 0.05}>
+              <motion.div
+                key={sponsor.name}
+                variants={{
+                  hidden: { opacity: 0, y: 24, scale: 0.92, filter: "blur(8px)" },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                    transition: { duration: 0.6, ease: easeOut },
+                  },
+                }}
+                whileHover={{ y: -4, transition: { duration: 0.25, ease: easeOut } }}
+              >
                 {sponsor.url ? (
                   <a
                     href={sponsor.url}
@@ -326,10 +374,10 @@ function SponsorsSection() {
                     {inner}
                   </div>
                 )}
-              </BlurFade>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

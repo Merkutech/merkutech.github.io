@@ -1,7 +1,6 @@
 'use client'
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -174,16 +173,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <div className="px-4 pb-4">
         <footer className="max-w-4xl mx-auto rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-4 sm:px-5 py-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2.5">
-              <Image
-                src="/logo.png"
-                alt="Merkutech"
-                width={28}
-                height={28}
-                className="h-7 w-7 object-contain"
+            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+              <img
+                src="/logo-white.png"
+                alt="MCT SENSOR Merkutech"
+                className="h-10 w-auto object-contain"
               />
-              <span className="text-xl font-bold text-white tracking-tight">Merkutech</span>
-            </div>
+              <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
+                MCT SENSOR Merkutech
+              </span>
+            </Link>
             <div className="flex items-center gap-2">
               <SocialIcon href="https://www.instagram.com/merkutech/" label="Merkutech Instagram">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
