@@ -14,6 +14,16 @@ function applyTheme(theme: Theme) {
   root.classList.toggle("light", theme === "light");
   root.classList.toggle("dark", theme === "dark");
   root.style.colorScheme = theme;
+
+  let link = document.querySelector<HTMLLinkElement>("link[rel='icon'][data-theme-aware]");
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    link.type = "image/png";
+    link.setAttribute("data-theme-aware", "");
+    document.head.appendChild(link);
+  }
+  link.href = theme === "light" ? "/logo-black.png" : "/logo-white.png";
 }
 
 export function ThemeToggle() {

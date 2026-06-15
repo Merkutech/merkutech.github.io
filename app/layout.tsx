@@ -8,6 +8,18 @@ try {
   document.documentElement.classList.toggle('light', theme === 'light');
   document.documentElement.classList.toggle('dark', theme === 'dark');
   document.documentElement.style.colorScheme = theme;
+  function setFavicon(t) {
+    var link = document.querySelector("link[rel='icon'][data-theme-aware]");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      link.type = 'image/png';
+      link.setAttribute('data-theme-aware', '');
+      document.head.appendChild(link);
+    }
+    link.href = t === 'light' ? '/logo-black.png' : '/logo-white.png';
+  }
+  setFavicon(theme);
 } catch (_) {}
 `;
 
