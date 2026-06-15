@@ -34,14 +34,14 @@ export default function Home() {
 
       {/* HERO */}
       <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
-        {/* Logo — sayfanın sol üst köşesi */}
+        {/* Logo — sayfanın en üst sol köşesi */}
         <motion.img
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: easeOut }}
           src="/merkutech.png"
           alt="MCT Sensor Merkutech"
-          className="absolute top-20 left-5 sm:left-8 lg:left-12 z-20 h-20 md:h-28 lg:h-36 w-auto"
+          className="absolute top-4 left-5 sm:left-8 lg:left-12 z-[60] h-20 md:h-28 lg:h-36 w-auto"
         />
 
         <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-8 lg:gap-6 items-center py-24 lg:py-0">
@@ -308,7 +308,7 @@ function MarqueeSection() {
 /* Sponsors */
 function SponsorsSection() {
   return (
-    <section className="relative py-20 md:py-24 border-y border-white/[0.06]">
+    <section className="relative py-20 md:py-24 border-b border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <div className="text-center mb-10 md:mb-14">
           <BlurFade>
