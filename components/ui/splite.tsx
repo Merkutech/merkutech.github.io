@@ -76,7 +76,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full overflow-hidden"
+      className="spline-scene-container relative w-full h-full overflow-hidden bg-background"
       style={{
         contain: 'layout paint size',
         transform: 'translateZ(0)',
