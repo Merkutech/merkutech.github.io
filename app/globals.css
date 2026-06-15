@@ -150,6 +150,12 @@
   animation: marquee-scroll 40s linear infinite;
 }
 
+@media (max-width: 640px) {
+  .animate-marquee {
+    animation-duration: 20s;
+  }
+}
+
 .animate-marquee:hover {
   animation-play-state: paused;
 }

@@ -66,42 +66,40 @@ const links = [
       </svg>
     ),
   },
+  {
+    name: "Merkutech GitHub",
+    handle: "Merkutech",
+    href: "https://github.com/Merkutech",
+    icon: (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 17 5.77a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.38 13.38 0 0 0-7 0C5.27 1.65 4.09 2 4.09 2A5.07 5.07 0 0 0 4 5.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 19.13V23"/>
+      </svg>
+    ),
+  },
 ];
 
 export default function IletisimPage() {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Sol — Globe */}
-      <div className="flex-1 flex items-center justify-center px-8 py-24 lg:py-0">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: easeOut }}
-          className="w-full max-w-xl"
-        >
-          <GlobeFlights className="w-full" />
-        </motion.div>
-      </div>
-
-      {/* Sağ — Linkler */}
-      <div className="flex-1 flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 border-t lg:border-t-0 border-white/[0.06]">
+    <div className="min-h-screen lg:min-h-screen flex flex-col lg:flex-row">
+      {/* Sol — Linkler (mobilde üstte) */}
+      <div className="flex-[3] flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24 lg:order-2 order-1">
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: easeOut, delay: 0.2 }}
-          className="max-w-md"
+          className="max-w-md mx-auto lg:mx-0 w-full"
         >
           <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
             Merkutech
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tighter mt-3 mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter mt-3 mb-3 sm:mb-4">
             Bize Ulaşın
           </h1>
-          <p className="text-sm text-neutral-500 mb-12 leading-relaxed">
+          <p className="text-xs sm:text-sm text-neutral-500 mb-5 sm:mb-12 leading-relaxed lg:block hidden">
             Tüm sosyal medya hesaplarımız ve iletişim kanallarımız burada. Takip et, bize katıl.
           </p>
 
-          <div className="space-y-1">
+          <div className="space-y-0.5 sm:space-y-1">
             {links.map((link, i) => (
               <motion.a
                 key={link.name}
@@ -111,23 +109,37 @@ export default function IletisimPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease: easeOut }}
-                className="group flex items-center gap-4 py-4 border-b border-white/[0.06] hover:border-white/[0.12] transition-colors"
+                className="group flex items-center gap-3 sm:gap-4 py-2.5 sm:py-4 border-b border-white/[0.06] hover:border-white/[0.12] transition-colors"
               >
-                <div className="p-2.5 rounded-lg bg-white/[0.04] text-neutral-500 group-hover:text-white group-hover:bg-white/[0.08] transition-all duration-300">
-                  {link.icon}
+                <div className="p-1.5 sm:p-2.5 rounded-lg bg-white/[0.04] text-neutral-500 group-hover:text-white group-hover:bg-white/[0.08] transition-all duration-300 shrink-0">
+                  <div className="h-4 w-4 sm:h-5 sm:w-5 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">
+                    {link.icon}
+                  </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">
+                  <p className="text-[13px] sm:text-sm font-medium text-white truncate">
                     {link.name}
                   </p>
-                  <p className="text-xs text-neutral-600 mt-0.5">
+                  <p className="text-[10px] sm:text-xs text-neutral-600 mt-0.5">
                     {link.handle}
                   </p>
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-neutral-700 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-neutral-700 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
               </motion.a>
             ))}
           </div>
+        </motion.div>
+      </div>
+
+      {/* Sağ — Globe (mobilde altta) */}
+      <div className="flex-[2] flex items-end justify-center px-5 sm:px-8 pt-0 pb-3 sm:py-16 lg:py-0 lg:order-1 order-2 min-h-0 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: easeOut }}
+          className="w-full max-w-[180px] sm:max-w-md lg:max-w-xl"
+        >
+          <GlobeFlights className="w-full" />
         </motion.div>
       </div>
     </div>

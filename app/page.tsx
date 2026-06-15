@@ -31,25 +31,43 @@ export default function Home() {
 
       {/* HERO */}
       <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
-        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-8 lg:gap-6 items-center py-24 lg:py-0">
+        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center py-20 sm:py-24 lg:py-0">
           {/* Sol — Başlık ve açıklama */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: easeOut }}
-            className="order-2 lg:order-1 flex flex-col items-start max-w-xl"
+            className="order-2 lg:order-1 flex flex-col items-start max-w-xl text-center sm:text-left mx-auto lg:mx-0"
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter">
               MCT Sensor Merkutech
             </h1>
-            <p className="text-lg md:text-xl text-neutral-400 mt-4 max-w-md">
+            <p className="text-base sm:text-lg md:text-xl text-neutral-400 mt-3 sm:mt-4 max-w-md">
               İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü
             </p>
-            <p className="text-sm md:text-base text-neutral-500 mt-6 leading-relaxed max-w-md">
+            <p className="text-sm md:text-base text-neutral-500 mt-5 sm:mt-6 leading-relaxed max-w-md">
               Robotik, otonom sistemler, drone teknolojileri ve yapay zeka alanlarında
               projeler üreten; Teknofest ve uluslararası yarışmalara katılan bir
               öğrenci topluluğu.
             </p>
+
+            {/* Mobil — Hızlı erişim butonları */}
+            <div className="flex sm:hidden items-center gap-3 mt-8 w-full">
+              <Link
+                href="/projelerimiz"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-neutral-200 transition-colors"
+              >
+                Projelerimiz
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/iletisim"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition-colors"
+              >
+                İletişim
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
           </motion.div>
 
           {/* Sağ — Robot */}
@@ -57,12 +75,15 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="order-1 lg:order-2 relative h-[55vh] sm:h-[65vh] lg:h-screen"
+            className="order-1 lg:order-2 relative h-[38vh] sm:h-[55vh] lg:h-screen"
           >
-            <SplineScene
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
-            />
+            <div className="absolute inset-0 rounded-3xl sm:rounded-none overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none z-[1] sm:hidden" />
+              <SplineScene
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full"
+              />
+            </div>
           </motion.div>
         </div>
 
@@ -173,7 +194,7 @@ export default function Home() {
             </Link>
           </BlurFade>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {projects.slice(0, 3).map((project, i) => (
               <MaskCard key={project.slug} project={project} index={i} />
             ))}
@@ -311,7 +332,7 @@ function SponsorsSection() {
             hidden: {},
             visible: { transition: { staggerChildren: 0.08, delayChildren: 0.4 } },
           }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
         >
           {sponsors.map((sponsor) => {
             const initials = sponsor.name

@@ -14,7 +14,7 @@ export default function ProjelerimizPage() {
   return (
     <div className="flex flex-col">
       {/* Üst — başlık */}
-      <div className="pt-24 pb-8 px-4 sm:px-8">
+      <div className="pt-20 sm:pt-24 pb-6 sm:pb-8 px-5 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.span
             initial={{ opacity: 0 }}
@@ -28,7 +28,7 @@ export default function ProjelerimizPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-            className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tighter mt-2"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter mt-2"
           >
             Projeler
           </motion.h1>
@@ -39,8 +39,8 @@ export default function ProjelerimizPage() {
       <section className="relative">
         <div className="flex flex-col lg:flex-row items-start">
           {/* Sol — Projeler */}
-          <div className="w-full lg:w-2/3 px-4 sm:px-8 lg:px-12 pb-32 order-2 lg:order-1">
-            <div className="max-w-3xl mx-auto lg:mx-0 space-y-32 md:space-y-40">
+          <div className="w-full lg:w-2/3 px-5 sm:px-8 lg:px-12 pb-24 sm:pb-32 order-2 lg:order-1">
+            <div className="max-w-3xl mx-auto lg:mx-0 space-y-20 sm:space-y-32 md:space-y-40">
               {projects.map((project, i) => (
                 <motion.div
                   key={project.slug}
@@ -50,11 +50,11 @@ export default function ProjelerimizPage() {
                   transition={{ duration: 0.7, ease: easeOut }}
                 >
                   <Link href={`/projelerimiz/${project.slug}`} className="group block">
-                    <span className="text-base font-mono text-neutral-700 block mb-8">
+                    <span className="text-sm sm:text-base font-mono text-neutral-700 block mb-5 sm:mb-8">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     {project.image && (
-                      <div className="aspect-[16/9] overflow-hidden rounded-2xl bg-white/[0.02] mb-10">
+                      <div className="aspect-[16/9] overflow-hidden rounded-xl sm:rounded-2xl bg-white/[0.02] mb-6 sm:mb-10">
                         <img
                           src={project.image}
                           alt={project.title}
@@ -62,15 +62,15 @@ export default function ProjelerimizPage() {
                         />
                       </div>
                     )}
-                    <h2 className="text-4xl md:text-5xl font-bold text-white group-hover:text-neutral-200 transition-colors leading-tight tracking-tight mb-6">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white group-hover:text-neutral-200 transition-colors leading-tight tracking-tight mb-4 sm:mb-6">
                       {project.title}
                     </h2>
-                    <p className="text-base text-neutral-400 leading-relaxed mb-8">
+                    <p className="text-sm sm:text-base text-neutral-400 leading-relaxed mb-6 sm:mb-8">
                       {project.description}
                     </p>
-                    <div className="inline-flex items-center gap-2 text-base text-white group-hover:text-neutral-300 transition-colors">
+                    <div className="inline-flex items-center gap-2 text-sm sm:text-base text-white group-hover:text-neutral-300 transition-colors">
                       Detayları İncele
-                      <ArrowUpRight className="h-5 w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      <ArrowUpRight className="h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </Link>
                 </motion.div>
@@ -80,7 +80,7 @@ export default function ProjelerimizPage() {
 
           {/* Sağ — Robot (sticky) */}
           <div className="w-full lg:w-1/3 order-1 lg:order-2 lg:sticky lg:top-24 lg:self-start z-20">
-            <div className="relative h-[55vh] lg:h-[calc(100vh-6rem)] overflow-hidden">
+            <div className="relative h-[42vh] sm:h-[50vh] lg:h-[calc(100vh-6rem)] overflow-hidden">
               <InteractiveRobotSpline scene={ROBOT_SCENE_URL} className="w-full h-full" />
               <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/95 to-transparent pointer-events-none z-10" />
             </div>
