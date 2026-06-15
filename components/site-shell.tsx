@@ -84,6 +84,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     { href: "/iletisim", label: t.nav.contact },
   ];
 
+  const isActive = (href: string) => {
+    const cleanPath = pathname.replace(/\/$/, "");
+    const cleanHref = href.replace(/\/$/, "");
+    if (cleanHref === "") return cleanPath === "";
+    return cleanPath === cleanHref || cleanPath.startsWith(cleanHref + "/");
+  };
+
   return (
     <>
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -110,26 +117,29 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </Link>
 
             <nav className="flex items-center gap-0.5">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative px-3.5 py-1.5 text-[11px] font-medium rounded-full transition-colors ${
-                    pathname === link.href
-                      ? "text-white"
-                      : "text-neutral-500 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                  {pathname === link.href && (
-                    <motion.div
-                      layoutId="nav-indicator"
-                      className="site-nav-indicator absolute inset-0 bg-white/[0.08] rounded-full -z-10"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-                    />
-                  )}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative px-3.5 py-1.5 text-[11px] font-medium rounded-full transition-colors ${
+                      active
+                        ? "text-white"
+                        : "text-neutral-500 hover:text-white"
+                    }`}
+                  >
+                    {link.label}
+                    {active && (
+                      <motion.div
+                        layoutId="nav-indicator"
+                        className="site-nav-indicator absolute inset-0 bg-white/[0.08] rounded-full -z-10"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
 
             <div className="flex items-center gap-2">
@@ -204,23 +214,26 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               className="site-mobile-menu mx-3 mt-2 overflow-hidden rounded-[1.35rem] border border-white/[0.1] bg-black/70 p-2 shadow-2xl shadow-black/45 backdrop-blur-2xl md:hidden"
             >
               <div className="mx-auto max-w-md space-y-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${
-                      pathname === link.href
-                        ? "bg-white text-black"
-                        : "text-neutral-300 hover:bg-white/[0.08] hover:text-white"
-                    }`}
-                  >
-                    <span>{link.label}</span>
-                    <span className={`h-1.5 w-1.5 rounded-full ${
-                      pathname === link.href ? "bg-black" : "bg-white/20"
-                    }`} />
-                  </Link>
-                ))}
+                {navLinks.map((link) => {
+                  const active = isActive(link.href);
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${
+                        active
+                          ? "bg-white text-black"
+                          : "text-neutral-300 hover:bg-white/[0.08] hover:text-white"
+                      }`}
+                    >
+                      <span>{link.label}</span>
+                      <span className={`h-1.5 w-1.5 rounded-full ${
+                        active ? "bg-black" : "bg-white/20"
+                      }`} />
+                    </Link>
+                  );
+                })}
                 <a
                   href={APPLY_URL}
                   target="_blank"
