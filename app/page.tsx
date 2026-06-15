@@ -10,9 +10,6 @@ import {
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
-import BotDetection from "@/components/ui/bot-detection";
-import SwarmNetwork from "@/components/ui/swarm-network";
-import AiVision from "@/components/ui/ai-vision";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -153,44 +150,6 @@ export default function Home() {
                 />
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* DRONE WAVE */}
-      <DroneWave />
-
-      {/* TECH CARDS */}
-      <section className="relative py-24 md:py-32 border-y border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <BlurFade className="mb-4">
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">Teknolojiler</p>
-          </BlurFade>
-          <BlurFade className="mb-16" delay={0.1}>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
-              Neler Yapıyoruz?
-            </h2>
-          </BlurFade>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <BlurFade delay={0.15}>
-              <BotDetection
-                cardTitle="Bot Algılama"
-                cardDescription="AI destekli bot tespiti ile platform güvenliğini artırıyor, sahte kayıtları minimuma indiriyoruz."
-              />
-            </BlurFade>
-            <BlurFade delay={0.25}>
-              <SwarmNetwork
-                cardTitle="Sürü Ağı"
-                cardDescription="Çoklu drone koordinasyonu ve sürü algoritmaları ile gerçek zamanlı iletişim protokolleri geliştiriyoruz."
-              />
-            </BlurFade>
-            <BlurFade delay={0.35}>
-              <AiVision
-                cardTitle="Yapay Zeka Görüşü"
-                cardDescription="Derin öğrenme ve bilgisayarlı görü ile robotlara karar verme yetisi kazandırıyoruz."
-              />
-            </BlurFade>
           </div>
         </div>
       </section>
@@ -375,48 +334,6 @@ function SponsorsSection() {
     </section>
   );
 }
-
-/* Drone Wave */
-function DroneWave() {
-  const seededWave = (index: number) => {
-    const value = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
-    return value - Math.floor(value);
-  };
-
-  const lines = Array.from({ length: 24 }, (_, i) => ({
-    height: 25 + Math.abs(Math.sin(i * 0.6)) * 55 + seededWave(i) * 15,
-    delay: i * 0.12,
-    duration: 2.5 + seededWave(i + 24) * 0.8,
-  }));
-
-  return (
-    <section className="drone-wave-section relative py-20 md:py-28 overflow-hidden border-b border-white/[0.06]">
-      <div className="text-center mb-12">
-        <p className="text-xs text-neutral-600 tracking-[0.3em] uppercase mb-3">Uçan Teknolojiler</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Drone Teknolojisi</h2>
-      </div>
-
-      <div className="flex items-center justify-center gap-[3px] md:gap-1 h-36 md:h-48 px-8">
-        {lines.map((line, i) => (
-          <motion.div
-            key={i}
-            className="drone-wave-bar w-[3px] md:w-1 rounded-full"
-            animate={{ height: [`${line.height * 0.35}%`, `${line.height}%`, `${line.height * 0.35}%`] }}
-            transition={{ duration: line.duration, delay: line.delay, repeat: Infinity, ease: "easeInOut" }}
-          />
-        ))}
-      </div>
-
-      <div className="text-center mt-10 max-w-lg mx-auto px-5">
-        <p className="text-sm text-neutral-500 leading-relaxed">
-          Otonom uçuş algoritmaları, çoklu drone koordinasyonu ve sürü teknolojileri üzerine çalışıyoruz.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-
 
 /* Blur Fade */
 function BlurFade({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {

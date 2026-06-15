@@ -217,17 +217,6 @@
   color: var(--theme-muted-text);
 }
 
-.drone-wave-section {
-  background:
-    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--foreground) 5%, transparent), transparent 44%),
-    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--foreground) 2%, transparent) 100%);
-}
-
-.drone-wave-bar {
-  background: color-mix(in srgb, var(--foreground) 16%, transparent);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--foreground) 10%, transparent);
-}
-
 .tech-demo-card {
   --tech-muted-node: #404040;
   --tech-blue-line: #1e3a5f;
@@ -297,17 +286,6 @@
 :root.light .site-header-panel .site-header-cta:hover {
   background: #e5e7eb !important;
   color: #0f172a !important;
-}
-
-:root.light .drone-wave-section {
-  background:
-    radial-gradient(circle at 50% 42%, rgba(39, 54, 77, 0.08), transparent 44%),
-    linear-gradient(180deg, transparent 0%, rgba(23, 32, 51, 0.03) 100%);
-}
-
-:root.light .drone-wave-bar {
-  background: linear-gradient(180deg, rgba(23, 32, 51, 0.16), rgba(23, 32, 51, 0.34));
-  box-shadow: 0 0 14px rgba(23, 32, 51, 0.12);
 }
 
 :root.light .tech-demo-card {
