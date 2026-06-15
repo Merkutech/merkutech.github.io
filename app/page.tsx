@@ -420,7 +420,7 @@ function BlurFade({ children, delay = 0, className = "" }: { children: React.Rea
 
 /* Stagger Row */
 function StaggerRow({ num, title, desc, tags, icon, index }: {
-  num: string; title: string; desc: string; tags: string[]; icon: React.ReactNode; index: number;
+  num: string; title: string; desc: string; tags: readonly string[]; icon: React.ReactNode; index: number;
 }) {
   const [hovered, setHovered] = useState(false);
   const ref = useRef(null);
@@ -469,6 +469,8 @@ function StaggerRow({ num, title, desc, tags, icon, index }: {
 function MaskCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const { language } = useLanguage();
+  const tr = project.translations[language];
 
   return (
     <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: index * 0.1, ease: easeOut }}>
@@ -476,7 +478,7 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
         <div className="aspect-[16/10] overflow-hidden relative">
           <motion.img
             src={project.image}
-            alt={project.title}
+            alt={tr.title}
             className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
             initial={{ clipPath: "inset(0 100% 0 0)" }}
             animate={isInView ? { clipPath: "inset(0 0% 0 0)" } : {}}
@@ -484,8 +486,8 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
           />
         </div>
         <div className="p-5">
-          <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">{project.title}</h3>
-          <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2">{project.description}</p>
+          <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">{tr.title}</h3>
+          <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2">{tr.description}</p>
         </div>
       </Link>
     </motion.div>
