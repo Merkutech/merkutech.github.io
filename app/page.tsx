@@ -342,13 +342,15 @@ function SponsorsSection() {
 
             const inner = (
               <>
-                <div className="aspect-[5/3] flex items-center justify-center p-4">
+                <div className="aspect-[5/3] flex items-center justify-center p-2 sm:p-3 md:p-4">
                   {sponsor.logo ? (
-                    <img
-                      src={sponsor.logo}
-                      alt={sponsor.name}
-                      className="h-full w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                    />
+                    <div className="flex h-full w-full items-center justify-center rounded-lg bg-white p-2 sm:p-2.5 md:p-3">
+                      <img
+                        src={sponsor.logo}
+                        alt={sponsor.name}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
                   ) : (
                     <span className="text-2xl md:text-3xl font-mono font-bold text-neutral-600 group-hover:text-neutral-400 transition-colors duration-500 tracking-wider">
                       {initials}

@@ -262,7 +262,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1">{children}</main>
 
       <div className="px-4 pb-4">
-        <footer className="max-w-4xl mx-auto rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-4 sm:px-5 py-4">
+        <footer className="site-footer max-w-4xl mx-auto rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-4 sm:px-5 py-4">
           <div className="flex items-center justify-between mb-3">
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <img
