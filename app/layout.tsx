@@ -38,6 +38,7 @@ export default function RootLayout({
         <title>MCT SENSOR Merkutech</title>
         <meta name="description" content="İstanbul Arel Üniversitesi Merkutech Robotik ve Teknoloji Kulübü" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script defer src="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com/script.js" data-website-id="0de9e7f8-36ed-453c-bcc2-301905e1bc56" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 transition-colors duration-300">
         <LanguageProvider>
