@@ -78,7 +78,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
-  const { t, language } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
 
   const openSearch = useCallback(() => {
     setSearchOpen(true);
@@ -235,7 +235,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </Link>
 
             <div className="flex shrink-0 items-center gap-2">
-              <LanguageSwitcher />
               <SearchTrigger onClick={openSearch} />
               <button
                 type="button"
@@ -305,6 +304,23 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   </span>
                   <ArrowUpRight className="h-4 w-4 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
+
+                <div className="mt-2 flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.04]">
+                  <span className="text-sm font-medium text-neutral-300">
+                    {language === "tr" ? "Dil" : "Language"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setLanguage(language === "tr" ? "en" : "tr")}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-white"
+                  >
+                    {language === "tr" ? (
+                      <><FlagEN /><span>English</span></>
+                    ) : (
+                      <><FlagTR /><span>Türkçe</span></>
+                    )}
+                  </button>
+                </div>
 
                 <div className="mt-2 flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.04]">
                   <span className="text-sm font-medium text-neutral-300">
