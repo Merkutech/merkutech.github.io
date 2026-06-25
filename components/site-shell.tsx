@@ -43,20 +43,38 @@ function FlagEN() {
 
 function LanguageSwitcher() {
   const { language, setLanguage, t } = useLanguage();
-  const other = language === "tr" ? "en" : "tr";
   return (
-    <button
-      type="button"
-      onClick={() => setLanguage(other)}
-      aria-label={`${t.language[other]} diline geç`}
+    <div
       suppressHydrationWarning
-      className="inline-flex items-center gap-1.5 h-8 px-2 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
+      className="inline-flex h-8 rounded-full border border-white/[0.1] bg-white/[0.04] p-0.5"
     >
-      {language === "tr" ? <FlagEN /> : <FlagTR />}
-      <span className="text-[10px] font-mono font-semibold tracking-wider">
-        {language === "tr" ? "EN" : "TR"}
-      </span>
-    </button>
+      <button
+        type="button"
+        onClick={() => setLanguage("tr")}
+        aria-label={`${t.language.tr} diline geç`}
+        className={`inline-flex items-center gap-1 h-full px-2.5 rounded-full text-[10px] font-mono font-semibold tracking-wider transition-all duration-300 ${
+          language === "tr"
+            ? "bg-white/[0.12] text-white"
+            : "text-neutral-400 hover:text-white"
+        }`}
+      >
+        <FlagTR />
+        TR
+      </button>
+      <button
+        type="button"
+        onClick={() => setLanguage("en")}
+        aria-label={`${t.language.en} diline geç`}
+        className={`inline-flex items-center gap-1 h-full px-2.5 rounded-full text-[10px] font-mono font-semibold tracking-wider transition-all duration-300 ${
+          language === "en"
+            ? "bg-white/[0.12] text-white"
+            : "text-neutral-400 hover:text-white"
+        }`}
+      >
+        <FlagEN />
+        EN
+      </button>
+    </div>
   );
 }
 
