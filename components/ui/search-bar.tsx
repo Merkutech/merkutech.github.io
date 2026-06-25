@@ -133,40 +133,40 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.15 }}
-              className="absolute top-full mt-2 left-0 right-0 rounded-xl border border-white/[0.1] bg-black/85 backdrop-blur-2xl shadow-2xl shadow-black/50 overflow-hidden z-[200] max-h-[45vh] overflow-y-auto"
-            >
-              {results.length === 0 ? (
-                <p className="px-4 py-4 text-center text-[11px] text-neutral-500">{txt.empty}</p>
-              ) : (
-                results.map((entry, i) => {
-                  const Icon = resultIcon(entry.href);
-                  const prev = i > 0 ? fullHref(results[i - 1]).split("#")[0] : "";
-                  const cur = fullHref(entry).split("#")[0];
-                  return (
-                    <div key={entry.href + (entry.hash || "") + i}>
-                      {i > 0 && prev !== cur && <div className="mx-3 border-t border-white/[0.06]" />}
-                      <button
-                        type="button" onClick={() => go(entry)}
-                        className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.05] transition-colors text-left group"
-                      >
-                        <span className="w-5 h-5 rounded-[4px] bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0 group-hover:bg-white/[0.08] transition-colors">
-                          <Icon className="h-2.5 w-2.5 text-neutral-400 group-hover:text-white transition-colors" />
-                        </span>
-                        <span className="flex-1 min-w-0">
-                          <span className="block text-[11px] font-medium text-neutral-200 group-hover:text-white transition-colors truncate leading-tight">
-                            {entry.title[language]}
+                className="absolute top-full mt-2 left-0 right-0 rounded-2xl border border-white/[0.1] bg-white/[0.04] backdrop-blur-2xl shadow-xl shadow-black/40 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
+              >
+                {results.length === 0 ? (
+                  <p className="px-4 py-6 text-center text-sm text-neutral-500">{txt.empty}</p>
+                ) : (
+                  results.map((entry, i) => {
+                    const Icon = resultIcon(entry.href);
+                    const prev = i > 0 ? fullHref(results[i - 1]).split("#")[0] : "";
+                    const cur = fullHref(entry).split("#")[0];
+                    return (
+                      <div key={entry.href + (entry.hash || "") + i}>
+                        {i > 0 && prev !== cur && <div className="mx-4 border-t border-white/[0.06]" />}
+                        <button
+                          type="button" onClick={() => go(entry)}
+                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] transition-colors text-left group"
+                        >
+                          <span className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-white/[0.08] group-hover:border-white/[0.14] transition-colors">
+                            <Icon className="h-3.5 w-3.5 text-neutral-400 group-hover:text-white transition-colors" />
                           </span>
-                          <span className="block text-[10px] text-neutral-500 truncate leading-tight">
-                            {entry.description[language]}
+                          <span className="flex-1 min-w-0">
+                            <span className="block text-sm font-medium text-white group-hover:text-primary transition-colors truncate">
+                              {entry.title[language]}
+                            </span>
+                            <span className="block text-xs text-neutral-500 truncate mt-0.5">
+                              {entry.description[language]}
+                            </span>
                           </span>
-                        </span>
-                        <ArrowRight className="h-2.5 w-2.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
-                      </button>
-                    </div>
-                  );
-                })
-              )}
-            </motion.div>
+                          <ArrowRight className="h-3.5 w-3.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
+                        </button>
+                      </div>
+                    );
+                  })
+                )}
+              </motion.div>
           )}
         </AnimatePresence>
       </div>
