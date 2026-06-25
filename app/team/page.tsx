@@ -81,11 +81,11 @@ export default function TeamPage() {
   const { language } = useLanguage();
 
   const title = language === "tr" ? "Ekibimiz" : "Our Team";
-  const subtitle = language === "tr" ? "SUAS 2026 Takımı" : "SUAS 2026 Team";
+  const subtitle = language === "tr" ? "Merkutech" : "Merkutech";
   const description =
     language === "tr"
-      ? "SUAS 2026 yarışmasında Merkutech'i temsil eden takım üyelerimiz. Her biri farklı uzmanlık alanlarıyla projeye katkı sağlamaktadır."
-      : "Our team members representing Merkutech in the SUAS 2026 competition. Each contributes to the project with their specialized expertise.";
+      ? "Merkutech ailesinin bir parçası olan takım üyelerimiz. Her biri farklı uzmanlık alanlarıyla projelere katkı sağlamaktadır."
+      : "Our team members who are part of the Merkutech family. Each contributes to projects with their specialized expertise.";
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-4">

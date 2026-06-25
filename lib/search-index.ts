@@ -46,12 +46,12 @@ export const searchIndex: SearchEntry[] = [
     href: "/team",
     title: { tr: "Ekibimiz", en: "Our Team" },
     description: {
-      tr: "SUAS 2026 Merkutech takım üyeleri",
-      en: "SUAS 2026 Merkutech team members",
+      tr: "Merkutech takım üyeleri",
+      en: "Merkutech team members",
     },
     content: {
-      tr: "takım üyeler ekip üyeleri SUAS 2026 roller yazılım mekanik aviyonik pilot görev planlama bilgisayarlı görü yer istasyonu",
-      en: "team members crew SUAS 2026 roles software mechanical avionics pilot mission planning computer vision ground station",
+      tr: "takım üyeler ekip üyeleri roller yazılım mekanik aviyonik pilot görev planlama bilgisayarlı görü yer istasyonu",
+      en: "team members crew roles software mechanical avionics pilot mission planning computer vision ground station",
     },
   },
   {
