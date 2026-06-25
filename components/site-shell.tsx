@@ -270,7 +270,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -6, scale: 0.97 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="site-mobile-menu fixed inset-x-3 top-[4.5rem] bottom-4 rounded-[2rem] border border-white/[0.1] bg-black/80 backdrop-blur-2xl shadow-2xl shadow-black/50 md:hidden flex flex-col overflow-hidden z-40"
+              className="site-mobile-menu fixed inset-x-3 top-[4.5rem] bottom-4 rounded-[2rem] border border-border bg-card/90 backdrop-blur-2xl shadow-2xl shadow-black/40 md:hidden flex flex-col overflow-hidden z-40"
             >
               <nav className="flex-1 overflow-y-auto px-4 pt-5 pb-2">
                 <div className="space-y-1">
@@ -291,11 +291,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                         onClick={() => setMobileOpen(false)}
                         className={`flex items-center gap-3.5 rounded-2xl px-4 py-3.5 transition-all duration-200 ${
                           active
-                            ? "bg-white text-black font-medium"
-                            : "text-neutral-400 hover:bg-white/[0.06] hover:text-white"
+                            ? "bg-foreground text-background font-medium"
+                            : "text-muted-foreground hover:bg-foreground/[0.06] hover:text-foreground"
                         }`}
                       >
-                        <Icon className={`h-5 w-5 shrink-0 ${active ? "text-black/70" : "text-neutral-600"}`} />
+                        <Icon className={`h-5 w-5 shrink-0 ${active ? "text-background/70" : "text-muted-foreground/60"}`} />
                         <span className="text-[15px]">{link.label}</span>
                       </Link>
                     );
@@ -303,12 +303,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 </div>
               </nav>
 
-              <div className="shrink-0 px-4 pb-4 pt-2 border-t border-white/[0.08] space-y-3">
+              <div className="shrink-0 px-4 pb-4 pt-2 border-t border-border space-y-3">
                 <a
                   href={APPLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-2xl px-4 py-3.5 bg-white text-black text-[15px] font-semibold hover:bg-neutral-200 transition-colors"
+                  className="flex items-center justify-center gap-2 rounded-2xl px-4 py-3.5 bg-foreground text-background text-[15px] font-semibold hover:bg-foreground/90 transition-colors"
                 >
                   {t.cta.apply}
                   <ArrowUpRight className="h-4 w-4" />
@@ -318,29 +318,31 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <button
                     type="button"
                     onClick={() => setLanguage("tr")}
-                    className={`flex-1 rounded-2xl py-3 text-sm font-medium transition-all ${
+                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
                       language === "tr"
-                        ? "bg-white text-black"
-                        : "text-neutral-400 border border-white/[0.08] hover:text-white hover:border-white/[0.14]"
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
                     }`}
                   >
-                    🇹🇷 Türkçe
+                    <FlagTR />
+                    Türkçe
                   </button>
                   <button
                     type="button"
                     onClick={() => setLanguage("en")}
-                    className={`flex-1 rounded-2xl py-3 text-sm font-medium transition-all ${
+                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
                       language === "en"
-                        ? "bg-white text-black"
-                        : "text-neutral-400 border border-white/[0.08] hover:text-white hover:border-white/[0.14]"
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
                     }`}
                   >
-                    🇬🇧 English
+                    <FlagEN />
+                    English
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between rounded-2xl px-4 py-3 border border-white/[0.08] bg-white/[0.02]">
-                  <span className="text-sm text-neutral-400">
+                <div className="flex items-center justify-between rounded-2xl px-4 py-3 border border-border">
+                  <span className="text-sm text-muted-foreground">
                     {language === "tr" ? "Görünüm" : "Appearance"}
                   </span>
                   <ThemeToggle />
