@@ -109,12 +109,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <header className="fixed top-0 left-0 right-0 z-50">
-        <div className="hidden px-4 pt-3 md:block">
+        <div className="hidden md:flex items-start justify-center gap-2.5 px-4 pt-3">
           <motion.div
             initial={{ y: -60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 350, damping: 32 }}
-            className="site-header-panel mx-auto flex h-14 w-full max-w-5xl items-center overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] shadow-xl shadow-black/40 backdrop-blur-2xl"
+            className="site-header-panel flex h-12 w-full max-w-5xl items-center overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] shadow-xl shadow-black/40 backdrop-blur-2xl"
           >
             <AnimatePresence mode="wait">
               {searchOpen ? (
@@ -130,7 +130,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                     <img
                       src="/logo-white.png"
                       alt={t.footer.brand}
-                      className="h-8 w-auto object-contain"
+                      className="h-7 w-auto object-contain"
                     />
                   </Link>
                   <SearchInput onClose={closeSearch} />
@@ -148,7 +148,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                     <img
                       src="/logo-white.png"
                       alt={t.footer.brand}
-                      className="h-8 w-auto object-contain"
+                      className="h-7 w-auto object-contain"
                     />
                     <span className="site-header-brand text-[10px] font-semibold tracking-tight text-white whitespace-nowrap hidden lg:block">
                       {t.footer.brand}
@@ -200,12 +200,15 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                         transition={{ duration: 0.6, ease: "easeInOut" }}
                       />
                     </motion.a>
-                    <SearchTrigger onClick={openSearch} />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
+
+          <AnimatePresence>
+            {!searchOpen && <SearchTrigger onClick={openSearch} />}
+          </AnimatePresence>
         </div>
 
         <div className="px-3 pt-3 md:hidden">
@@ -217,7 +220,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           >
             <Link
               href="/"
-              onClick={() => { setMobileOpen(false); setSearchOpen(false); }}
+              onClick={() => setMobileOpen(false)}
               className="flex min-w-0 items-center gap-3"
             >
               <img
@@ -237,7 +240,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <SearchTrigger onClick={openSearch} />
               <button
                 type="button"
-                onClick={() => { setMobileOpen(!mobileOpen); setSearchOpen(false); }}
+                onClick={() => setMobileOpen(!mobileOpen)}
                 className="site-mobile-menu-button inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/[0.1] bg-white/[0.06] text-neutral-300 transition-all duration-300 hover:border-white/[0.18] hover:bg-white/[0.1] hover:text-white"
                 aria-label={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
                 aria-expanded={mobileOpen}
@@ -304,7 +307,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <ArrowUpRight className="h-4 w-4 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
 
-                {/* Mobil — Tema ve dil satırı */}
                 <div className="mt-2 flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.04]">
                   <span className="text-sm font-medium text-neutral-300">
                     {language === "tr" ? "Tema" : "Theme"}
