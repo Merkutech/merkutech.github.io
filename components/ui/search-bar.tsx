@@ -66,8 +66,14 @@ export function SearchTrigger({ onClick }: { onClick: () => void }) {
       className="inline-flex items-center gap-1.5 h-8 px-2 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
     >
       <Search className="h-3.5 w-3.5" />
-      <span className="hidden sm:inline-flex items-center gap-0.5 text-[10px] font-mono text-neutral-600">
-        <kbd className="px-1 py-px rounded bg-white/[0.06] text-[9px]">Ctrl+K</kbd>
+      <span className="hidden sm:inline-flex items-center gap-0.5">
+        <kbd className="inline-flex items-center justify-center h-[18px] min-w-[18px] px-1 rounded-[4px] bg-white/[0.08] border border-white/[0.08] text-[9px] font-medium text-neutral-400 font-sans leading-none">
+          Ctrl
+        </kbd>
+        <span className="text-[9px] text-neutral-600 leading-none">+</span>
+        <kbd className="inline-flex items-center justify-center h-[18px] min-w-[18px] px-1 rounded-[4px] bg-white/[0.08] border border-white/[0.08] text-[9px] font-medium text-neutral-400 font-sans leading-none">
+          K
+        </kbd>
       </span>
     </motion.button>
   );
