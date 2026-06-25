@@ -3,7 +3,7 @@
 import { SplineScene } from "@/components/ui/splite";
 import { motion, useScroll, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import {
   ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
   Layers, Zap, Users
@@ -244,10 +244,38 @@ export default function Home() {
    ═══════════════════════════════════════ */
 
 function TeamCarousel() {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   const doubled = [...teamMembers, ...teamMembers];
+
+  const onDown = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    dragging.current = true;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    startX.current = clientX;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+    scrollRef.current.style.animationPlayState = "paused";
+    scrollRef.current.style.cursor = "grabbing";
+  }, []);
+
+  const onMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!dragging.current || !scrollRef.current) return;
+    e.preventDefault();
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const dx = startX.current - clientX;
+    scrollRef.current.scrollLeft = scrollLeft.current + dx;
+  }, []);
+
+  const onUp = useCallback(() => {
+    if (!scrollRef.current) return;
+    dragging.current = false;
+    scrollRef.current.style.animationPlayState = "running";
+    scrollRef.current.style.cursor = "";
+  }, []);
 
   return (
     <section className="relative py-20 md:py-28 overflow-hidden border-y border-white/[0.06]">
@@ -261,21 +289,40 @@ function TeamCarousel() {
         >
           {language === "tr" ? "Merkutech" : "Merkutech"}
         </motion.span>
-        <motion.h2
-          initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
-          whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-          className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4"
-        >
-          {language === "tr" ? "Ekibimiz" : "Our Team"}
-        </motion.h2>
+        <div className="flex items-end justify-between gap-4">
+          <motion.h2
+            initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
+            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+            className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4"
+          >
+            {language === "tr" ? "Ekibimiz" : "Our Team"}
+          </motion.h2>
+          <Link
+            href="/team/"
+            className="shrink-0 inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors group pb-1"
+          >
+            {language === "tr" ? "Tümünü Gör" : "View All"}
+            <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </Link>
+        </div>
       </div>
 
       <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <div ref={scrollRef} className="flex gap-4 px-5 sm:px-8 lg:px-12 animate-scroll">
+      <div
+        ref={scrollRef}
+        className="flex gap-4 px-5 sm:px-8 lg:px-12 overflow-x-auto scrollbar-none cursor-grab select-none animate-scroll"
+        onMouseDown={onDown}
+        onMouseMove={onMove}
+        onMouseUp={onUp}
+        onMouseLeave={onUp}
+        onTouchStart={onDown}
+        onTouchMove={onMove}
+        onTouchEnd={onUp}
+      >
         {doubled.map((member, i) => (
           <div
             key={`${member.id}-${i}`}
@@ -310,9 +357,10 @@ function TeamCarousel() {
         .animate-scroll {
           animation: scroll-team 40s linear infinite;
           width: max-content;
+          scrollbar-width: none;
         }
-        .animate-scroll:hover {
-          animation-play-state: paused;
+        .animate-scroll::-webkit-scrollbar {
+          display: none;
         }
       `}</style>
     </section>
