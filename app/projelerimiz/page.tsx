@@ -11,6 +11,22 @@ const ROBOT_SCENE_URL = "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splin
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+function Item({ label, en }: { label: string; en: string }) {
+  const { language } = useLanguage();
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, ease: easeOut }}
+      className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.03] transition-colors"
+    >
+      <span className="w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
+      <span className="text-sm text-neutral-300">{language === "tr" ? label : en}</span>
+    </motion.div>
+  );
+}
+
 export default function ProjelerimizPage() {
   const { t, language } = useLanguage();
   return (
@@ -90,6 +106,33 @@ export default function ProjelerimizPage() {
               <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/95 to-transparent pointer-events-none z-10" />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 2021 - 2025 Çalışmaları */}
+      <section className="relative border-t border-white/[0.06] py-20 md:py-28">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: easeOut }}
+          >
+            <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
+              {language === "tr" ? "Geçmiş" : "History"}
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-10">
+              {language === "tr" ? "2021 - 2025 Çalışmaları" : "2021 - 2025 Work"}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Item label="Yangın Tespit ve Analiz Dron'u" en="Fire Detection & Analysis Drone" />
+              <Item label="Yangın Müdahale Kapsülü" en="Fire Intervention Capsule" />
+              <Item label="AquaVista Denizaltı Sistemi" en="AquaVista Submarine System" />
+              <Item label="Engelsiz Kampüs Mobil Uygulama" en="Barrier-Free Campus Mobile App" />
+              <Item label="Karşı Ateş Teknikli İHA" en="Counter-Fire UAV" />
+              <Item label="Çeşitli Mobil Uygulamalar" en="Various Mobile Applications" />
+            </div>
+          </motion.div>
         </div>
       </section>
 
