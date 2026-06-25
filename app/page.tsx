@@ -6,10 +6,11 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import {
   ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
-  Layers, Zap
+  Layers, Zap, Users
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
+import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -171,6 +172,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* EKİBİMİZ — Kayan kartlar */}
+      <TeamCarousel />
+
       {/* PROJELER */}
       <section className="relative py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
@@ -238,6 +242,82 @@ export default function Home() {
 /* ═══════════════════════════════════════
    ANİMASYON BİLEŞENLERİ
    ═══════════════════════════════════════ */
+
+function TeamCarousel() {
+  const { t, language } = useLanguage();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const doubled = [...teamMembers, ...teamMembers];
+
+  return (
+    <section className="relative py-20 md:py-28 overflow-hidden border-y border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-10">
+        <motion.span
+          initial={{ opacity: 0, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: easeOut }}
+          className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase block"
+        >
+          {language === "tr" ? "Merkutech" : "Merkutech"}
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
+          whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+          className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4"
+        >
+          {language === "tr" ? "Ekibimiz" : "Our Team"}
+        </motion.h2>
+      </div>
+
+      <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+      <div ref={scrollRef} className="flex gap-4 px-5 sm:px-8 lg:px-12 animate-scroll">
+        {doubled.map((member, i) => (
+          <div
+            key={`${member.id}-${i}`}
+            className="shrink-0 w-40 sm:w-48 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 flex flex-col items-center text-center gap-3"
+          >
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/[0.04] border border-primary/10 flex items-center justify-center overflow-hidden">
+              {member.image ? (
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Users className="h-8 w-8 sm:h-10 sm:w-10 text-primary/40" />
+              )}
+            </div>
+            <div>
+              <p className="text-xs sm:text-sm font-medium text-white leading-tight">{member.name}</p>
+              <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-tight">
+                {member.role[language as keyof typeof member.role]}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <style jsx>{`
+        @keyframes scroll-team {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+          animation: scroll-team 40s linear infinite;
+          width: max-content;
+        }
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+    </section>
+  );
+}
 
 /* Marquee — sonsuz, seamless */
 function MarqueeSection() {
