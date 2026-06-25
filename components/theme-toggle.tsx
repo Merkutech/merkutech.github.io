@@ -50,7 +50,7 @@ export function ThemeToggle() {
       aria-label={theme === "light" ? "Koyu temaya geç" : "Açık temaya geç"}
       aria-pressed={theme === "light"}
       suppressHydrationWarning
-      className="theme-toggle-button inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-500 transition-all duration-300 hover:border-white/[0.16] hover:bg-white/[0.08] hover:text-white md:h-9 md:w-9"
+      className="theme-toggle-button inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-500 transition-all duration-300 hover:border-white/[0.16] hover:bg-white/[0.08] hover:text-white"
     >
       {theme === "light" ? (
         <Moon className="h-4 w-4" />

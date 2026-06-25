@@ -50,7 +50,7 @@ function LanguageSwitcher() {
       onClick={() => setLanguage(other)}
       aria-label={`${t.language[other]} diline geç`}
       suppressHydrationWarning
-      className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
+      className="inline-flex items-center gap-1.5 h-8 px-2 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
     >
       {language === "tr" ? <FlagEN /> : <FlagTR />}
       <span className="text-[10px] font-mono font-semibold tracking-wider">
@@ -114,7 +114,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             initial={{ y: -60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 350, damping: 32 }}
-            className="site-header-panel mx-auto flex h-14 w-full max-w-3xl items-center overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] shadow-xl shadow-black/40 backdrop-blur-2xl"
+            className="site-header-panel mx-auto flex h-14 w-full max-w-5xl items-center overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] shadow-xl shadow-black/40 backdrop-blur-2xl"
           >
             <AnimatePresence mode="wait">
               {searchOpen ? (
@@ -142,27 +142,27 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.12 }}
-                  className="flex items-center w-full justify-between px-7"
+                  className="flex items-center w-full justify-between px-5"
                 >
-                  <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+                  <Link href="/" className="flex items-center gap-1.5 flex-shrink-0">
                     <img
                       src="/logo-white.png"
                       alt={t.footer.brand}
-                      className="h-10 w-auto object-contain"
+                      className="h-8 w-auto object-contain"
                     />
-                    <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
+                    <span className="site-header-brand text-[10px] font-semibold tracking-tight text-white whitespace-nowrap hidden lg:block">
                       {t.footer.brand}
                     </span>
                   </Link>
 
-                  <nav className="flex items-center gap-0.5">
+                  <nav className="flex items-center gap-0">
                     {navLinks.map((link) => {
                       const active = isActive(link.href);
                       return (
                         <Link
                           key={link.href}
                           href={link.href}
-                          className={`relative px-3.5 py-1.5 text-[11px] font-medium rounded-full transition-colors ${
+                          className={`relative px-2.5 py-1.5 text-[11px] font-medium rounded-full transition-colors ${
                             active
                               ? "text-white"
                               : "text-neutral-500 hover:text-white"
@@ -181,7 +181,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                     })}
                   </nav>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <LanguageSwitcher />
                     <ThemeToggle />
                     <motion.a
@@ -190,9 +190,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.97 }}
-                      className="site-header-cta inline-flex items-center px-4 py-1.5 rounded-full bg-white text-black text-[11px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
+                      className="site-header-cta inline-flex items-center px-3 py-1.5 rounded-full bg-white text-black text-[10px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
                     >
-                      <span className="relative z-10">{t.cta.apply}</span>
+                      <span className="relative z-10 whitespace-nowrap">{t.cta.apply}</span>
                       <motion.div
                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                         initial={{ x: "-100%" }}

@@ -63,7 +63,7 @@ export function SearchTrigger({ onClick }: { onClick: () => void }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.15 }}
-      className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
+      className="inline-flex items-center gap-1.5 h-8 px-2 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:border-white/[0.16] hover:bg-white/[0.08] transition-all duration-300"
     >
       <Search className="h-3.5 w-3.5" />
       <span className="hidden sm:inline-flex items-center gap-0.5 text-[10px] font-mono text-neutral-600">
