@@ -114,7 +114,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             initial={{ y: -60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 350, damping: 32 }}
-            className="site-header-panel flex h-12 w-full max-w-5xl items-center overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] shadow-xl shadow-black/40 backdrop-blur-2xl"
+            className="site-header-panel flex h-12 w-full max-w-4xl items-center overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.04] shadow-xl shadow-black/40 backdrop-blur-2xl"
           >
             <AnimatePresence mode="wait">
               {searchOpen ? (
