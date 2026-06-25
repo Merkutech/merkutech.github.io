@@ -44,9 +44,9 @@ function pageIndex(): SearchEntry[] {
     },
     {
       href: "/blog",
-      title: { tr: "Blog / Build Log", en: "Blog / Build Log" },
-      description: { tr: "Geliştirme süreci kayıtları ve güncellemeler", en: "Development process logs and updates" },
-      content: { tr: "blog build log geliştirme süreci kayıtlar ilerleme güncellemeler SUAS 2026 yapım aşamaları test entegrasyon montaj haftalık rapor dokümantasyon", en: "blog build log development process records progress updates SUAS 2026 build phases testing integration assembly weekly report documentation" },
+      title: { tr: "Blog", en: "Blog" },
+      description: { tr: "Merkutech projeleri, etkinlikleri ve teknoloji yazıları", en: "Merkutech projects, events, and technology writings" },
+      content: { tr: "blog yazılar projeler etkinlikler teknoloji robotik yapay zeka drone güncellemeler duyurular", en: "blog posts projects events technology robotics AI drone updates announcements" },
     },
     {
       href: "/suas-2026",

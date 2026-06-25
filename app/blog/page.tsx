@@ -56,8 +56,8 @@ export default function BlogPage() {
           </h1>
           <p className="text-neutral-400 text-lg max-w-xl leading-relaxed">
             {language === "tr"
-              ? "SUAS 2026 geliştirme sürecimiz, teknik dokümantasyonlar ve ekip deneyimleri."
-              : "SUAS 2026 development process, technical documentation, and team experiences."}
+              ? "Projelerimiz, etkinliklerimiz ve teknoloji üzerine yazılarımız."
+              : "Our projects, events, and writings on technology."}
           </p>
         </motion.div>
 
