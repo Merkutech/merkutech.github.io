@@ -133,7 +133,7 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.15 }}
-                className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-[3px] border-[#1a2a5e] bg-[#0a1229] shadow-2xl shadow-[#1a2a5e]/15 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
+                className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-[4px] border-[#1a2a5e] bg-[#0a1229] shadow-2xl shadow-[#1a2a5e]/15 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
               >
                 {results.length === 0 ? (
                   <p className="px-4 py-6 text-center text-sm text-neutral-400">{txt.empty}</p>
