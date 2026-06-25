@@ -21,6 +21,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "member-1",
     name: "Team Lead",
+    image: "/team/member-1.jpg",
     role: {
       tr: "Takım Kaptanı",
       en: "Team Captain",
@@ -33,6 +34,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "member-2",
     name: "Software Lead",
+    image: "/team/member-2.jpg",
     role: {
       tr: "Yazılım Lideri",
       en: "Software Lead",
@@ -45,6 +47,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "member-3",
     name: "Mechanical Lead",
+    image: "/team/member-3.jpg",
     role: {
       tr: "Mekanik Lideri",
       en: "Mechanical Lead",
@@ -57,6 +60,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "member-4",
     name: "Avionics Lead",
+    image: "/team/member-4.jpg",
     role: {
       tr: "Aviyonik Lideri",
       en: "Avionics Lead",
@@ -69,6 +73,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "member-5",
     name: "Pilot / Safety Officer",
+    image: "/team/member-5.jpg",
     role: {
       tr: "Pilot / Güvenlik Sorumlusu",
       en: "Pilot / Safety Officer",
@@ -81,6 +86,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "member-6",
     name: "Mission Planner",
+    image: "/team/member-6.jpg",
     role: {
       tr: "Görev Planlayıcı",
       en: "Mission Planner",
