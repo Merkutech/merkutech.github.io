@@ -105,29 +105,20 @@ export default function ProjelerimizPage() {
           >
             <div className="order-2 lg:order-1">
               <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
-                Hakkımızda
+                {t.home.about.label}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-8">
-                Biz Kimiz?
+                {t.home.about.title}
               </h2>
               <div className="space-y-6 text-neutral-400 leading-relaxed">
-                <p>
-                  Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür.
-                  Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında
-                  kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.
-                </p>
-                <p>
-                  Teknofest ve ulusal/uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler,
-                  robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.
-                  Her seviyeden öğrenciye açık olan kulübümüzde öğrenme, üretme ve büyüme kültürü hakim.
-                </p>
+                <p>{t.home.about.p1}</p>
+                <p>{t.home.about.p2}</p>
                 <div className="text-neutral-300">
-                  <p className="mb-3">Sahip olduğumuz başarılar:</p>
+                  <p className="mb-3">{t.home.about.achievements}</p>
                   <ul className="space-y-2 list-disc list-inside">
-                    <li>🏆 Teknofest Şampiyonlar Ligi Şampiyonu</li>
-                    <li>🥈 Teknofest 2025 Turizm İkincisi</li>
-                    <li>🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü</li>
-                    <li>🎖️ AUVSI SUAS 2024 - USA</li>
+                    {t.home.about.achievementsList.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
                   </ul>
                 </div>
               </div>

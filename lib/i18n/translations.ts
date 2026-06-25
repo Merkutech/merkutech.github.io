@@ -38,6 +38,10 @@ export const translations = {
           "🥈 Teknofest 2025 Turizm İkincisi",
           "🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü",
           "🎖️ AUVSI SUAS 2024 - USA",
+          "🏅 3x Teknofest Finali (13,17,25/40.000)",
+          "🥇 10. İnovasyon Yarışması 1.si",
+          "📋 4x Tübitak 2209A Desteği",
+          "🎤 2x Uluslararası Konferans",
         ],
       },
       projects: {
@@ -146,6 +150,10 @@ export const translations = {
           "🥈 Teknofest 2025 Tourism Runner-up",
           "🥉 Teknofest 2024 Unmanned Settlement Team Third",
           "🎖️ AUVSI SUAS 2024 - USA",
+          "🏅 3x Teknofest Finalist (13,17,25/40,000)",
+          "🥇 10th Innovation Competition 1st Place",
+          "📋 4x TUBITAK 2209A Grant",
+          "🎤 2x International Conference",
         ],
       },
       projects: {
