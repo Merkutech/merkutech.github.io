@@ -88,7 +88,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   const navLinks = [
     { href: "/", label: t.nav.home },
-    { href: "/suas-2026", label: t.nav.suas },
     { href: "/team", label: t.nav.team },
     { href: "/projelerimiz", label: t.nav.projects },
     { href: "/blog", label: t.nav.blog },
