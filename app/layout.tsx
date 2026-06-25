@@ -30,17 +30,23 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="tr"
+      lang="en"
       suppressHydrationWarning
       className="h-full antialiased"
     >
       <head>
         <title>MCT SENSOR Merkutech</title>
-        <meta name="description" content="İstanbul Arel Üniversitesi Merkutech Robotik ve Teknoloji Kulübü" />
+        <meta name="description" content="Istanbul Arel University Merkutech Robotics and Technology Club — SUAS 2026" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script defer src="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com/script.js" data-website-id="0de9e7f8-36ed-453c-bcc2-301905e1bc56" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 transition-colors duration-300">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-black focus:text-sm focus:font-medium focus:shadow-lg"
+        >
+          Skip to content
+        </a>
         <LanguageProvider>
           <SiteShell>{children}</SiteShell>
         </LanguageProvider>

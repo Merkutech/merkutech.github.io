@@ -15,8 +15,19 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "merkutech-language";
 
+function detectBrowserLanguage(): Language {
+  try {
+    if (typeof navigator !== "undefined" && navigator.language?.startsWith("tr")) {
+      return "tr";
+    }
+  } catch {
+    /* ignore */
+  }
+  return "en";
+}
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("tr");
+  const [language, setLanguageState] = useState<Language>(detectBrowserLanguage);
 
   useEffect(() => {
     try {
@@ -58,10 +69,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 export function useLanguage() {
   const ctx = useContext(LanguageContext);
   if (!ctx) {
+    const lang = detectBrowserLanguage();
     return {
-      language: "tr" as Language,
+      language: lang,
       setLanguage: () => {},
-      t: translations.tr,
+      t: translations[lang],
     };
   }
   return ctx;

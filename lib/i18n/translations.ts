@@ -5,6 +5,9 @@ export const translations = {
     nav: {
       home: "Ana Sayfa",
       projects: "Projelerimiz",
+      suas: "SUAS 2026",
+      team: "Ekibimiz",
+      blog: "Blog",
       contact: "İletişim",
     },
     cta: {
@@ -111,6 +114,9 @@ export const translations = {
     nav: {
       home: "Home",
       projects: "Projects",
+      suas: "SUAS 2026",
+      team: "Our Team",
+      blog: "Blog",
       contact: "Contact",
     },
     cta: {
