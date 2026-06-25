@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, FileText, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
@@ -266,65 +266,82 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              initial={{ opacity: 0, y: -6, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-              className="site-mobile-menu mx-3 mt-2 overflow-hidden rounded-[1.35rem] border border-white/[0.1] bg-black/70 p-2 shadow-2xl shadow-black/45 backdrop-blur-2xl md:hidden"
+              exit={{ opacity: 0, y: -6, scale: 0.97 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="site-mobile-menu fixed inset-x-3 top-[4.5rem] bottom-4 rounded-[2rem] border border-white/[0.1] bg-black/80 backdrop-blur-2xl shadow-2xl shadow-black/50 md:hidden flex flex-col overflow-hidden z-40"
             >
-              <div className="mx-auto max-w-md space-y-1">
-                {navLinks.map((link) => {
-                  const active = isActive(link.href);
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${
-                        active
-                          ? "bg-white text-black"
-                          : "text-neutral-300 hover:bg-white/[0.08] hover:text-white"
-                      }`}
-                    >
-                      <span>{link.label}</span>
-                      <span className={`h-1.5 w-1.5 rounded-full ${
-                        active ? "bg-black" : "bg-white/20"
-                      }`} />
-                    </Link>
-                  );
-                })}
+              <nav className="flex-1 overflow-y-auto px-4 pt-5 pb-2">
+                <div className="space-y-1">
+                  {navLinks.map((link) => {
+                    const active = isActive(link.href);
+                    const icons: Record<string, React.ElementType> = {
+                      "/": Home,
+                      "/team": Users,
+                      "/projelerimiz": FolderOpen,
+                      "/blog": FileText,
+                      "/iletisim": MessageCircle,
+                    };
+                    const Icon = icons[link.href] || Home;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center gap-3.5 rounded-2xl px-4 py-3.5 transition-all duration-200 ${
+                          active
+                            ? "bg-white text-black font-medium"
+                            : "text-neutral-400 hover:bg-white/[0.06] hover:text-white"
+                        }`}
+                      >
+                        <Icon className={`h-5 w-5 shrink-0 ${active ? "text-black/70" : "text-neutral-600"}`} />
+                        <span className="text-[15px]">{link.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </nav>
+
+              <div className="shrink-0 px-4 pb-4 pt-2 border-t border-white/[0.08] space-y-3">
                 <a
                   href={APPLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 group flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/[0.14] transition-all"
+                  className="flex items-center justify-center gap-2 rounded-2xl px-4 py-3.5 bg-white text-black text-[15px] font-semibold hover:bg-neutral-200 transition-colors"
                 >
-                  <span className="text-sm font-medium text-white">
-                    {t.cta.apply}
-                  </span>
-                  <ArrowUpRight className="h-4 w-4 text-neutral-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  {t.cta.apply}
+                  <ArrowUpRight className="h-4 w-4" />
                 </a>
 
-                <div className="mt-2 flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.04]">
-                  <span className="text-sm font-medium text-neutral-300">
-                    {language === "tr" ? "Dil" : "Language"}
-                  </span>
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => setLanguage(language === "tr" ? "en" : "tr")}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-white"
+                    onClick={() => setLanguage("tr")}
+                    className={`flex-1 rounded-2xl py-3 text-sm font-medium transition-all ${
+                      language === "tr"
+                        ? "bg-white text-black"
+                        : "text-neutral-400 border border-white/[0.08] hover:text-white hover:border-white/[0.14]"
+                    }`}
                   >
-                    {language === "tr" ? (
-                      <><FlagEN /><span>English</span></>
-                    ) : (
-                      <><FlagTR /><span>Türkçe</span></>
-                    )}
+                    🇹🇷 Türkçe
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLanguage("en")}
+                    className={`flex-1 rounded-2xl py-3 text-sm font-medium transition-all ${
+                      language === "en"
+                        ? "bg-white text-black"
+                        : "text-neutral-400 border border-white/[0.08] hover:text-white hover:border-white/[0.14]"
+                    }`}
+                  >
+                    🇬🇧 English
                   </button>
                 </div>
 
-                <div className="mt-2 flex items-center justify-between rounded-2xl px-4 py-3 bg-white/[0.04]">
-                  <span className="text-sm font-medium text-neutral-300">
-                    {language === "tr" ? "Tema" : "Theme"}
+                <div className="flex items-center justify-between rounded-2xl px-4 py-3 border border-white/[0.08] bg-white/[0.02]">
+                  <span className="text-sm text-neutral-400">
+                    {language === "tr" ? "Görünüm" : "Appearance"}
                   </span>
                   <ThemeToggle />
                 </div>
