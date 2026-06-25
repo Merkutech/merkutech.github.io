@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { Search, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { searchIndex, defaultSearchEntries, type SearchEntry } from "@/lib/search-index";
+import { searchIndex, type SearchEntry } from "@/lib/search-index";
 
 function fuzzyMatch(text: string, query: string): boolean {
   const lower = text.toLowerCase();
@@ -15,10 +16,10 @@ function fuzzyMatch(text: string, query: string): boolean {
 
 function searchEntries(query: string, language: "tr" | "en"): SearchEntry[] {
   if (!query.trim() || query.trim().length < 2) return [];
-  const all = [...searchIndex, ...defaultSearchEntries];
+  const seen = new Set<string>();
   const results: { entry: SearchEntry; score: number }[] = [];
 
-  for (const entry of all) {
+  for (const entry of searchIndex) {
     let score = 0;
     const t = entry.title[language];
     const d = entry.description[language];
@@ -29,13 +30,14 @@ function searchEntries(query: string, language: "tr" | "en"): SearchEntry[] {
     if (d.toLowerCase().includes(qLower)) score += 6;
     if (fuzzyMatch(c, query)) score += 3;
 
-    if (score > 0) {
+    if (score > 0 && !seen.has(entry.href + entry.title[language])) {
+      seen.add(entry.href + entry.title[language]);
       results.push({ entry, score });
     }
   }
 
   results.sort((a, b) => b.score - a.score);
-  return results.slice(0, 6).map((r) => r.entry);
+  return results.slice(0, 8).map((r) => r.entry);
 }
 
 export function SearchTrigger({ onClick }: { onClick: () => void }) {
@@ -81,6 +83,7 @@ export function SearchTrigger({ onClick }: { onClick: () => void }) {
 
 export function SearchInput({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
+  const [dropdownRect, setDropdownRect] = useState<DOMRect | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
@@ -94,6 +97,7 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
 
   const handleClose = useCallback(() => {
     setQuery("");
+    setDropdownRect(null);
     onClose();
   }, [onClose]);
 
@@ -111,7 +115,10 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         handleClose();
       }
     }
@@ -119,7 +126,9 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [handleClose]);
 
-  return (
+  const showDropdown = query.trim().length >= 2;
+
+  const inputElement = (
     <motion.div
       key="search"
       ref={containerRef}
@@ -135,7 +144,18 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
           ref={inputRef}
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            const rect = e.target.getBoundingClientRect();
+            setDropdownRect(
+              DOMRect.fromRect({
+                x: rect.left,
+                y: rect.bottom + 8,
+                width: rect.width,
+                height: 0,
+              })
+            );
+          }}
           placeholder={t.placeholder}
           className="w-full h-9 pl-9 pr-3 text-sm bg-white/[0.06] border border-white/[0.12] rounded-full text-white placeholder:text-neutral-500 outline-none focus:border-white/[0.25] focus:bg-white/[0.08] transition-all duration-200"
         />
@@ -150,41 +170,56 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
       >
         <X className="h-3.5 w-3.5" />
       </motion.button>
-
-      <AnimatePresence>
-        {query.trim().length >= 2 && (
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.12 }}
-            className="absolute top-full mt-2 left-0 right-0 bg-[#111] border border-white/[0.1] rounded-xl shadow-2xl shadow-black/50 backdrop-blur-xl overflow-hidden z-50"
-          >
-            {results.length === 0 ? (
-              <div className="px-4 py-3 text-sm text-neutral-500">{t.noResults}</div>
-            ) : (
-              results.map((entry, i) => (
-                <Link
-                  key={entry.href + i}
-                  href={entry.href}
-                  onClick={() => handleClose()}
-                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/[0.06] transition-colors group"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">
-                      {entry.title[language]}
-                    </p>
-                    <p className="text-xs text-neutral-500 truncate">
-                      {entry.description[language]}
-                    </p>
-                  </div>
-                  <ArrowRight className="h-3.5 w-3.5 text-neutral-600 group-hover:text-white transition-colors shrink-0" />
-                </Link>
-              ))
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
+  );
+
+  const dropdown = showDropdown && dropdownRect && createPortal(
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, y: -4 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -4 }}
+        transition={{ duration: 0.12 }}
+        style={{
+          position: "fixed",
+          top: dropdownRect.y,
+          left: dropdownRect.x,
+          width: dropdownRect.width,
+          zIndex: 200,
+        }}
+        className="bg-[#111] border border-white/[0.1] rounded-xl shadow-2xl shadow-black/50 backdrop-blur-xl overflow-hidden"
+      >
+        {results.length === 0 ? (
+          <div className="px-4 py-3 text-sm text-neutral-500">{t.noResults}</div>
+        ) : (
+          results.map((entry, i) => (
+            <Link
+              key={entry.href + i}
+              href={entry.href}
+              onClick={() => handleClose()}
+              className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/[0.06] transition-colors group"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white truncate">
+                  {entry.title[language]}
+                </p>
+                <p className="text-xs text-neutral-500 truncate">
+                  {entry.description[language]}
+                </p>
+              </div>
+              <ArrowRight className="h-3.5 w-3.5 text-neutral-600 group-hover:text-white transition-colors shrink-0" />
+            </Link>
+          ))
+        )}
+      </motion.div>
+    </AnimatePresence>,
+    document.body
+  );
+
+  return (
+    <>
+      {inputElement}
+      {dropdown}
+    </>
   );
 }
