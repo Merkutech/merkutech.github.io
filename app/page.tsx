@@ -3,7 +3,7 @@
 import { SplineScene } from "@/components/ui/splite";
 import { motion, useScroll, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
   Layers, Zap, Users
@@ -246,36 +246,51 @@ export default function Home() {
 function TeamCarousel() {
   const { language } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const paused = useRef(false);
   const dragging = useRef(false);
   const startX = useRef(0);
-  const scrollLeft = useRef(0);
+  const startScroll = useRef(0);
+  const rafRef = useRef(0);
+  const speed = 0.8;
 
   const doubled = [...teamMembers, ...teamMembers];
 
-  const onDown = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!scrollRef.current) return;
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const tick = () => {
+      if (el && !paused.current && !dragging.current) {
+        el.scrollLeft += speed;
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft -= el.scrollWidth / 2;
+        }
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  const onDown = (clientX: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
     dragging.current = true;
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     startX.current = clientX;
-    scrollLeft.current = scrollRef.current.scrollLeft;
-    scrollRef.current.style.animationPlayState = "paused";
-    scrollRef.current.style.cursor = "grabbing";
-  }, []);
+    startScroll.current = el.scrollLeft;
+  };
 
-  const onMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!dragging.current || !scrollRef.current) return;
-    e.preventDefault();
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+  const onMove = (clientX: number) => {
+    const el = scrollRef.current;
+    if (!dragging.current || !el) return;
     const dx = startX.current - clientX;
-    scrollRef.current.scrollLeft = scrollLeft.current + dx;
-  }, []);
+    el.scrollLeft = startScroll.current + dx;
+  };
 
-  const onUp = useCallback(() => {
-    if (!scrollRef.current) return;
+  const onUp = () => {
     dragging.current = false;
-    scrollRef.current.style.animationPlayState = "running";
-    scrollRef.current.style.cursor = "";
-  }, []);
+  };
 
   return (
     <section className="relative py-20 md:py-28 overflow-hidden border-y border-white/[0.06]">
@@ -314,19 +329,21 @@ function TeamCarousel() {
 
       <div
         ref={scrollRef}
-        className="flex gap-4 px-5 sm:px-8 lg:px-12 overflow-x-auto scrollbar-none cursor-grab select-none animate-scroll"
-        onMouseDown={onDown}
-        onMouseMove={onMove}
+        className="flex gap-4 px-5 sm:px-8 lg:px-12 overflow-x-auto select-none"
+        style={{ scrollbarWidth: "none", cursor: "grab" }}
+        onMouseEnter={() => { paused.current = true; }}
+        onMouseLeave={() => { paused.current = false; dragging.current = false; }}
+        onMouseDown={(e) => onDown(e.clientX)}
+        onMouseMove={(e) => onMove(e.clientX)}
         onMouseUp={onUp}
-        onMouseLeave={onUp}
-        onTouchStart={onDown}
-        onTouchMove={onMove}
-        onTouchEnd={onUp}
+        onTouchStart={(e) => { paused.current = true; onDown(e.touches[0].clientX); }}
+        onTouchMove={(e) => onMove(e.touches[0].clientX)}
+        onTouchEnd={() => { paused.current = false; onUp(); }}
       >
         {doubled.map((member, i) => (
           <div
             key={`${member.id}-${i}`}
-            className="shrink-0 w-40 sm:w-48 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 flex flex-col items-center text-center gap-3"
+            className="shrink-0 w-40 sm:w-48 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 flex flex-col items-center text-center gap-3 pointer-events-none"
           >
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/[0.04] border border-primary/10 flex items-center justify-center overflow-hidden">
               {member.image ? (
@@ -350,16 +367,7 @@ function TeamCarousel() {
       </div>
 
       <style jsx>{`
-        @keyframes scroll-team {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          animation: scroll-team 40s linear infinite;
-          width: max-content;
-          scrollbar-width: none;
-        }
-        .animate-scroll::-webkit-scrollbar {
+        .overflow-x-auto::-webkit-scrollbar {
           display: none;
         }
       `}</style>
