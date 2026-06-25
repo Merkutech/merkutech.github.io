@@ -73,22 +73,20 @@ export default function BlogPage() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6, ease: easeOut }}
-          className="mt-10 flex items-center justify-center gap-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: easeOut }}
+          className="mt-8 flex items-center justify-center gap-2.5 text-neutral-500"
         >
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/15 bg-primary/[0.04]">
-            <motion.div
-              animate={{ rotate: [0, -8, 8, -8, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 2.5 }}
-            >
-              <PenLine className="h-4 w-4 text-primary/60" />
-            </motion.div>
-            <span className="text-sm text-primary/70 font-medium">
-              {language === "tr" ? "Yakında burada..." : "Coming soon..."}
-            </span>
-          </div>
+          <motion.div
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <PenLine className="h-3.5 w-3.5" />
+          </motion.div>
+          <span className="text-xs tracking-wide">
+            {language === "tr" ? "Yakında burada" : "Coming soon"}
+          </span>
         </motion.div>
       </div>
     </div>
