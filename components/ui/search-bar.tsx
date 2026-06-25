@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Search, X, ArrowRight, Globe, Users, Wrench, FileText, BookOpen, Hash } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { searchIndex, type SearchEntry } from "@/lib/search-index";
 
@@ -77,9 +76,7 @@ export function SearchTrigger({ onClick }: { onClick: () => void }) {
 export function SearchInput({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
-  const router = useRouter();
   const results = useMemo(() => searchEntries(query, language), [query, language]);
 
   const txt =
@@ -89,14 +86,6 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
 
   const close = useCallback(() => { setQuery(""); onClose(); }, [onClose]);
 
-  const go = useCallback((entry: SearchEntry) => {
-    const href = fullHref(entry);
-    const hash = href.includes("#") ? href.split("#")[1] : "";
-    close();
-    router.push(href);
-    if (hash) setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "center" }), 200);
-  }, [close, router]);
-
   useEffect(() => { inputRef.current?.focus(); }, []);
 
   useEffect(() => {
@@ -105,18 +94,10 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
     return () => document.removeEventListener("keydown", h);
   }, [close]);
 
-  useEffect(() => {
-    const h = (e: MouseEvent) => {
-      if (barRef.current && !barRef.current.contains(e.target as Node)) close();
-    };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
-  }, [close]);
-
   const show = query.trim().length >= 2;
 
   return (
-    <div ref={barRef} className="flex items-center gap-2 w-full">
+    <div className="flex items-center gap-2 w-full">
       <div className="relative flex-1">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-500" />
         <input
@@ -126,49 +107,41 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
           className="w-full h-8 pl-[34px] pr-3 text-xs bg-white/[0.04] border border-white/[0.1] rounded-full text-white placeholder:text-neutral-500 outline-none focus:border-white/[0.2] focus:bg-white/[0.06] transition-all duration-200"
         />
 
-        <AnimatePresence>
-          {show && (
-            <motion.div
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.15 }}
-                className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-2 border-white/[0.15] bg-card/95 backdrop-blur-2xl shadow-xl shadow-black/40 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
-              >
-                {results.length === 0 ? (
-                  <p className="px-4 py-6 text-center text-sm text-muted-foreground">{txt.empty}</p>
-                ) : (
-                  results.map((entry, i) => {
-                    const Icon = resultIcon(entry.href);
-                    const prev = i > 0 ? fullHref(results[i - 1]).split("#")[0] : "";
-                    const cur = fullHref(entry).split("#")[0];
-                    return (
-                      <div key={entry.href + (entry.hash || "") + i}>
-                        {i > 0 && prev !== cur && <div className="mx-4 border-t border-white/[0.08]" />}
-                        <button
-                          type="button" onClick={() => go(entry)}
-                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-foreground/[0.04] transition-colors text-left group"
-                        >
-                          <span className="w-8 h-8 rounded-lg bg-foreground/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-foreground/[0.08] group-hover:border-foreground/[0.14] transition-colors">
-                            <Icon className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                          </span>
-                          <span className="flex-1 min-w-0">
-                            <span className="block text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
-                              {entry.title[language]}
-                            </span>
-                            <span className="block text-xs text-muted-foreground truncate mt-0.5">
-                              {entry.description[language]}
-                            </span>
-                          </span>
-                          <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/50 group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0" />
-                        </button>
-                      </div>
-                    );
-                  })
-                )}
-              </motion.div>
-          )}
-        </AnimatePresence>
+        {show && (
+          <div className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-2 border-white/[0.15] bg-card/95 backdrop-blur-2xl shadow-xl shadow-black/40 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto">
+            {results.length === 0 ? (
+              <p className="px-4 py-6 text-center text-sm text-muted-foreground">{txt.empty}</p>
+            ) : (
+              results.map((entry, i) => {
+                const Icon = resultIcon(entry.href);
+                const prev = i > 0 ? fullHref(results[i - 1]).split("#")[0] : "";
+                const cur = fullHref(entry).split("#")[0];
+                return (
+                  <div key={entry.href + (entry.hash || "") + i}>
+                    {i > 0 && prev !== cur && <div className="mx-4 border-t border-white/[0.08]" />}
+                    <a
+                      href={fullHref(entry)}
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-foreground/[0.04] transition-colors text-left group"
+                    >
+                      <span className="w-8 h-8 rounded-lg bg-foreground/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-foreground/[0.08] group-hover:border-foreground/[0.14] transition-colors">
+                        <Icon className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                      </span>
+                      <span className="flex-1 min-w-0">
+                        <span className="block text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                          {entry.title[language]}
+                        </span>
+                        <span className="block text-xs text-muted-foreground truncate mt-0.5">
+                          {entry.description[language]}
+                        </span>
+                      </span>
+                      <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/50 group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0" />
+                    </a>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
       </div>
 
       <button
