@@ -10,7 +10,6 @@ function searchEntries(query: string, language: "tr" | "en"): SearchEntry[] {
   if (!query.trim() || query.trim().length < 2) return [];
   const seen = new Set<string>();
   const results: { entry: SearchEntry; score: number }[] = [];
-
   const qLower = query.toLowerCase();
   const terms = qLower.split(/\s+/);
 
@@ -75,7 +74,10 @@ export function SearchTrigger({ onClick }: { onClick: () => void }) {
 
 export function SearchInput({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const { language } = useLanguage();
   const results = useMemo(() => searchEntries(query, language), [query, language]);
 
@@ -84,15 +86,37 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
       ? { placeholder: "Ara...", empty: "Sonuç bulunamadı" }
       : { placeholder: "Search...", empty: "No results found" };
 
-  const close = useCallback(() => { setQuery(""); onClose(); }, [onClose]);
+  const close = useCallback(() => { setQuery(""); setActiveIndex(-1); onClose(); }, [onClose]);
 
   useEffect(() => { inputRef.current?.focus(); }, []);
 
   useEffect(() => {
-    const h = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
-    document.addEventListener("keydown", h);
-    return () => document.removeEventListener("keydown", h);
-  }, [close]);
+    if (activeIndex >= 0 && itemRefs.current[activeIndex]) {
+      itemRefs.current[activeIndex]?.scrollIntoView({ block: "nearest" });
+    }
+  }, [activeIndex]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (!results.length) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev < results.length - 1 ? prev + 1 : 0));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      e.preventDefault();
+      const entry = results[activeIndex];
+      if (entry) {
+        setQuery("");
+        onClose();
+        window.location.href = fullHref(entry);
+      }
+    } else if (e.key === "Escape") {
+      close();
+    }
+  }, [results, activeIndex, close, onClose]);
 
   const show = query.trim().length >= 2;
 
@@ -102,13 +126,21 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-500" />
         <input
           ref={inputRef} type="text" value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => { setQuery(e.target.value); setActiveIndex(-1); }}
+          onKeyDown={handleKeyDown}
           placeholder={txt.placeholder}
+          role="combobox"
+          aria-expanded={show}
+          aria-activedescendant={activeIndex >= 0 ? `search-result-${activeIndex}` : undefined}
           className="w-full h-8 pl-[34px] pr-3 text-xs bg-white/[0.04] border border-white/[0.1] rounded-full text-white placeholder:text-neutral-500 outline-none focus:border-white/[0.2] focus:bg-white/[0.06] transition-all duration-200"
         />
 
         {show && (
-          <div className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-2 border-white/[0.15] bg-card/95 backdrop-blur-2xl shadow-xl shadow-black/40 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto">
+          <div
+            ref={listRef}
+            role="listbox"
+            className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-2 border-white/[0.15] bg-card/95 backdrop-blur-2xl shadow-xl shadow-black/40 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
+          >
             {results.length === 0 ? (
               <p className="px-4 py-6 text-center text-sm text-muted-foreground">{txt.empty}</p>
             ) : (
@@ -120,8 +152,12 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
                   <div key={entry.href + (entry.hash || "") + i}>
                     {i > 0 && prev !== cur && <div className="mx-4 border-t border-white/[0.08]" />}
                     <a
+                      ref={(el) => { itemRefs.current[i] = el; }}
+                      id={`search-result-${i}`}
                       href={fullHref(entry)}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-foreground/[0.04] transition-colors text-left group"
+                      role="option"
+                      aria-selected={i === activeIndex}
+                      className={`w-full flex items-center gap-3 px-4 py-3 transition-colors text-left group ${i === activeIndex ? "bg-foreground/[0.06]" : "hover:bg-foreground/[0.04]"}`}
                     >
                       <span className="w-8 h-8 rounded-lg bg-foreground/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-foreground/[0.08] group-hover:border-foreground/[0.14] transition-colors">
                         <Icon className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -146,7 +182,8 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
 
       <button
         type="button" onClick={close}
-          className="shrink-0 h-8 w-8 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.16] transition-colors inline-flex items-center justify-center"
+        aria-label={language === "tr" ? "Kapat" : "Close"}
+        className="shrink-0 h-8 w-8 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.16] transition-colors inline-flex items-center justify-center"
       >
         <X className="h-3 w-3" />
       </button>
