@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, FileText, MessageCircle } from "lucide-react";
+import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, FileText, MessageCircle, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SearchTrigger, SearchInput } from "@/components/ui/search-bar";
@@ -77,6 +77,11 @@ function SocialIcon({ href, label, children }: { href: string; label: string; ch
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileTheme, setMobileTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    setMobileTheme(document.documentElement.classList.contains("light") ? "light" : "dark");
+  }, []);
   const pathname = usePathname();
   const { t, language, setLanguage } = useLanguage();
 
@@ -341,11 +346,45 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between rounded-2xl px-4 py-3 border border-border">
-                  <span className="text-sm text-muted-foreground">
-                    {language === "tr" ? "Görünüm" : "Appearance"}
-                  </span>
-                  <ThemeToggle />
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileTheme("light");
+                      const root = document.documentElement;
+                      root.classList.add("light"); root.classList.remove("dark");
+                      root.style.colorScheme = "light";
+                      const link = document.querySelector<HTMLLinkElement>("link[rel='icon'][data-theme-aware]");
+                      if (link) link.href = "/logo-black.png";
+                    }}
+                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
+                      mobileTheme === "light"
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
+                    }`}
+                  >
+                    <Sun className="h-4 w-4" />
+                    {language === "tr" ? "Açık" : "Light"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileTheme("dark");
+                      const root = document.documentElement;
+                      root.classList.remove("light"); root.classList.add("dark");
+                      root.style.colorScheme = "dark";
+                      const link = document.querySelector<HTMLLinkElement>("link[rel='icon'][data-theme-aware]");
+                      if (link) link.href = "/logo-white.png";
+                    }}
+                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
+                      mobileTheme === "dark"
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
+                    }`}
+                  >
+                    <Moon className="h-4 w-4" />
+                    {language === "tr" ? "Koyu" : "Dark"}
+                  </button>
                 </div>
               </div>
             </motion.div>
