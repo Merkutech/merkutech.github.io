@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
-import { Search, X, ArrowRight } from "lucide-react";
+import { Search, X, ArrowRight, Globe, Users, Wrench, FileText, BookOpen, Hash } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -38,6 +38,19 @@ function searchEntries(query: string, language: "tr" | "en"): SearchEntry[] {
 
   results.sort((a, b) => b.score - a.score);
   return results.slice(0, 8).map((r) => r.entry);
+}
+
+function entryIcon(href: string) {
+  if (href.startsWith("/team")) return Users;
+  if (href.startsWith("/suas")) return Wrench;
+  if (href.startsWith("/projelerimiz")) return Globe;
+  if (href.startsWith("/blog")) return FileText;
+  if (href.startsWith("/iletisim")) return Hash;
+  return BookOpen;
+}
+
+function entryHref(entry: SearchEntry): string {
+  return entry.hash ? `${entry.href}${entry.hash}` : entry.href;
 }
 
 export function SearchTrigger({ onClick }: { onClick: () => void }) {
@@ -187,29 +200,43 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
           width: dropdownRect.width,
           zIndex: 200,
         }}
-        className="bg-[#111] border border-white/[0.1] rounded-xl shadow-2xl shadow-black/50 backdrop-blur-xl overflow-hidden"
+        className="bg-[#0d0d0d] border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/60 backdrop-blur-2xl overflow-hidden max-h-[70vh] overflow-y-auto"
       >
         {results.length === 0 ? (
-          <div className="px-4 py-3 text-sm text-neutral-500">{t.noResults}</div>
+          <div className="px-5 py-6 text-center">
+            <p className="text-sm text-neutral-500">{t.noResults}</p>
+          </div>
         ) : (
-          results.map((entry, i) => (
-            <Link
-              key={entry.href + i}
-              href={entry.href}
-              onClick={() => handleClose()}
-              className="flex items-center gap-3 px-4 py-2.5 hover:bg-white/[0.06] transition-colors group"
-            >
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
-                  {entry.title[language]}
-                </p>
-                <p className="text-xs text-neutral-500 truncate">
-                  {entry.description[language]}
-                </p>
-              </div>
-              <ArrowRight className="h-3.5 w-3.5 text-neutral-600 group-hover:text-white transition-colors shrink-0" />
-            </Link>
-          ))
+          <div className="py-2">
+            {results.map((entry, i) => {
+              const Icon = entryIcon(entry.href);
+              const isFirstOfType =
+                i === 0 || results[i - 1].href.split("#")[0] !== entry.href.split("#")[0];
+              return (
+                <div key={entry.href + (entry.hash || "") + i}>
+                  {isFirstOfType && i > 0 && <div className="mx-4 my-1 border-t border-white/[0.04]" />}
+                  <Link
+                    href={entryHref(entry)}
+                    onClick={() => handleClose()}
+                    className="flex items-center gap-3.5 mx-2 px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0 group-hover:bg-white/[0.08] group-hover:border-white/[0.1] transition-colors">
+                      <Icon className="h-3.5 w-3.5 text-neutral-400 group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white group-hover:text-primary transition-colors truncate">
+                        {entry.title[language]}
+                      </p>
+                      <p className="text-[11px] text-neutral-500 truncate mt-0.5">
+                        {entry.description[language]}
+                      </p>
+                    </div>
+                    <ArrowRight className="h-3.5 w-3.5 text-neutral-700 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
         )}
       </motion.div>
     </AnimatePresence>,

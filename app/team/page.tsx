@@ -14,6 +14,7 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
   return (
     <motion.div
       ref={ref}
+      id={member.id}
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}

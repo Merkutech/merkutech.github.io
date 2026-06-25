@@ -220,7 +220,7 @@ export default function Suas2026Page() {
           </p>
         </div>
 
-        <section className="mb-16">
+        <section id="specs" className="mb-16">
           <div className="flex items-center gap-2 mb-6">
             <BookOpen className="h-4 w-4 text-primary/60" />
             <h2 className="text-lg font-semibold text-white">
@@ -239,7 +239,7 @@ export default function Suas2026Page() {
           </div>
         </section>
 
-        <section className="mb-16">
+        <section id="components" className="mb-16">
           <div className="flex items-center gap-2 mb-6">
             <Wrench className="h-4 w-4 text-primary/60" />
             <h2 className="text-lg font-semibold text-white">
@@ -272,7 +272,7 @@ export default function Suas2026Page() {
           </div>
         </section>
 
-        <section className="mb-16">
+        <section id="testing" className="mb-16">
           <div className="flex items-center gap-2 mb-6">
             <BookOpen className="h-4 w-4 text-primary/60" />
             <h2 className="text-lg font-semibold text-white">
@@ -287,7 +287,7 @@ export default function Suas2026Page() {
           </div>
         </section>
 
-        <section className="mb-16">
+        <section id="safety" className="mb-16">
           <div className="flex items-center gap-2 mb-6">
             <Shield className="h-4 w-4 text-primary/60" />
             <h2 className="text-lg font-semibold text-white">
