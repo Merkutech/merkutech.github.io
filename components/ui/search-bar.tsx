@@ -133,10 +133,10 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.15 }}
-                className="absolute top-full mt-2 left-0 right-0 rounded-2xl border border-white/[0.1] bg-white/[0.04] backdrop-blur-2xl shadow-xl shadow-black/40 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
+                className="absolute top-full mt-2 left-0 right-0 rounded-2xl border-[3px] border-[#1a2a5e] bg-[#0a1229] shadow-2xl shadow-[#1a2a5e]/15 overflow-hidden z-[200] max-h-[55vh] overflow-y-auto"
               >
                 {results.length === 0 ? (
-                  <p className="px-4 py-6 text-center text-sm text-neutral-500">{txt.empty}</p>
+                  <p className="px-4 py-6 text-center text-sm text-neutral-400">{txt.empty}</p>
                 ) : (
                   results.map((entry, i) => {
                     const Icon = resultIcon(entry.href);
@@ -147,16 +147,16 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
                         {i > 0 && prev !== cur && <div className="mx-4 border-t border-white/[0.06]" />}
                         <button
                           type="button" onClick={() => go(entry)}
-                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.05] transition-colors text-left group"
+                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.04] transition-colors text-left group"
                         >
-                          <span className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-white/[0.08] group-hover:border-white/[0.14] transition-colors">
+                          <span className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center shrink-0 group-hover:bg-white/[0.06] group-hover:border-white/[0.1] transition-colors">
                             <Icon className="h-3.5 w-3.5 text-neutral-400 group-hover:text-white transition-colors" />
                           </span>
                           <span className="flex-1 min-w-0">
                             <span className="block text-sm font-medium text-white group-hover:text-primary transition-colors truncate">
                               {entry.title[language]}
                             </span>
-                            <span className="block text-xs text-neutral-500 truncate mt-0.5">
+                            <span className="block text-xs text-neutral-400 truncate mt-0.5">
                               {entry.description[language]}
                             </span>
                           </span>
@@ -173,7 +173,7 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
 
       <button
         type="button" onClick={close}
-        className="shrink-0 h-8 w-8 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.16] transition-colors inline-flex items-center justify-center"
+          className="shrink-0 h-8 w-8 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.16] transition-colors inline-flex items-center justify-center"
       >
         <X className="h-3 w-3" />
       </button>
