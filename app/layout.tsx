@@ -40,6 +40,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#0a0a0a" />
         <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <link rel="prefetch" as="fetch" href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

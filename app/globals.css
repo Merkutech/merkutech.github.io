@@ -168,6 +168,7 @@
 /* Spline canvas — temaya duyarlı arka plan */
 .spline-scene-container canvas {
   background-color: transparent !important;
+  image-rendering: auto;
 }
 
 /* ===== UTILİTY SINIFLAR ===== */
