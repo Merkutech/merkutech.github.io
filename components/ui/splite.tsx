@@ -24,6 +24,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   const splineRef = useRef<SplineRuntime | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [shouldLoad, setShouldLoad] = useState(false)
+  const [visible, setVisible] = useState(false)
 
   const syncBackground = useCallback(() => {
     splineRef.current?.setBackgroundColor?.(getThemeBackground())
@@ -52,7 +53,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     if (!el) return
 
     if (typeof IntersectionObserver === 'undefined') {
-      setShouldLoad(true)
+      queueMicrotask(() => setShouldLoad(true))
       return
     }
 
@@ -60,7 +61,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setShouldLoad(true)
+            setVisible(true)
             io.disconnect()
             break
           }
@@ -73,6 +74,40 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     return () => io.disconnect()
   }, [shouldLoad])
 
+  useEffect(() => {
+    if (!visible) return
+
+    let cancelled = false
+    const ric = (window as unknown as {
+      requestIdleCallback?: (cb: () => void) => number
+    }).requestIdleCallback
+
+    let handle: number
+    if (typeof ric === 'function') {
+      handle = ric(() => {
+        if (cancelled) return
+        window.setTimeout(() => {
+          if (!cancelled) setShouldLoad(true)
+        }, 600)
+      })
+    } else {
+      handle = window.setTimeout(() => {
+        if (!cancelled) setShouldLoad(true)
+      }, 1200) as unknown as number
+    }
+
+    return () => {
+      cancelled = true
+      const cic = (window as unknown as { cancelIdleCallback?: (h: number) => void })
+        .cancelIdleCallback
+      if (typeof cic === 'function' && typeof ric === 'function') {
+        cic(handle)
+      } else {
+        window.clearTimeout(handle)
+      }
+    }
+  }, [visible])
+
   return (
     <div
       ref={containerRef}
@@ -83,6 +118,20 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         willChange: 'transform',
       }}
     >
+      {!shouldLoad && (
+        <div
+          aria-hidden
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <div
+            className="absolute inset-0 opacity-60"
+            style={{
+              background:
+                'radial-gradient(closest-side, color-mix(in srgb, var(--foreground) 8%, transparent), transparent 70%)',
+            }}
+          />
+        </div>
+      )}
       <Suspense
         fallback={
           <div className="w-full h-full flex items-center justify-center bg-background">

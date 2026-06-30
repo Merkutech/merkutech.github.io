@@ -120,6 +120,12 @@
   }
 }
 
+/* Off-screen heavy sections — defer paint/layout for below-fold content */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
 /* ===== ANİMASYONLAR ===== */
 
 @keyframes pulse-glow {

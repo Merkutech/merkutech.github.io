@@ -78,6 +78,10 @@ export default function ProjelerimizPage() {
                         <img
                           src={project.image}
                           alt={tr.title}
+                          width={1280}
+                          height={720}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
                         />
                       </div>
@@ -177,6 +181,10 @@ export default function ProjelerimizPage() {
                 <img
                   src="/4.jpg"
                   alt="Merkutech Ekibi"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>

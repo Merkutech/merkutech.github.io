@@ -37,8 +37,17 @@ export default function RootLayout({
       <head>
         <title>MCT SENSOR Merkutech</title>
         <meta name="description" content="Istanbul Arel University Merkutech Robotics and Technology Club — SUAS 2026" />
+        <meta name="theme-color" content="#0a0a0a" />
+        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <link rel="preconnect" href="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <script defer src="https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com/script.js" data-website-id="0de9e7f8-36ed-453c-bcc2-301905e1bc56" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=function(){var s=document.createElement('script');s.defer=true;s.src='https://umami-x7rusnpsmhmu5aj8gy6wfrb2.erencakar.com/script.js';s.setAttribute('data-website-id','0de9e7f8-36ed-453c-bcc2-301905e1bc56');document.body.appendChild(s);};if('requestIdleCallback'in window){requestIdleCallback(l,{timeout:3500});}else{setTimeout(l,2500);}})();`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 transition-colors duration-300">
         <a

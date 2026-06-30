@@ -9,12 +9,18 @@ type SpotlightProps = {
   springOptions?: SpringOptions;
 };
 
+function hasCoarsePointer() {
+  if (typeof window === 'undefined' || !window.matchMedia) return false;
+  return window.matchMedia('(pointer: coarse)').matches;
+}
+
 export function SpotlightCursor({
   className,
   size = 200,
-  springOptions = { bounce: 0 },
+  springOptions = { bounce: 0, stiffness: 220, damping: 28, mass: 0.6 },
 }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null);
 
@@ -23,6 +29,15 @@ export function SpotlightCursor({
 
   const spotlightLeft = useTransform(mouseX, (x) => `${x - size / 2}px`);
   const spotlightTop = useTransform(mouseY, (y) => `${y - size / 2}px`);
+
+  useEffect(() => {
+    if (hasCoarsePointer()) return;
+    const mq = window.matchMedia('(pointer: coarse)');
+    const onChange = () => setEnabled(!mq.matches);
+    onChange();
+    mq.addEventListener?.('change', onChange);
+    return () => mq.removeEventListener?.('change', onChange);
+  }, []);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -46,12 +61,12 @@ export function SpotlightCursor({
   );
 
   useEffect(() => {
-    if (!parentElement) return;
+    if (!parentElement || !enabled) return;
 
     const handleEnter = () => setIsHovered(true);
     const handleLeave = () => setIsHovered(false);
 
-    parentElement.addEventListener('mousemove', handleMouseMove);
+    parentElement.addEventListener('mousemove', handleMouseMove, { passive: true });
     parentElement.addEventListener('mouseenter', handleEnter);
     parentElement.addEventListener('mouseleave', handleLeave);
 
@@ -60,7 +75,9 @@ export function SpotlightCursor({
       parentElement.removeEventListener('mouseenter', handleEnter);
       parentElement.removeEventListener('mouseleave', handleLeave);
     };
-  }, [parentElement, handleMouseMove]);
+  }, [parentElement, handleMouseMove, enabled]);
+
+  if (!enabled) return null;
 
   return (
     <motion.div

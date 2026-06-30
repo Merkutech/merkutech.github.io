@@ -1,7 +1,7 @@
 'use client'
 
 import { SplineScene } from "@/components/ui/splite";
-import { motion, useScroll, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
@@ -20,17 +20,26 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
    ═══════════════════════════════════════ */
 
 export default function Home() {
-  const { scrollYProgress } = useScroll();
   const { t } = useLanguage();
 
   return (
     <div className="flex flex-col">
 
-      {/* Scroll Progress */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-foreground/30 z-[100] origin-left"
-        style={{ scaleX: scrollYProgress }}
-      />
+      {/* Scroll Progress (CSS-only, no scroll listener) */}
+      <div
+        aria-hidden
+        className="fixed top-0 left-0 right-0 h-[2px] bg-foreground/20 z-[100] origin-left pointer-events-none"
+      >
+        <div
+          className="h-full w-full bg-foreground/60 origin-left"
+          style={{
+            transform: 'scaleX(var(--scroll, 0))',
+            transition: 'transform 80ms linear',
+            willChange: 'transform',
+          }}
+        />
+        <ScrollProgressDriver />
+      </div>
 
       {/* HERO */}
       <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
@@ -98,7 +107,7 @@ export default function Home() {
       <SponsorsSection />
 
       {/* BİZ KİMİZ — Ana Sayfa */}
-      <section className="relative py-24 md:py-32 border-y border-white/[0.06]">
+      <section className="relative py-24 md:py-32 border-y border-white/[0.06] cv-auto">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
@@ -164,6 +173,10 @@ export default function Home() {
                 <img
                   src="/4.jpg"
                   alt="Merkutech Ekibi"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -176,7 +189,7 @@ export default function Home() {
       <TeamCarousel />
 
       {/* PROJELER */}
-      <section className="relative py-24 md:py-32">
+      <section className="relative py-24 md:py-32 cv-auto">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
@@ -203,7 +216,7 @@ export default function Home() {
       </section>
 
       {/* NE YAPIYORUZ */}
-      <section className="relative py-24 md:py-32">
+      <section className="relative py-24 md:py-32 cv-auto">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="mb-4">
             <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.areas.label}</p>
@@ -239,6 +252,34 @@ export default function Home() {
   );
 }
 
+/* Scroll progress — passive listener, writes CSS var without re-render */
+function ScrollProgressDriver() {
+  useEffect(() => {
+    let ticking = false;
+    const update = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const p = max > 0 ? doc.scrollTop / max : 0;
+      doc.style.setProperty('--scroll', String(Math.min(1, Math.max(0, p))));
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+  return null;
+}
+
 /* ═══════════════════════════════════════
    ANİMASYON BİLEŞENLERİ
    ═══════════════════════════════════════ */
@@ -246,8 +287,10 @@ export default function Home() {
 function TeamCarousel() {
   const { language } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const paused = useRef(false);
   const dragging = useRef(false);
+  const inView = useRef(false);
   const startX = useRef(0);
   const startScroll = useRef(0);
   const rafRef = useRef(0);
@@ -257,10 +300,32 @@ function TeamCarousel() {
 
   useEffect(() => {
     const el = scrollRef.current;
+    const section = sectionRef.current;
+    if (!el || !section) return;
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            inView.current = entry.isIntersecting;
+          }
+        },
+        { rootMargin: '100px' }
+      );
+      io.observe(section);
+      return () => io.disconnect();
+    }
+    inView.current = true;
+    return undefined;
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
     if (!el) return;
 
+    let running = false;
     const tick = () => {
-      if (el && !paused.current && !dragging.current) {
+      if (el && inView.current && !paused.current && !dragging.current) {
         el.scrollLeft += speed;
         if (el.scrollLeft >= el.scrollWidth / 2) {
           el.scrollLeft -= el.scrollWidth / 2;
@@ -268,9 +333,32 @@ function TeamCarousel() {
       }
       rafRef.current = requestAnimationFrame(tick);
     };
-    rafRef.current = requestAnimationFrame(tick);
 
-    return () => cancelAnimationFrame(rafRef.current);
+    const start = () => {
+      if (running) return;
+      running = true;
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(rafRef.current);
+    };
+
+    const visIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) start();
+          else stop();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    visIo.observe(el);
+
+    return () => {
+      visIo.disconnect();
+      stop();
+    };
   }, []);
 
   const onDown = (clientX: number) => {
@@ -293,7 +381,7 @@ function TeamCarousel() {
   };
 
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden border-y border-white/[0.06]">
+    <section ref={sectionRef} className="relative py-20 md:py-28 overflow-hidden border-y border-white/[0.06] cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-10">
         <motion.span
           initial={{ opacity: 0, filter: "blur(8px)" }}
@@ -350,6 +438,10 @@ function TeamCarousel() {
                 <img
                   src={member.image}
                   alt={member.name}
+                  width={96}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -414,9 +506,9 @@ function SponsorsSection() {
   const { t } = useLanguage();
 
   return (
-    <section
+      <section
       ref={ref}
-      className="relative py-20 md:py-24 border-b border-white/[0.06] overflow-hidden"
+      className="relative py-20 md:py-24 border-b border-white/[0.06] overflow-hidden cv-auto"
     >
       <motion.div
         aria-hidden
@@ -484,6 +576,10 @@ function SponsorsSection() {
                       <img
                         src={sponsor.logo}
                         alt={sponsor.name}
+                        width={240}
+                        height={144}
+                        loading="lazy"
+                        decoding="async"
                         className="max-h-full max-w-full object-contain"
                       />
                     </div>
@@ -617,6 +713,10 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
           <motion.img
             src={project.image}
             alt={tr.title}
+            width={640}
+            height={400}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
             initial={{ clipPath: "inset(0 100% 0 0)" }}
             animate={isInView ? { clipPath: "inset(0 0% 0 0)" } : {}}
@@ -641,7 +741,7 @@ function ProcessSection() {
   const steps = t.home.process.steps;
 
   return (
-    <section ref={ref} className="relative py-32 md:py-40 border-t border-white/[0.06] overflow-hidden">
+    <section ref={ref} className="relative py-32 md:py-40 border-t border-white/[0.06] overflow-hidden cv-auto">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="text-center mb-20">
           <BlurFade>
