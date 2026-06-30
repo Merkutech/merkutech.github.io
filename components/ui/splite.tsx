@@ -64,51 +64,23 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   }, [syncBackground])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    let cancelled = false
-
-    const startLoad = () => {
-      if (cancelled || shouldLoad) return
-      setShouldLoad(true)
-    }
-
+    if (shouldLoad || typeof window === 'undefined') return
     const el = containerRef.current
-    if (!el) {
-      startLoad()
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setShouldLoad(true)
       return
     }
-
-    if (typeof IntersectionObserver === 'undefined') {
-      startLoad()
-      return
-    }
-
     const io = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback
-            if (typeof ric === 'function') {
-              ric(() => startLoad(), { timeout: 800 })
-            } else {
-              window.setTimeout(startLoad, 120)
-            }
-            io.disconnect()
-            break
-          }
+        if (entries.some((e) => e.isIntersecting)) {
+          setShouldLoad(true)
+          io.disconnect()
         }
       },
-      { rootMargin: '400px' }
+      { rootMargin: '600px' }
     )
     io.observe(el)
-
-    const safety = window.setTimeout(startLoad, 2500)
-
-    return () => {
-      cancelled = true
-      io.disconnect()
-      window.clearTimeout(safety)
-    }
+    return () => io.disconnect()
   }, [shouldLoad])
 
   return (
@@ -124,7 +96,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       <Suspense fallback={null}>
         {shouldLoad ? (
           <div
-            className="absolute inset-0 transition-opacity duration-700 ease-out"
+            className="absolute inset-0 transition-opacity duration-500 ease-out"
             style={{ opacity: isReady ? 1 : 0 }}
           >
             <Spline
