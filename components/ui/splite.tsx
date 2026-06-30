@@ -1,7 +1,7 @@
 'use client'
 
-import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
-const Spline = lazy(() => import('@splinetool/react-spline'))
+import { useCallback, useEffect, useRef, useState } from 'react'
+import Spline from '@splinetool/react-spline'
 
 interface SplineSceneProps {
   scene: string
@@ -35,7 +35,6 @@ function isLowPowerDevice() {
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const splineRef = useRef<SplineRuntime | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const [shouldLoad, setShouldLoad] = useState(false)
   const [isReady, setIsReady] = useState(false)
 
   const syncBackground = useCallback(() => {
@@ -63,26 +62,6 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     return () => observer.disconnect()
   }, [syncBackground])
 
-  useEffect(() => {
-    if (shouldLoad || typeof window === 'undefined') return
-    const el = containerRef.current
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      setShouldLoad(true)
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShouldLoad(true)
-          io.disconnect()
-        }
-      },
-      { rootMargin: '600px' }
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [shouldLoad])
-
   return (
     <div
       ref={containerRef}
@@ -93,22 +72,18 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         willChange: 'transform',
       }}
     >
-      <Suspense fallback={null}>
-        {shouldLoad ? (
-          <div
-            className="absolute inset-0 transition-opacity duration-500 ease-out"
-            style={{ opacity: isReady ? 1 : 0 }}
-          >
-            <Spline
-              scene={scene}
-              className={className}
-              onLoad={onLoad}
-              renderOnDemand
-              style={{ width: '100%', height: '100%' }}
-            />
-          </div>
-        ) : null}
-      </Suspense>
+      <div
+        className="absolute inset-0 transition-opacity duration-500 ease-out"
+        style={{ opacity: isReady ? 1 : 0 }}
+      >
+        <Spline
+          scene={scene}
+          className={className}
+          onLoad={onLoad}
+          renderOnDemand
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
     </div>
   )
 }
