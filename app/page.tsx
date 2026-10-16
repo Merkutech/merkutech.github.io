@@ -51,6 +51,8 @@ export default function Home() {
             transition={{ duration: 0.9, ease: easeOut }}
             className="order-2 lg:order-1 flex flex-col items-start max-w-xl text-center sm:text-left mx-auto lg:mx-0"
           >
+            <RecruitingBadge />
+
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter">
               {t.home.brand}
             </h1>
@@ -496,6 +498,30 @@ function MarqueeSection() {
         ))}
       </div>
     </section>
+  );
+}
+
+/* Recruiting Badge */
+function RecruitingBadge() {
+  const { t } = useLanguage();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
+      className="mb-6 sm:mb-8 self-center sm:self-start"
+    >
+      <Link href="/basvuru/" className="group inline-flex items-stretch text-left">
+        <span className="inline-flex items-center gap-2 bg-white text-black px-3.5 py-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-[0.18em] transition-colors group-hover:bg-neutral-200">
+          {t.home.recruiting.badge}
+          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </span>
+        <span className="hidden sm:inline-flex items-center border border-l-0 border-white/20 px-3.5 text-xs font-mono text-neutral-400 group-hover:text-white transition-colors">
+          {t.home.recruiting.teams}
+        </span>
+      </Link>
+    </motion.div>
   );
 }
 

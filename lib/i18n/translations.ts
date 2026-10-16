@@ -17,6 +17,10 @@ export const translations = {
       subtitle: "İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü",
       description:
         "Robotik, otonom sistemler, drone teknolojileri ve yapay zeka alanlarında projeler üreten; Teknofest ve uluslararası yarışmalara katılan bir öğrenci topluluğu.",
+      recruiting: {
+        badge: "Başvurular açık",
+        teams: "Aviyonik / Mekanik / Yazılım / Tanıtım",
+      },
       heroCta: {
         projects: "Projelerimiz",
         contact: "İletişim",
@@ -86,7 +90,7 @@ export const translations = {
       title: "Bize Ulaşın",
       description: "Tüm sosyal medya hesaplarımız ve iletişim kanallarımız burada. Takip et, bize katıl.",
       links: [
-        { name: "Takıma Başvur", handle: "Google Form" },
+        { name: "Takıma Başvur", handle: "Aviyonik · Mekanik · Yazılım · Tanıtım" },
         { name: "Arel Savunma Sanayi Kulübü WhatsApp Grubu", handle: "WhatsApp Community" },
         { name: "Merkutech Instagram", handle: "@merkutech" },
         { name: "Arel Savunma Sanayi Kulübü Instagram", handle: "@arelsavunma" },
@@ -129,6 +133,10 @@ export const translations = {
       subtitle: "Istanbul Arel University Robotics and Technology Club",
       description:
         "A student community producing projects in robotics, autonomous systems, drone technologies and artificial intelligence; participating in Teknofest and international competitions.",
+      recruiting: {
+        badge: "Applications open",
+        teams: "Avionics / Mechanical / Software / Promotion",
+      },
       heroCta: {
         projects: "Projects",
         contact: "Contact",
@@ -198,7 +206,7 @@ export const translations = {
       title: "Contact Us",
       description: "All our social media accounts and communication channels are here. Follow us, join us.",
       links: [
-        { name: "Apply to Team", handle: "Google Form" },
+        { name: "Apply to Team", handle: "Avionics · Mechanical · Software · Promotion" },
         { name: "Arel Defense Industry Club WhatsApp Group", handle: "WhatsApp Community" },
         { name: "Merkutech Instagram", handle: "@merkutech" },
         { name: "Arel Defense Industry Club Instagram", handle: "@arelsavunma" },

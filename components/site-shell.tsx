@@ -10,8 +10,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { SearchTrigger, SearchInput } from "@/components/ui/search-bar";
 import { useLanguage } from "@/lib/i18n/language-context";
 
-const APPLY_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform";
+const APPLY_URL = "/basvuru/";
 
 function FlagTR() {
   return (
@@ -208,8 +207,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                     <ThemeToggle />
                     <motion.a
                       href={APPLY_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.97 }}
                       className="site-header-cta inline-flex items-center px-3 py-1.5 rounded-full bg-white text-black text-[10px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
@@ -329,8 +326,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <div className="shrink-0 px-4 pb-4 pt-2 border-t border-border space-y-3">
                 <a
                   href={APPLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
                   className="flex items-center justify-center gap-2 rounded-2xl px-4 py-3.5 bg-foreground text-background text-[15px] font-semibold hover:bg-foreground/90 transition-colors"
                 >
                   {t.cta.apply}
@@ -450,7 +446,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] text-neutral-500">
-            <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.apply}</a>
+            <a href={APPLY_URL} className="hover:text-white transition-colors">{t.footer.apply}</a>
             <span className="text-neutral-800">·</span>
             <a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.whatsapp}</a>
             <span className="text-neutral-800">·</span>

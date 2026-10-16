@@ -15,7 +15,7 @@ function pageIndex(): SearchEntry[] {
       href: "/",
       title: { tr: "Ana Sayfa", en: "Home" },
       description: { tr: "İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü", en: "Istanbul Arel University Robotics and Technology Club" },
-      content: { tr: "robotik otonom sistemler drone teknolojileri yapay zeka projeler Teknofest uluslararası yarışmalar ROS OpenCV Python TensorFlow PyTorch Computer Vision MAVLink DroneKit Swarm AI STM32 Arduino Embedded C SolidWorks AutoCAD Gazebo gömülü sistemler 3D modelleme keşfet öğren üret başarılar Teknofest Şampiyonlar Ligi Şampiyonu SUAS AUVSI sponsorlar MCT Sensor MCT Technic Demsay Robomer çalışma alanları İstanbul Arel Üniversitesi", en: "robotics autonomous systems drone technologies artificial intelligence projects Teknofest international competitions ROS OpenCV Python TensorFlow PyTorch Computer Vision MAVLink DroneKit Swarm AI STM32 Arduino Embedded C SolidWorks AutoCAD Gazebo embedded systems 3D modeling explore learn build achievements Teknofest Champions League Champion SUAS AUVSI sponsors MCT Sensor MCT Technic Demsay Robomer work areas Istanbul Arel University" },
+      content: { tr: "robotik otonom sistemler drone teknolojileri yapay zeka projeler Teknofest uluslararası yarışmalar ROS OpenCV Python TensorFlow PyTorch Computer Vision MAVLink DroneKit Swarm AI STM32 Arduino Embedded C SolidWorks AutoCAD Gazebo gömülü sistemler 3D modelleme keşfet öğren üret başarılar Teknofest Şampiyonlar Ligi Şampiyonu SUAS AUVSI sponsorlar MCT Sensor MCT Technic Würth Ekom Robomer çalışma alanları İstanbul Arel Üniversitesi", en: "robotics autonomous systems drone technologies artificial intelligence projects Teknofest international competitions ROS OpenCV Python TensorFlow PyTorch Computer Vision MAVLink DroneKit Swarm AI STM32 Arduino Embedded C SolidWorks AutoCAD Gazebo embedded systems 3D modeling explore learn build achievements Teknofest Champions League Champion SUAS AUVSI sponsors MCT Sensor MCT Technic Würth Ekom Robomer work areas Istanbul Arel University" },
     },
     {
       href: "/projelerimiz",
@@ -34,6 +34,12 @@ function pageIndex(): SearchEntry[] {
       title: { tr: "Ekibimiz", en: "Our Team" },
       description: { tr: "Merkutech takım üyeleri", en: "Merkutech team members" },
       content: { tr: teamMembers.map((m) => `${m.name} ${m.role.tr}`).join(" ") + " takım üyeler ekip üyeleri roller", en: teamMembers.map((m) => `${m.name} ${m.role.en}`).join(" ") + " team members crew roles" },
+    },
+    {
+      href: "/basvuru",
+      title: { tr: "Takıma Başvur", en: "Apply to the Team" },
+      description: { tr: "Aviyonik, mekanik, yazılım, tanıtım ve sponsorluk ekiplerine başvuru", en: "Apply to the avionics, mechanical, software, promotion and sponsorship teams" },
+      content: { tr: "başvuru başvur form takım ekip aviyonik elektronik mekanik yazılım tanıtım sponsorluk", en: "application apply form team avionics electronics mechanical software promotion sponsorship" },
     },
     {
       href: "/blog",

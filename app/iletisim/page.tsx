@@ -9,7 +9,7 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const linkConfigs = [
   {
-    href: "https://docs.google.com/forms/d/e/1FAIpQLSckYuTY80b2k3wLRspS8xys9TvVyKRoC-WZcsM65g-3LchyWA/closedform",
+    href: "/basvuru/",
     icon: <ArrowUpRight className="h-5 w-5" />,
   },
   {
@@ -106,8 +106,7 @@ export default function IletisimPage() {
               <motion.a
                 key={config.href}
                 href={config.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(config.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease: easeOut }}
