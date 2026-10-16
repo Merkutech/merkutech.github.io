@@ -532,3 +532,42 @@ div:has(> a[href*="spline"]) {
 :root.light body .site-footer [class*="bg-white/"] {
   background-color: rgba(255, 255, 255, 0.06) !important;
 }
+
+/* Başvuru sayfası — ekip animasyonları */
+@keyframes apply-wave { to { transform: translateX(-40px); } }
+@keyframes apply-blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.15; } }
+@keyframes apply-spin { to { transform: rotate(360deg); } }
+@keyframes apply-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes apply-caret { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+@keyframes apply-ripple {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes apply-float {
+  0% { opacity: 0; transform: translateY(8px) scale(0.6); }
+  25% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-26px) scale(0.9); }
+}
+
+.apply-wave { animation: apply-wave 1.6s linear infinite; }
+.apply-blink { animation: apply-blink 1.2s steps(1) infinite; }
+.apply-spin, .apply-spin-rev { transform-origin: 0 0; }
+.apply-spin { animation: apply-spin 12s linear infinite; }
+.apply-spin-rev { animation: apply-spin-rev 8s linear infinite; }
+.apply-caret { animation: apply-caret 1s steps(1) infinite; }
+.apply-ripple { animation: apply-ripple 1.8s ease-out infinite; }
+.apply-float { transform-box: fill-box; transform-origin: center; animation: apply-float 2.4s ease-out infinite; }
+
+/* Üstüne gelince hızlansın */
+.group:hover .apply-wave { animation-duration: 0.8s; }
+.group:hover .apply-spin { animation-duration: 4s; }
+.group:hover .apply-spin-rev { animation-duration: 2.667s; }
+.group:hover .apply-ripple { animation-duration: 1.1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .apply-wave, .apply-blink, .apply-spin, .apply-spin-rev, .apply-caret, .apply-ripple, .apply-float {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { applicationTeams } from "@/lib/applications";
+import { TeamAnimation } from "./team-animations";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -30,7 +31,8 @@ const copy = {
 
 export default function BasvuruPage() {
   const { language } = useLanguage();
-  const c = copy[language as "tr" | "en"];
+  const lang = language as "tr" | "en";
+  const c = copy[lang];
 
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-24">
@@ -87,7 +89,7 @@ export default function BasvuruPage() {
           {c.pick}
         </p>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-l border-white/[0.1]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-white/[0.1]">
           {applicationTeams.map((team, i) => (
             <motion.a
               key={team.id}
@@ -99,7 +101,7 @@ export default function BasvuruPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: easeOut }}
-              className="group relative flex flex-col justify-between min-h-56 sm:min-h-72 lg:min-h-96 p-4 sm:p-6 border-r border-b border-white/[0.1] overflow-hidden"
+              className="group relative flex flex-col justify-between p-4 sm:p-6 lg:p-7 border-r border-b border-white/[0.1] overflow-hidden"
             >
               <span
                 aria-hidden
@@ -110,11 +112,20 @@ export default function BasvuruPage() {
                 {String(i + 1).padStart(2, "0")}
               </span>
 
+              <div className="relative flex-1 flex items-center py-6 sm:py-8">
+                <div className="w-full max-w-[11rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
+                  <TeamAnimation id={team.id} />
+                </div>
+              </div>
+
               <div className="relative">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tighter leading-[1.05] text-foreground group-hover:text-background transition-colors duration-500">
-                  {team.title[language as "tr" | "en"]}
+                  {team.title[lang]}
                 </h2>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-muted-foreground group-hover:text-background transition-colors duration-500">
+                <p className="mt-3 text-xs sm:text-sm leading-relaxed text-muted-foreground group-hover:text-background/70 transition-colors duration-500">
+                  {team.description[lang]}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-foreground group-hover:text-background transition-colors duration-500">
                   {c.form}
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
