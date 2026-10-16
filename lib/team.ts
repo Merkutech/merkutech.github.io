@@ -69,6 +69,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "irem-yaman",
     name: "İrem YAMAN",
+    image: "/team/irem-yaman.png",
     role: { tr: "Tanıtım ve Sponsorluk Ekip Üyesi", en: "Promotion & Sponsorship Team Member" },
     bio: { tr: "", en: "" },
   },
