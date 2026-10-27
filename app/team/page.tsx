@@ -20,7 +20,7 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.45, delay: (index % 4) * 0.05, ease: easeOut }}
-      className="group scroll-mt-28 flex h-full flex-1 flex-col items-center text-center rounded-2xl border border-border bg-card/40 px-4 pt-6 pb-5 transition-colors duration-300 hover:border-foreground/15 hover:bg-card/70"
+      className="group scroll-mt-28 flex h-full flex-1 flex-col items-center text-center rounded-2xl bg-foreground/[0.03] px-4 pt-6 pb-5 transition-colors duration-300 hover:bg-foreground/[0.06]"
     >
       <div className="team-avatar h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-full border border-border transition-transform duration-500 group-hover:scale-[1.03]">
         {member.image ? (
@@ -71,13 +71,11 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
   );
 }
 
-// Her yerde aynı ızgara: tüm kartlar aynı genişlikte
-const CARD_GRID = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4";
-// Izgaradaki bir sütunun genişliği (yukarıdaki sütun sayısı ve boşluklarla eşleşir)
+// Her kart aynı genişlikte: 2 / 3 / 4 sütunluk bir ızgaranın tek sütunu
 const CARD_WIDTH = "w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]";
 
 function GroupTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="eyebrow mb-4">{children}</h2>;
+  return <h2 className="eyebrow mb-5 w-full justify-center">{children}</h2>;
 }
 
 export default function TeamPage() {
@@ -110,18 +108,18 @@ export default function TeamPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: easeOut }}
-          className="max-w-2xl"
+          className="max-w-2xl mx-auto text-center"
         >
           <p className="eyebrow">{c.label}</p>
           <h1 className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.045em] text-foreground">{c.title}</h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>
 
-        <div className="mt-12">
-          {/* Tek kişilik ekipler aynı satırda ama ayrı ekip oldukları belli olsun:
-              kart genişliği ızgarayla aynı, aralarında geniş boşluk var */}
+        <div className="mt-14 space-y-14 md:space-y-20">
+          {/* Tek kişilik ekipler aynı satırda, ortada; aralarındaki boşluk
+              ekip içindeki boşluktan geniş ki ayrı ekipler oldukları belli olsun */}
           {singles.length > 0 && (
-            <div className="flex flex-wrap gap-8 lg:justify-between py-8 md:py-10">
+            <div className="flex flex-wrap justify-center gap-x-10 lg:gap-x-16 gap-y-10">
               {singles.map((group) => (
                 <section key={group.id} id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
                   <GroupTitle>{group.title[lang]}</GroupTitle>
@@ -132,11 +130,13 @@ export default function TeamPage() {
           )}
 
           {multis.map((group) => (
-            <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 py-8 md:py-10">
+            <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28">
               <GroupTitle>{group.title[lang]}</GroupTitle>
-              <div className={CARD_GRID}>
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
                 {group.members.map((member, i) => (
-                  <MemberCard key={member.id} member={member} index={i} />
+                  <div key={member.id} className={`flex ${CARD_WIDTH}`}>
+                    <MemberCard member={member} index={i} />
+                  </div>
                 ))}
               </div>
             </section>
