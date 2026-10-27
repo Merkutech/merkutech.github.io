@@ -773,7 +773,7 @@ function TeamsSection() {
     <section className="relative py-24 md:py-32 border-t border-border cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <BlurFade>
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground mb-3">{c.label}</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">{c.label}</p>
         </BlurFade>
         <BlurFade delay={0.1} className="mb-12">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h2>
