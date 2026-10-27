@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Users, Mail } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { teamGroups, teamMembers } from "@/lib/team";
+import { teamMembers } from "@/lib/team";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -74,10 +74,6 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
 // Her kart aynı genişlikte: 2 / 3 / 4 sütunluk bir ızgaranın tek sütunu
 const CARD_WIDTH = "w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]";
 
-function GroupTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="eyebrow mb-5 w-full justify-center">{children}</h2>;
-}
-
 export default function TeamPage() {
   const { language } = useLanguage();
   const lang = language as "tr" | "en";
@@ -95,12 +91,6 @@ export default function TeamPage() {
           description: "Our team members who are part of the Merkutech family.",
         };
 
-  const groups = teamGroups
-    .map((g) => ({ ...g, members: teamMembers.filter((m) => m.team === g.id) }))
-    .filter((g) => g.members.length > 0);
-  const singles = groups.filter((g) => g.members.length === 1);
-  const multis = groups.filter((g) => g.members.length > 1);
-
   return (
     <div className="min-h-screen pt-28 sm:pt-32 pb-24 px-5 sm:px-8">
       <div className="max-w-6xl mx-auto">
@@ -115,31 +105,12 @@ export default function TeamPage() {
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>
 
-        <div className="mt-14 space-y-14 md:space-y-20">
-          {/* Tek kişilik ekipler aynı satırda, ortada; aralarındaki boşluk
-              ekip içindeki boşluktan geniş ki ayrı ekipler oldukları belli olsun */}
-          {singles.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-x-3 sm:gap-x-10 lg:gap-x-16 gap-y-10">
-              {singles.map((group) => (
-                <section key={group.id} id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
-                  <GroupTitle>{group.title[lang]}</GroupTitle>
-                  <MemberCard member={group.members[0]} index={0} />
-                </section>
-              ))}
+        {/* Tek ızgara, veri sırası; görev her kartın altında yazıyor */}
+        <div className="mt-14 flex flex-wrap justify-center gap-3 sm:gap-4">
+          {teamMembers.map((member, i) => (
+            <div key={member.id} className={`flex ${CARD_WIDTH}`}>
+              <MemberCard member={member} index={i} />
             </div>
-          )}
-
-          {multis.map((group) => (
-            <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28">
-              <GroupTitle>{group.title[lang]}</GroupTitle>
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-                {group.members.map((member, i) => (
-                  <div key={member.id} className={`flex ${CARD_WIDTH}`}>
-                    <MemberCard member={member} index={i} />
-                  </div>
-                ))}
-              </div>
-            </section>
           ))}
         </div>
       </div>
