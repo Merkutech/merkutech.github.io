@@ -82,7 +82,7 @@ export default function IletisimPage() {
       </div>
 
       {/* Linkler — mobilde üstte, masaüstünde sağda */}
-      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24 border-b lg:border-b-0 border-white/[0.06]">
+      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24">
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -110,7 +110,7 @@ export default function IletisimPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease: easeOut }}
-                className="group flex items-center gap-3 sm:gap-4 py-2.5 sm:py-4 border-b border-white/[0.06] hover:border-white/[0.12] transition-colors"
+                className="group flex items-center gap-3 sm:gap-4 py-2.5 sm:py-3.5 px-3 -mx-3 rounded-xl hover:bg-foreground/[0.04] transition-colors"
               >
                 <div className="p-1.5 sm:p-2.5 rounded-lg bg-white/[0.04] text-neutral-500 group-hover:text-white group-hover:bg-white/[0.08] transition-all duration-300 shrink-0">
                   <div className="h-4 w-4 sm:h-5 sm:w-5 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">

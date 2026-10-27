@@ -132,7 +132,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
       </section>
 
       {/* Features */}
-      <section className="py-20 border-t border-white/[0.06] cv-auto">
+      <section className="py-20 cv-auto">
         <div className="container max-w-3xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

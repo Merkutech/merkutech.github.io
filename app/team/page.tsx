@@ -117,11 +117,11 @@ export default function TeamPage() {
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>
 
-        <div className="mt-14 border-t border-border">
+        <div className="mt-12">
           {/* Tek kişilik ekipler aynı satırda ama ayrı ekip oldukları belli olsun:
               kart genişliği ızgarayla aynı, aralarında geniş boşluk var */}
           {singles.length > 0 && (
-            <div className="flex flex-wrap gap-8 lg:justify-between border-b border-border py-8 md:py-10">
+            <div className="flex flex-wrap gap-8 lg:justify-between py-8 md:py-10">
               {singles.map((group) => (
                 <section key={group.id} id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
                   <GroupTitle>{group.title[lang]}</GroupTitle>
@@ -132,7 +132,7 @@ export default function TeamPage() {
           )}
 
           {multis.map((group) => (
-            <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 border-b border-border py-8 md:py-10">
+            <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 py-8 md:py-10">
               <GroupTitle>{group.title[lang]}</GroupTitle>
               <div className={CARD_GRID}>
                 {group.members.map((member, i) => (

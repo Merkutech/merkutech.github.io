@@ -114,7 +114,7 @@ export default function ProjelerimizPage() {
       </section>
 
       {/* 2021 - 2025 Çalışmaları */}
-      <section className="relative border-t border-white/[0.06] py-20 md:py-28">
+      <section className="relative py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -141,7 +141,7 @@ export default function ProjelerimizPage() {
       </section>
 
       {/* Biz Kimiz */}
-      <section className="relative border-t border-white/[0.06] py-28 md:py-36">
+      <section className="relative py-28 md:py-36">
         <div className="max-w-6xl mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

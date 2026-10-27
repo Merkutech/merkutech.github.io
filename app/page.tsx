@@ -110,7 +110,7 @@ export default function Home() {
       <SponsorsSection />
 
       {/* BİZ KİMİZ — Ana Sayfa */}
-      <section className="relative py-24 md:py-32 border-y border-white/[0.06] cv-auto">
+      <section className="relative py-24 md:py-32 cv-auto">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
@@ -230,7 +230,7 @@ export default function Home() {
             </h2>
           </BlurFade>
 
-          <div className="border-t border-white/[0.08]">
+          <div className="space-y-1">
             {t.home.areas.items.map((item, i) => {
               const icons = [<Bot className="h-5 w-5" key="bot"/>, <Cpu className="h-5 w-5" key="cpu"/>, <Radio className="h-5 w-5" key="radio"/>, <CircuitBoard className="h-5 w-5" key="cb"/>, <Layers className="h-5 w-5" key="layers"/>, <Zap className="h-5 w-5" key="zap"/>];
               return (
@@ -384,7 +384,7 @@ function TeamCarousel() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-28 overflow-hidden border-y border-white/[0.06] cv-auto">
+    <section ref={sectionRef} className="relative py-20 md:py-28 overflow-hidden cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-10">
         <motion.span
           initial={{ opacity: 0, filter: "blur(8px)" }}
@@ -535,7 +535,7 @@ function SponsorsSection() {
   return (
       <section
       ref={ref}
-      className="relative py-20 md:py-24 border-b border-white/[0.06] overflow-hidden cv-auto"
+      className="relative py-20 md:py-24 overflow-hidden cv-auto"
     >
       <motion.div
         aria-hidden
@@ -616,7 +616,7 @@ function SponsorsSection() {
                     </span>
                   )}
                 </div>
-                <div className="border-t border-white/[0.06] group-hover:border-white/[0.12] transition-colors duration-500 px-4 py-3">
+                <div className="px-4 pb-3">
                   <p className="text-[11px] md:text-xs text-neutral-500 group-hover:text-neutral-300 text-center font-medium transition-colors duration-500 truncate">
                     {sponsor.name}
                   </p>
@@ -694,7 +694,7 @@ function StaggerRow({ num, title, desc, tags, icon, index }: {
       initial={{ opacity: 0, x: -15 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.4, delay: index * 0.06, ease: easeOut }}
-      className="border-b border-white/[0.08] cursor-pointer"
+      className={`rounded-2xl px-4 md:px-6 cursor-pointer transition-colors duration-300 ${hovered ? "bg-foreground/[0.04]" : ""}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -770,7 +770,7 @@ function TeamsSection() {
       : { label: "Applications open", title: "Our Teams", apply: "Apply" };
 
   return (
-    <section className="relative py-24 md:py-32 border-t border-border cv-auto">
+    <section className="relative py-24 md:py-32 cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <BlurFade>
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">{c.label}</p>

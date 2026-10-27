@@ -89,7 +89,7 @@ export default function BasvuruPage() {
           {c.pick}
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-white/[0.1]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {applicationTeams.map((team, i) => (
             <motion.a
               key={team.id}
@@ -101,7 +101,7 @@ export default function BasvuruPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: easeOut }}
-              className="group relative flex flex-col justify-between p-4 sm:p-6 lg:p-7 border-r border-b border-white/[0.1] overflow-hidden"
+              className="group relative flex flex-col justify-between p-4 sm:p-6 lg:p-7 rounded-2xl bg-foreground/[0.03] overflow-hidden"
             >
               <span
                 aria-hidden
