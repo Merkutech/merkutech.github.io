@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { Users, Mail } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { teamGroups, teamMembers } from "@/lib/team";
@@ -73,6 +73,8 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
 
 // Her yerde aynı ızgara: tüm kartlar aynı genişlikte
 const CARD_GRID = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4";
+// Izgaradaki bir sütunun genişliği (yukarıdaki sütun sayısı ve boşluklarla eşleşir)
+const CARD_WIDTH = "w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]";
 
 function GroupTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{children}</h2>;
@@ -116,14 +118,18 @@ export default function TeamPage() {
         </motion.header>
 
         <div className="mt-14 border-t border-border">
-          {/* Tek kişilik ekipler yan yana, boş alan kalmasın */}
+          {/* Tek kişilik ekipler aynı satırda ama ayrı ekip oldukları belli olsun:
+              kart genişliği ızgarayla aynı, aralarında boşluk ve ayraç var */}
           {singles.length > 0 && (
-            <div className={`${CARD_GRID} border-b border-border py-8 md:py-10`}>
-              {singles.map((group) => (
-                <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 flex flex-col">
-                  <GroupTitle>{group.title[lang]}</GroupTitle>
-                  <MemberCard member={group.members[0]} index={0} />
-                </section>
+            <div className="flex flex-wrap gap-8 lg:gap-x-0 border-b border-border py-8 md:py-10">
+              {singles.map((group, i) => (
+                <Fragment key={group.id}>
+                  {i > 0 && <span aria-hidden className="hidden lg:block w-px self-stretch bg-border mx-8" />}
+                  <section id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
+                    <GroupTitle>{group.title[lang]}</GroupTitle>
+                    <MemberCard member={group.members[0]} index={0} />
+                  </section>
+                </Fragment>
               ))}
             </div>
           )}
