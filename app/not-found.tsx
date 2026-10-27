@@ -76,11 +76,7 @@ export default function NotFound() {
               </div>
 
               <div className="grid flex-1 place-items-center py-8">
-                <div className="relative grid h-44 w-44 place-items-center rounded-full border border-white/[0.08]">
-                  <span className="absolute h-32 w-32 rounded-full border border-dashed border-white/[0.12]" />
-                  <span className="absolute h-56 w-56 rounded-full border border-white/[0.04]" />
-                  <SearchX className="h-14 w-14 text-neutral-500" />
-                </div>
+                <SearchX className="h-16 w-16 text-neutral-500" strokeWidth={1.25} />
               </div>
 
               <div className="space-y-2">

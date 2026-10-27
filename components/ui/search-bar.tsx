@@ -64,10 +64,10 @@ export function SearchTrigger({ onClick }: { onClick: () => void }) {
     <motion.button
       type="button" onClick={onClick} aria-label={label}
       initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.15 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-      className="inline-flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-full bg-white text-black hover:bg-neutral-200 transition-colors shadow-lg shadow-black/30"
+      transition={{ duration: 0.15 }} whileTap={{ scale: 0.92 }}
+      className="site-header-icon inline-flex items-center justify-center h-8 w-8 text-neutral-400 hover:text-white transition-colors"
     >
-      <Search className="h-4 w-4 md:h-[18px] md:w-[18px]" />
+      <Search className="h-[18px] w-[18px]" />
     </motion.button>
   );
 }
@@ -166,9 +166,7 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
                       aria-selected={i === activeIndex}
                       className={`w-full flex items-center gap-3 px-4 py-3 transition-colors text-left group ${i === activeIndex ? "bg-foreground/[0.06]" : "hover:bg-foreground/[0.04]"}`}
                     >
-                      <span className="w-8 h-8 rounded-lg bg-foreground/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-foreground/[0.08] group-hover:border-foreground/[0.14] transition-colors">
-                        <Icon className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                      </span>
+                      <Icon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-foreground transition-colors" />
                       <span className="flex-1 min-w-0">
                         <span className="block text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
                           {entry.title[language]}
@@ -190,9 +188,9 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
       <button
         type="button" onClick={close}
         aria-label={language === "tr" ? "Kapat" : "Close"}
-        className="shrink-0 h-8 w-8 rounded-full border border-white/[0.1] bg-white/[0.04] text-neutral-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.16] transition-colors inline-flex items-center justify-center"
+        className="shrink-0 h-8 w-8 text-neutral-400 hover:text-white transition-colors inline-flex items-center justify-center"
       >
-        <X className="h-3 w-3" />
+        <X className="h-4 w-4" />
       </button>
     </div>
   );

@@ -283,15 +283,13 @@
   background: rgba(255, 255, 255, 0.12) !important;
 }
 
-:root.light .site-mobile-menu-button {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
+:root.light .site-mobile-menu-button,
+:root.light .site-header-icon {
   color: #dbe3ef !important;
 }
 
-:root.light .site-mobile-menu-button:hover {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.24) !important;
+:root.light .site-mobile-menu-button:hover,
+:root.light .site-header-icon:hover {
   color: #ffffff !important;
 }
 

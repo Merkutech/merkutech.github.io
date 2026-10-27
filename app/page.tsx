@@ -759,8 +759,8 @@ function StaggerRow({ num, title, desc, tags, icon, index }: {
           <span className="text-sm font-mono text-neutral-700 w-8">{num}</span>
           <h3 className={`text-xl md:text-2xl font-semibold transition-colors duration-300 ${hovered ? 'text-neutral-300' : 'text-white'}`}>{title}</h3>
         </div>
-        <motion.div animate={{ rotate: hovered ? 45 : 0 }} transition={{ duration: 0.25 }} className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center text-neutral-500">
-          <ArrowUpRight className="h-4 w-4" />
+        <motion.div animate={{ rotate: hovered ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex items-center justify-center text-neutral-500">
+          <ArrowUpRight className="h-5 w-5" />
         </motion.div>
       </div>
 
@@ -774,7 +774,7 @@ function StaggerRow({ num, title, desc, tags, icon, index }: {
                   {tags.map((tag) => <span key={tag} className="px-2.5 py-1 bg-white/[0.04] rounded-md text-[11px] font-mono text-neutral-500">{tag}</span>)}
                 </div>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-white/[0.04] flex items-center justify-center text-neutral-400 shrink-0">{icon}</div>
+              <div className="text-neutral-400 shrink-0 [&>svg]:h-6 [&>svg]:w-6">{icon}</div>
             </div>
           </motion.div>
         )}

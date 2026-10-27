@@ -112,10 +112,8 @@ export default function IletisimPage() {
                 transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease: easeOut }}
                 className="group flex items-center gap-3 sm:gap-4 py-2.5 sm:py-3.5 px-3 -mx-3 rounded-xl hover:bg-foreground/[0.04] transition-colors"
               >
-                <div className="p-1.5 sm:p-2.5 rounded-lg bg-white/[0.04] text-neutral-500 group-hover:text-white group-hover:bg-white/[0.08] transition-all duration-300 shrink-0">
-                  <div className="h-4 w-4 sm:h-5 sm:w-5 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">
-                    {config.icon}
-                  </div>
+                <div className="shrink-0 text-muted-foreground group-hover:text-foreground transition-colors h-4 w-4 sm:h-5 sm:w-5 [&>svg]:h-4 [&>svg]:w-4 sm:[&>svg]:h-5 sm:[&>svg]:w-5">
+                  {config.icon}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] sm:text-sm font-medium text-white truncate">

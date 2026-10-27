@@ -52,7 +52,7 @@ function SocialIcon({ href, label, children }: { href: string; label: string; ch
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-neutral-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+      className="inline-flex h-8 w-8 items-center justify-center text-neutral-500 hover:text-white transition-colors duration-300"
     >
       {children}
     </a>
@@ -166,6 +166,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   </nav>
 
                   <div className="flex items-center gap-1.5">
+                    <SearchTrigger onClick={openSearch} />
                     <LanguageSwitcher />
                     <ThemeToggle />
                     <motion.a
@@ -188,9 +189,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </AnimatePresence>
           </motion.div>
 
-          <AnimatePresence>
-            {!searchOpen && <SearchTrigger onClick={openSearch} />}
-          </AnimatePresence>
         </div>
 
         <div className="px-3 pt-3 md:hidden">
@@ -222,11 +220,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="site-mobile-menu-button inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/[0.1] bg-white/[0.06] text-neutral-300 transition-all duration-300 hover:border-white/[0.18] hover:bg-white/[0.1] hover:text-white"
+                className="site-mobile-menu-button inline-flex h-10 w-10 items-center justify-center text-neutral-300 transition-colors duration-300 hover:text-white"
                 aria-label={mobileOpen ? "Menüyü kapat" : "Menüyü aç"}
                 aria-expanded={mobileOpen}
               >
-                {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
             </div>
           </motion.div>

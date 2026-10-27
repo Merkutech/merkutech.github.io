@@ -44,10 +44,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               {labels.back}
             </Link>
 
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white">
-                {iconMap[project.icon] || <Code2 className="h-6 w-6" />}
-              </div>
+            <div className="mb-6 text-foreground/80 [&>svg]:h-8 [&>svg]:w-8">
+              {iconMap[project.icon] || <Code2 className="h-8 w-8" />}
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -151,9 +149,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   transition={{ duration: 0.4, delay: i * 0.08 }}
                   className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-neutral-500 shrink-0">
-                    <Check className="h-4 w-4" />
-                  </div>
+                  <Check className="h-4 w-4 shrink-0 text-brand" />
                   <span className="text-sm text-neutral-300">{feature}</span>
                 </motion.div>
               ))}
