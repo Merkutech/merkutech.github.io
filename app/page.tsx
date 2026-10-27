@@ -1,9 +1,9 @@
 'use client'
 
-import { SplineScene } from "@/components/ui/splite";
+import { SplineScene, type SplineObject, type SplineRuntime } from "@/components/ui/splite";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { ArrowUpRight, Users, Trophy, Plane, Award } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
@@ -111,10 +111,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 rounded-3xl sm:rounded-none overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none z-[1] sm:hidden" />
-              <SplineScene
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full"
-              />
+              <HeroRobot />
             </div>
           </motion.div>
         </div>
@@ -264,6 +261,53 @@ export default function Home() {
 
       {/* EKİPLERİMİZ: başvuru */}
       <TeamsSection />
+    </div>
+  );
+}
+
+/* Hero robotu: açılış kamera hareketi gizlenir, göğsünde Merkutech amblemi */
+const HERO_SCENE = "https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode";
+const HERO_CAMERA = { name: "Camera 2", z: 1000 };
+
+function HeroRobot() {
+  const [torso, setTorso] = useState<SplineObject | null>(null);
+  const onLoad = useCallback((spline: SplineRuntime) => setTorso(spline.findObjectByName?.("Top part") ?? null), []);
+
+  return (
+    <SplineScene scene={HERO_SCENE} className="w-full h-full" revealWhenCamera={HERO_CAMERA} onLoad={onLoad}>
+      <ChestEmblem torso={torso} />
+    </SplineScene>
+  );
+}
+
+/* Göğüs amblemi: gövde fareye döndükçe aynı açıyla döner.
+   Konum ve ölçü sahne kutusunun yüksekliğine göre (cqh), çünkü kamera
+   dikey görüş açısını sabit tutuyor. */
+function ChestEmblem({ torso }: { torso: SplineObject | null }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !torso) return;
+    let raf = 0;
+    const tick = () => {
+      const { x, y, z } = torso.rotation;
+      el.style.transform = `perspective(90cqh) rotateX(${-x}rad) rotateY(${y}rad) rotateZ(${-z}rad)`;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [torso]);
+
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute left-1/2 top-[46%] flex w-[10cqh] -ml-[5cqh] -mt-[5cqh] flex-col items-center"
+      style={{ transformOrigin: "50% 24cqh -4cqh" }}
+    >
+      <img src="/logo-white.png" alt="" className="w-[7cqh] h-auto opacity-90" draggable={false} />
+      <span className="mt-[0.4cqh] text-[0.9cqh] font-semibold tracking-[0.35em] text-white/75 pl-[0.35em]">MERKUTECH</span>
     </div>
   );
 }

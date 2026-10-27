@@ -3,15 +3,29 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Spline from '@splinetool/react-spline'
 
+export interface SplineObject {
+  position: { x: number; y: number; z: number }
+  rotation: { x: number; y: number; z: number }
+}
+
+export interface SplineRuntime {
+  setBackgroundColor?: (color: string) => void
+  setQuality?: (q: 'low' | 'medium' | 'high') => void
+  findObjectByName?: (name: string) => SplineObject | undefined
+}
+
 interface SplineSceneProps {
   scene: string
   className?: string
+  /* Sahnenin açılış kamera hareketini göstermemek için: kamera bu z
+     konumuna oturana kadar sahne gizli kalır */
+  revealWhenCamera?: { name: string; z: number }
+  onLoad?: (spline: SplineRuntime) => void
+  /* Sahnenin üstünde, onunla birlikte beliren katman */
+  children?: React.ReactNode
 }
 
-interface SplineRuntime {
-  setBackgroundColor?: (color: string) => void
-  setQuality?: (q: 'low' | 'medium' | 'high') => void
-}
+const REVEAL_TIMEOUT = 4500
 
 function getThemeBackground() {
   if (typeof document === 'undefined') {
@@ -32,9 +46,10 @@ function isLowPowerDevice() {
   return false
 }
 
-export function SplineScene({ scene, className }: SplineSceneProps) {
+export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoadProp, children }: SplineSceneProps) {
   const splineRef = useRef<SplineRuntime | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const revealRaf = useRef(0)
   const [isReady, setIsReady] = useState(false)
 
   const syncBackground = useCallback(() => {
@@ -47,8 +62,26 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       try { spline.setQuality('low') } catch { /* noop */ }
     }
     syncBackground()
-    requestAnimationFrame(() => setIsReady(true))
-  }, [syncBackground])
+    onLoadProp?.(spline)
+
+    const camera = revealWhenCamera && spline.findObjectByName?.(revealWhenCamera.name)
+    if (!camera || !revealWhenCamera) {
+      requestAnimationFrame(() => setIsReady(true))
+      return
+    }
+
+    // Kamera son konumuna gelince göster
+    const start = performance.now()
+    const wait = () => {
+      const settled = Math.abs(camera.position.z - revealWhenCamera.z) < 2
+      if (settled || performance.now() - start > REVEAL_TIMEOUT) {
+        setIsReady(true)
+        return
+      }
+      revealRaf.current = requestAnimationFrame(wait)
+    }
+    revealRaf.current = requestAnimationFrame(wait)
+  }, [syncBackground, onLoadProp, revealWhenCamera])
 
   useEffect(() => {
     syncBackground()
@@ -59,7 +92,10 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       attributes: true,
     })
 
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(revealRaf.current)
+    }
   }, [syncBackground])
 
   return (
@@ -73,7 +109,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
       }}
     >
       <div
-        className="absolute inset-0 transition-opacity duration-500 ease-out"
+        className="absolute inset-0 transition-opacity duration-700 ease-out [container-type:size]"
         style={{ opacity: isReady ? 1 : 0 }}
       >
         <Spline
@@ -83,6 +119,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
           renderOnDemand
           style={{ width: '100%', height: '100%' }}
         />
+        {children}
       </div>
     </div>
   )
