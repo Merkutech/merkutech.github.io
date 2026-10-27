@@ -90,6 +90,15 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
 
   useEffect(() => { inputRef.current?.focus(); }, []);
 
+  // Escape closes the search whether or not there are results or focus
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { e.preventDefault(); close(); }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [close]);
+
   useEffect(() => {
     if (activeIndex >= 0 && itemRefs.current[activeIndex]) {
       itemRefs.current[activeIndex]?.scrollIntoView({ block: "nearest" });
@@ -113,10 +122,8 @@ export function SearchInput({ onClose }: { onClose: () => void }) {
         onClose();
         window.location.href = fullHref(entry);
       }
-    } else if (e.key === "Escape") {
-      close();
     }
-  }, [results, activeIndex, close, onClose]);
+  }, [results, activeIndex, onClose]);
 
   const show = query.trim().length >= 2;
 
