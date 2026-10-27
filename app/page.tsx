@@ -583,7 +583,7 @@ function SponsorsSection() {
             hidden: {},
             visible: { transition: { staggerChildren: 0.08, delayChildren: 0.4 } },
           }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+          className="flex flex-wrap justify-center gap-3 md:gap-4"
         >
           {sponsors.map((sponsor) => {
             const initials = sponsor.name
@@ -596,17 +596,17 @@ function SponsorsSection() {
 
             const inner = (
               <>
-                <div className="aspect-[5/3] flex items-center justify-center p-2 sm:p-3 md:p-4">
+                <div className="aspect-[5/3] shrink-0 overflow-hidden flex items-center justify-center p-2 sm:p-3 md:p-4">
                   {sponsor.logo ? (
-                    <div className="flex h-full w-full items-center justify-center rounded-lg bg-white p-2 sm:p-2.5 md:p-3">
+                    <div className="flex h-full w-full items-center justify-center rounded-lg bg-white p-2 sm:p-2.5 md:p-3 [container-type:size]">
+                      {/* Eşit görsel alan: genişlik oranın kareköküyle ölçeklenir */}
                       <img
                         src={sponsor.logo}
                         alt={sponsor.name}
-                        width={240}
-                        height={144}
                         loading="lazy"
                         decoding="async"
-                        className="max-h-full max-w-full object-contain"
+                        className="h-auto max-h-full max-w-full object-contain"
+                        style={{ width: `min(100cqw, ${(Math.sqrt(sponsor.logoRatio ?? 1) * 85).toFixed(1)}cqh)` }}
                       />
                     </div>
                   ) : (
@@ -637,6 +637,7 @@ function SponsorsSection() {
                   },
                 }}
                 whileHover={{ y: -4, transition: { duration: 0.25, ease: easeOut } }}
+                className="w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-1.5rem)/3)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-4rem)/5)]"
               >
                 {sponsor.url ? (
                   <a
