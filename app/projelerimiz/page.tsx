@@ -31,7 +31,7 @@ export default function ProjelerimizPage() {
   const { t, language } = useLanguage();
   return (
     <div className="flex flex-col">
-      {/* Üst — başlık */}
+      {/* Üst: başlık */}
       <div className="pt-20 sm:pt-24 pb-6 sm:pb-8 px-5 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.span
@@ -53,10 +53,10 @@ export default function ProjelerimizPage() {
         </div>
       </div>
 
-      {/* Ana içerik — projeler solda, robot sağda (sticky) */}
+      {/* Ana içerik: projeler solda, robot sağda (sticky) */}
       <section className="relative">
         <div className="flex flex-col lg:flex-row items-start">
-          {/* Sol — Projeler */}
+          {/* Sol: Projeler */}
           <div className="w-full lg:w-2/3 px-5 sm:px-8 lg:px-12 pb-12 sm:pb-32 order-1 lg:order-1">
             <div className="max-w-3xl mx-auto lg:mx-0 space-y-20 sm:space-y-32 md:space-y-40">
               {projects.map((project, i) => {
@@ -103,7 +103,7 @@ export default function ProjelerimizPage() {
             </div>
           </div>
 
-          {/* Sağ — Robot (sticky) */}
+          {/* Sağ: Robot (sticky) */}
           <div className="w-full lg:w-1/3 order-2 lg:order-2 lg:sticky lg:top-24 lg:self-start z-20">
             <div className="relative h-[42vh] sm:h-[50vh] lg:h-[calc(100vh-6rem)] overflow-hidden">
               <InteractiveRobotSpline scene={ROBOT_SCENE_URL} className="w-full h-full" />

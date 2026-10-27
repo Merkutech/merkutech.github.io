@@ -7,7 +7,7 @@ import { TeamAnimation } from "@/components/ui/team-animations";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-/* Başvuru kartı — başvuru sayfasında ve ana sayfada ortak */
+/* Başvuru kartı: başvuru sayfasında ve ana sayfada ortak */
 export function TeamApplyCard({
   team,
   index,

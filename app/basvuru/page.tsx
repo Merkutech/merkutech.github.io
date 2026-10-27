@@ -11,7 +11,7 @@ const copy = {
   tr: {
     label: "Başvurular açık",
     title: "Şampiyon ekibe katıl.",
-    facts: ["Teknofest Şampiyonlar Ligi Şampiyonu", "AUVSI SUAS 2024 — USA", "3x Teknofest Finali"],
+    facts: ["Teknofest Şampiyonlar Ligi Şampiyonu", "AUVSI SUAS 2024, USA", "3x Teknofest Finali"],
     pick: "Ekibini seç",
     form: "Formu aç",
     question: "Aklına takılan bir şey mi var?",
@@ -20,7 +20,7 @@ const copy = {
   en: {
     label: "Applications open",
     title: "Join a champion team.",
-    facts: ["Teknofest Champions League Champion", "AUVSI SUAS 2024 — USA", "3x Teknofest Finalist"],
+    facts: ["Teknofest Champions League Champion", "AUVSI SUAS 2024, USA", "3x Teknofest Finalist"],
     pick: "Pick your team",
     form: "Open form",
     question: "Got a question?",
@@ -45,7 +45,7 @@ export default function BasvuruPage() {
         >
           <img
             src="/3.jpeg"
-            alt="Merkutech — Teknofest Adana 2024"
+            alt="Merkutech, Teknofest Adana 2024"
             width={1600}
             height={1066}
             className="absolute inset-0 h-full w-full object-cover"

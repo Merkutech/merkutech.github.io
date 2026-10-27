@@ -127,7 +127,7 @@
   }
 }
 
-/* Off-screen heavy sections — defer paint/layout for below-fold content */
+/* Off-screen heavy sections: defer paint/layout for below-fold content */
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 800px;
@@ -172,7 +172,7 @@
   animation-play-state: paused;
 }
 
-/* Spline canvas — temaya duyarlı arka plan */
+/* Spline canvas: temaya duyarlı arka plan */
 .spline-scene-container canvas {
   background-color: transparent !important;
   image-rendering: auto;
@@ -454,7 +454,7 @@ div:has(> a[href*="spline"]) {
 }
 
 
-/* Footer — light temada header ile birebir aynı görünüm */
+/* Footer: light temada header ile birebir aynı görünüm */
 :root.light .site-footer,
 :root.light body .site-footer {
   background: rgba(17, 24, 39, 0.9) !important;
@@ -505,7 +505,7 @@ div:has(> a[href*="spline"]) {
   background-color: rgba(255, 255, 255, 0.06) !important;
 }
 
-/* Başvuru sayfası — ekip animasyonları */
+/* Başvuru sayfası: ekip animasyonları */
 @keyframes apply-wave { to { transform: translateX(-40px); } }
 @keyframes apply-blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.15; } }
 @keyframes apply-spin { to { transform: rotate(360deg); } }
@@ -544,7 +544,7 @@ div:has(> a[href*="spline"]) {
   }
 }
 
-/* Segment kontrolleri — dil ve tema seçici (kayan gösterge) */
+/* Segment kontrolleri: dil ve tema seçici (kayan gösterge) */
 .seg-control {
   position: relative;
   display: grid;
@@ -610,7 +610,7 @@ html[data-theme-choice="light"] .seg-theme [data-choice="light"],
 html[data-theme-choice="system"] .seg-theme [data-choice="system"],
 html[data-theme-choice="dark"] .seg-theme [data-choice="dark"] { color: #e5e5e5; }
 
-/* Açık temada mobil menü açık zeminli — kontroller de açık */
+/* Açık temada mobil menü açık zeminli: kontroller de açık */
 :root.light .site-mobile-menu .seg-control {
   background: rgba(120, 120, 120, 0.14);
   box-shadow:
@@ -635,14 +635,14 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
   .seg-thumb, .seg-option { transition: none; }
 }
 
-/* Ekip — avatar zemini (dekupe fotoğrafların arkası) */
+/* Ekip: avatar zemini (dekupe fotoğrafların arkası) */
 .team-avatar {
   background:
     radial-gradient(120% 70% at 50% 100%, color-mix(in srgb, var(--foreground) 9%, transparent), transparent 70%),
     linear-gradient(180deg, color-mix(in srgb, var(--foreground) 2%, var(--card)), var(--card));
 }
 
-/* Bölüm etiketi — sitenin her yerinde aynı */
+/* Bölüm etiketi (sitenin her yerinde aynı) */
 .eyebrow {
   display: inline-flex;
   align-items: center;

@@ -60,7 +60,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </div>
       </section>
 
-      {/* Kapak Görseli — varsa */}
+      {/* Kapak Görseli: varsa */}
       {project.image && (
         <section className="py-10">
           <div className="container max-w-5xl mx-auto px-4 md:px-8">
@@ -84,7 +84,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
       )}
 
-      {/* Galeri — sadece warscope gibi projelerde */}
+      {/* Galeri: sadece warscope gibi projelerde */}
       {project.gallery && project.gallery.length > 0 && (
         <section className="py-10 cv-auto">
           <div className="container max-w-5xl mx-auto px-4 md:px-8">

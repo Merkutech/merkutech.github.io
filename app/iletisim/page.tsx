@@ -69,7 +69,7 @@ export default function IletisimPage() {
   const { t } = useLanguage();
   return (
     <div className="min-h-screen flex flex-col-reverse lg:flex-row">
-      {/* Globe — mobilde altta, masaüstünde solda */}
+      {/* Globe: mobilde altta, masaüstünde solda */}
       <div className="flex-1 flex items-end lg:items-center justify-center px-5 sm:px-8 pb-4 pt-2 sm:py-16 lg:py-0 min-h-0 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -81,7 +81,7 @@ export default function IletisimPage() {
         </motion.div>
       </div>
 
-      {/* Linkler — mobilde üstte, masaüstünde sağda */}
+      {/* Linkler: mobilde üstte, masaüstünde sağda */}
       <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24">
         <motion.div
           initial={{ opacity: 0, x: 30 }}

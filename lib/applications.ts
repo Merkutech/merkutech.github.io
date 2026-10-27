@@ -21,7 +21,7 @@ export const applicationTeams: ApplicationTeam[] = [
     title: { tr: "Mekanik", en: "Mechanical" },
     description: {
       tr: "Gövdeyi çiziyor, kesiyor, yapıştırıyor ve uçuruyoruz. CAD'den pistte kalkışa kadar.",
-      en: "We design, cut, bond and fly the airframe — from CAD all the way to takeoff.",
+      en: "We design, cut, bond and fly the airframe, from CAD all the way to takeoff.",
     },
   },
   {
@@ -30,7 +30,7 @@ export const applicationTeams: ApplicationTeam[] = [
     title: { tr: "Yazılım", en: "Software" },
     description: {
       tr: "Otonom uçuş, görüntü işleme ve yer istasyonu. Araç kendi kararını verirken arkasındaki kod biziz.",
-      en: "Autonomous flight, computer vision and the ground station — the code behind every decision the vehicle makes.",
+      en: "Autonomous flight, computer vision and the ground station: the code behind every decision the vehicle makes.",
     },
   },
   {

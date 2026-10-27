@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-/* Aviyonik — osiloskop dalgası + yanıp sönen LED */
+/* Aviyonik: osiloskop dalgası + yanıp sönen LED */
 function AvionicsAnim() {
   const wave = Array.from({ length: 6 }, (_, i) => {
     const x = i * 40;
@@ -20,7 +20,7 @@ function AvionicsAnim() {
   );
 }
 
-/* Mekanik — birbirine geçen iki dişli */
+/* Mekanik: birbirine geçen iki dişli */
 function gearPath(teeth: number, outer: number, inner: number) {
   const pts: string[] = [];
   const step = (Math.PI * 2) / teeth;
@@ -58,7 +58,7 @@ function MechanicalAnim() {
   );
 }
 
-/* Yazılım — kendini yazan komutlar */
+/* Yazılım: kendini yazan komutlar */
 const commands = ["arm()", "takeoff(10)", "detect(target)", "land()"];
 
 function SoftwareAnim() {
@@ -92,7 +92,7 @@ function SoftwareAnim() {
   );
 }
 
-/* Tanıtım ve Sponsorluk — yayılan dalgalar ve uçuşan kalpler */
+/* Tanıtım ve Sponsorluk: yayılan dalgalar ve uçuşan kalpler */
 function PromotionAnim() {
   const heart = "M0 3 C0 -1, 5 -1, 5 3 C5 -1, 10 -1, 10 3 C10 7, 5 9, 5 11 C5 9, 0 7, 0 3 Z";
 

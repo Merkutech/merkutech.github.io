@@ -62,7 +62,7 @@ export default function RootLayout({
     >
       <head>
         <title>MCT SENSOR Merkutech</title>
-        <meta name="description" content="Istanbul Arel University Merkutech Robotics and Technology Club — SUAS 2026" />
+        <meta name="description" content="Istanbul Arel University Merkutech Robotics and Technology Club, SUAS 2026" />
         <meta name="theme-color" content="#0a0a0a" />
         <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />

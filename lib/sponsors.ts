@@ -2,7 +2,7 @@ export interface Sponsor {
   name: string;
   url?: string;
   logo?: string;
-  /* Logo genişlik/yükseklik oranı — logolar eşit alan kaplasın diye */
+  /* Logo genişlik/yükseklik oranı: logolar eşit alan kaplasın diye */
   logoRatio?: number;
 }
 
