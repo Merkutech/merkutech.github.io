@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import Spline from '@splinetool/react-spline'
 
 export interface SplineObject {
@@ -25,8 +25,11 @@ interface SplineSceneProps {
   children?: React.ReactNode
 }
 
-// Kare sayısıyla ölçülür: sekme arka plandayken kamera da durur, sayaç da
-const REVEAL_MAX_FRAMES = 480
+// Süreler yalnızca sekme görünürken sayılır (arka planda kamera da durur).
+// Sahnenin açılış kamera hareketi yaklaşık 3,5 sn sürüyor; sayfalar arası
+// geçişte kameranın okunan konumu görüntüyle uyuşmadığı için en az bu kadar beklenir.
+const REVEAL_MIN_MS = 3700
+const REVEAL_MAX_MS = 6000
 
 function getThemeBackground() {
   if (typeof document === 'undefined') {
@@ -51,11 +54,62 @@ export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoad
   const splineRef = useRef<SplineRuntime | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const revealRaf = useRef(0)
-  const [isReady, setIsReady] = useState(false)
+  const fadeRef = useRef<HTMLDivElement | null>(null)
+  const stopReveal = useRef<() => void>(() => {})
 
   const syncBackground = useCallback(() => {
     splineRef.current?.setBackgroundColor?.(getThemeBackground())
   }, [])
+
+  /* Görünürlük doğrudan DOM üzerinden yönetilir: Next.js ziyaret edilen sayfayı
+     durumuyla saklayıp geri gösterebiliyor ve o sırada sahne açılış hareketini
+     baştan oynatıyor. React durumuna bağlı kalırsak sahne bir an eski hâliyle görünür. */
+  const setVisible = useCallback((visible: boolean) => {
+    if (fadeRef.current) fadeRef.current.style.opacity = visible ? '1' : '0'
+  }, [])
+
+  const startReveal = useCallback((spline: SplineRuntime) => {
+    stopReveal.current()
+    setVisible(false)
+
+    const camera = revealWhenCamera && spline.findObjectByName?.(revealWhenCamera.name)
+    if (!camera || !revealWhenCamera) {
+      revealRaf.current = requestAnimationFrame(() => setVisible(true))
+      stopReveal.current = () => cancelAnimationFrame(revealRaf.current)
+      return
+    }
+
+    // Açılış hareketi bitip kamera son konumuna oturunca göster.
+    // Geçen süre gerçek saatle ölçülür, sekmenin gizli kaldığı süre düşülür.
+    const start = performance.now()
+    let hiddenTotal = 0
+    let hiddenSince = document.hidden ? start : null
+    const onVisibility = () => {
+      const t = performance.now()
+      if (document.hidden) hiddenSince = t
+      else if (hiddenSince !== null) {
+        hiddenTotal += t - hiddenSince
+        hiddenSince = null
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    stopReveal.current = () => {
+      cancelAnimationFrame(revealRaf.current)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+
+    const wait = (now: number) => {
+      const visibleMs = now - start - hiddenTotal
+      const settled = Math.abs(camera.position.z - revealWhenCamera.z) < 2
+      if ((visibleMs >= REVEAL_MIN_MS && settled) || visibleMs >= REVEAL_MAX_MS) {
+        stopReveal.current()
+        setVisible(true)
+        return
+      }
+      revealRaf.current = requestAnimationFrame(wait)
+    }
+    revealRaf.current = requestAnimationFrame(wait)
+  }, [revealWhenCamera, setVisible])
 
   const onLoad = useCallback((spline: SplineRuntime) => {
     splineRef.current = spline
@@ -64,29 +118,13 @@ export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoad
     }
     syncBackground()
     onLoadProp?.(spline)
-
-    const camera = revealWhenCamera && spline.findObjectByName?.(revealWhenCamera.name)
-    if (!camera || !revealWhenCamera) {
-      requestAnimationFrame(() => setIsReady(true))
-      return
-    }
-
-    // Kamera son konumuna gelince göster
-    let frames = 0
-    const wait = () => {
-      frames++
-      const settled = Math.abs(camera.position.z - revealWhenCamera.z) < 2
-      if (settled || frames > REVEAL_MAX_FRAMES) {
-        setIsReady(true)
-        return
-      }
-      revealRaf.current = requestAnimationFrame(wait)
-    }
-    revealRaf.current = requestAnimationFrame(wait)
-  }, [syncBackground, onLoadProp, revealWhenCamera])
+    startReveal(spline)
+  }, [syncBackground, onLoadProp, startReveal])
 
   useEffect(() => {
     syncBackground()
+    // Sayfa geri gösterildiyse sahne zaten yüklü: açılış hareketi yeniden oynar, baştan bekle
+    if (splineRef.current) startReveal(splineRef.current)
 
     const observer = new MutationObserver(syncBackground)
     observer.observe(document.documentElement, {
@@ -96,9 +134,10 @@ export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoad
 
     return () => {
       observer.disconnect()
-      cancelAnimationFrame(revealRaf.current)
+      stopReveal.current()
+      setVisible(false)
     }
-  }, [syncBackground])
+  }, [syncBackground, startReveal, setVisible])
 
   return (
     <div
@@ -111,8 +150,9 @@ export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoad
       }}
     >
       <div
+        ref={fadeRef}
         className="absolute inset-0 transition-opacity duration-700 ease-out [container-type:size]"
-        style={{ opacity: isReady ? 1 : 0 }}
+        style={{ opacity: 0 }}
       >
         <Spline
           scene={scene}
