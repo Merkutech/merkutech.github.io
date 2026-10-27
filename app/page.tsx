@@ -6,8 +6,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
   ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
-  Layers, Zap, Users, Trophy, Plane, Award, Medal, FileCheck, Mic,
-  type LucideIcon,
+  Layers, Zap, Users, Trophy, Plane, Award,
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
@@ -15,6 +14,7 @@ import { applicationTeams } from "@/lib/applications";
 import { TeamApplyCard } from "@/components/ui/team-apply-card";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { achievementParts, stripEmoji } from "@/lib/achievements";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -279,29 +279,6 @@ export default function Home() {
       <TeamsSection />
     </div>
   );
-}
-
-/* Metindeki baştaki emojiyi ayıkla: yerine ikon kullanıyoruz */
-const EMOJI_RE = /^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u;
-
-function stripEmoji(text: string) {
-  return text.replace(EMOJI_RE, "");
-}
-
-const EMOJI_ICONS: [string, LucideIcon][] = [
-  ["🏆", Trophy],
-  ["🥇", Medal],
-  ["🥈", Medal],
-  ["🥉", Medal],
-  ["🏅", Medal],
-  ["🎖", Award],
-  ["📋", FileCheck],
-  ["🎤", Mic],
-];
-
-function achievementParts(item: string): { Icon: LucideIcon; text: string } {
-  const Icon = EMOJI_ICONS.find(([e]) => item.startsWith(e))?.[1] ?? Award;
-  return { Icon, text: stripEmoji(item) };
 }
 
 /* Scroll progress: passive listener, writes CSS var without re-render */

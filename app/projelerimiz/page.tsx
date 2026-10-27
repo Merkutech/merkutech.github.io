@@ -6,6 +6,7 @@ import Link from "next/link";
 import { InteractiveRobotSpline } from "@/components/ui/interactive-3d-robot";
 import { projects } from "@/lib/projects";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { achievementParts } from "@/lib/achievements";
 
 const ROBOT_SCENE_URL = "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode";
 
@@ -19,9 +20,9 @@ function Item({ label, en }: { label: string; en: string }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, ease: easeOut }}
-      className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.03] transition-colors"
+      className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-foreground/[0.03] hover:bg-foreground/[0.05] transition-colors"
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
+      <span className="w-1.5 h-1.5 rounded-full bg-brand/80 shrink-0" />
       <span className="text-sm text-neutral-300">{language === "tr" ? label : en}</span>
     </motion.div>
   );
@@ -32,7 +33,7 @@ export default function ProjelerimizPage() {
   return (
     <div className="flex flex-col">
       {/* Üst: başlık */}
-      <div className="pt-20 sm:pt-24 pb-6 sm:pb-8 px-5 sm:px-8">
+      <div className="pt-28 sm:pt-32 pb-10 sm:pb-14 px-5 sm:px-8 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.span
             initial={{ opacity: 0 }}
@@ -46,7 +47,7 @@ export default function ProjelerimizPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter mt-2"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-foreground tracking-[-0.045em] mt-4"
           >
             {t.projects.title}
           </motion.h1>
@@ -70,7 +71,7 @@ export default function ProjelerimizPage() {
                   transition={{ duration: 0.7, ease: easeOut }}
                 >
                   <Link href={`/projelerimiz/${project.slug}`} className="group block">
-                    <span className="text-sm sm:text-base font-mono text-neutral-700 block mb-5 sm:mb-8">
+                    <span className="text-sm font-mono text-muted-foreground block mb-5 sm:mb-6">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     {project.image && (
@@ -160,12 +161,18 @@ export default function ProjelerimizPage() {
               <div className="space-y-6 text-neutral-400 leading-relaxed">
                 <p>{t.home.about.p1}</p>
                 <p>{t.home.about.p2}</p>
-                <div className="text-neutral-300">
-                  <p className="mb-3">{t.home.about.achievements}</p>
-                  <ul className="space-y-2 list-disc list-inside">
-                    {t.home.about.achievementsList.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
+                <div>
+                  <p className="mb-4 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {t.home.about.achievementsList.map((item) => {
+                      const { Icon, text } = achievementParts(item);
+                      return (
+                        <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
+                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                          <span className="leading-snug">{text}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
