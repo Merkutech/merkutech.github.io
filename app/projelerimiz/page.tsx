@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { projects } from "@/lib/projects";
 import { useLanguage } from "@/lib/i18n/language-context";
+import { PastWorkAnimation } from "@/components/ui/past-work-animations";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -200,7 +201,7 @@ export default function ProjelerimizPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: easeOut }}
-                className="group relative overflow-hidden rounded-2xl bg-foreground/[0.03] p-6 min-h-[9rem] flex flex-col justify-between"
+                className="group relative overflow-hidden rounded-2xl bg-foreground/[0.03] p-6 flex flex-col"
               >
                 <span
                   aria-hidden
@@ -209,7 +210,12 @@ export default function ProjelerimizPage() {
                 <span className="relative font-mono text-xs text-muted-foreground group-hover:text-background/60 transition-colors duration-500">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="relative mt-8 text-lg font-medium leading-snug text-foreground group-hover:text-background transition-colors duration-500">
+                <div className="relative flex h-32 items-center justify-center">
+                  <div className="w-full max-w-[10rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
+                    <PastWorkAnimation index={i} />
+                  </div>
+                </div>
+                <span className="relative text-lg font-medium leading-snug text-foreground group-hover:text-background transition-colors duration-500">
                   {language === "tr" ? item.tr : item.en}
                 </span>
               </motion.div>
