@@ -1,38 +1,129 @@
 'use client'
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { InteractiveRobotSpline } from "@/components/ui/interactive-3d-robot";
+import { useRef } from "react";
 import { projects } from "@/lib/projects";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { achievementParts } from "@/lib/achievements";
-
-const ROBOT_SCENE_URL = "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-function Item({ label, en }: { label: string; en: string }) {
-  const { language } = useLanguage();
+const pastWork = [
+  { tr: "Yangın Tespit ve Analiz Dron'u", en: "Fire Detection & Analysis Drone" },
+  { tr: "Yangın Müdahale Kapsülü", en: "Fire Intervention Capsule" },
+  { tr: "AquaVista Denizaltı Sistemi", en: "AquaVista Submarine System" },
+  { tr: "Engelsiz Kampüs Mobil Uygulama", en: "Barrier-Free Campus Mobile App" },
+  { tr: "Karşı Ateş Teknikli İHA", en: "Counter-Fire UAV" },
+  { tr: "Çeşitli Mobil Uygulamalar", en: "Various Mobile Applications" },
+];
+
+/* Proje satırı: görsel ve metin sırayla sağa sola geçer */
+function ProjectRow({ project, index }: { project: (typeof projects)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
+  const { t, language } = useLanguage();
+  const tr = project.translations[language];
+  const flip = index % 2 === 1;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.4, ease: easeOut }}
-      className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-foreground/[0.03] hover:bg-foreground/[0.05] transition-colors"
-    >
-      <span className="text-sm text-neutral-300">{language === "tr" ? label : en}</span>
-    </motion.div>
+    <div ref={ref} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+      <Link
+        href={`/projelerimiz/${project.slug}`}
+        aria-label={tr.title}
+        className={`group relative block lg:col-span-7 ${flip ? "lg:order-2" : ""}`}
+      >
+        <motion.div
+          initial={{ clipPath: "inset(12% 12% 12% 12% round 24px)", opacity: 0 }}
+          animate={inView ? { clipPath: "inset(0% 0% 0% 0% round 24px)", opacity: 1 } : {}}
+          transition={{ duration: 1.1, ease: easeOut }}
+          className="aspect-[16/10] overflow-hidden rounded-3xl bg-foreground/[0.04]"
+        >
+          {project.image && (
+            <div className="h-full w-full transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]">
+            <motion.img
+              src={project.image}
+              alt={tr.title}
+              width={1280}
+              height={800}
+              loading="lazy"
+              decoding="async"
+              initial={{ scale: 1.15 }}
+              animate={inView ? { scale: 1 } : {}}
+              transition={{ duration: 1.4, ease: easeOut }}
+              className="h-full w-full object-cover"
+            />
+            </div>
+          )}
+        </motion.div>
+      </Link>
+
+      <div className={`lg:col-span-5 ${flip ? "lg:order-1" : ""}`}>
+        <motion.span
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: easeOut, delay: 0.2 }}
+          className="block font-mono text-sm text-muted-foreground"
+        >
+          {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 18 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: easeOut, delay: 0.3 }}
+          className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.035em] text-foreground"
+        >
+          {tr.title}
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: easeOut, delay: 0.4 }}
+          className="mt-5 text-base leading-relaxed text-muted-foreground"
+        >
+          {tr.description}
+        </motion.p>
+
+        <ul className="mt-7 space-y-2.5">
+          {tr.features.slice(0, 3).map((feature, i) => (
+            <motion.li
+              key={feature}
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, ease: easeOut, delay: 0.5 + i * 0.08 }}
+              className="flex items-baseline gap-3 text-sm text-foreground/80"
+            >
+              <span className="font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+              {feature}
+            </motion.li>
+          ))}
+        </ul>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.75 }}
+        >
+          <Link
+            href={`/projelerimiz/${project.slug}`}
+            className="group mt-9 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-semibold text-background transition-colors hover:bg-foreground/85"
+          >
+            {t.projects.detail}
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+        </motion.div>
+      </div>
+    </div>
   );
 }
 
 export default function ProjelerimizPage() {
   const { t, language } = useLanguage();
+
   return (
     <div className="flex flex-col">
-      {/* Üst: başlık */}
-      <div className="pt-28 sm:pt-32 pb-10 sm:pb-14 px-5 sm:px-8 lg:px-12">
+      {/* Başlık */}
+      <section className="pt-28 sm:pt-32 pb-16 sm:pb-24 px-5 sm:px-8 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.span
             initial={{ opacity: 0 }}
@@ -42,160 +133,88 @@ export default function ProjelerimizPage() {
           >
             {t.projects.label}
           </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-foreground tracking-[-0.045em] mt-4"
+          <div className="overflow-hidden pb-2">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, ease: easeOut, delay: 0.1 }}
+              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold text-foreground tracking-[-0.05em] mt-4 leading-[0.95]"
+            >
+              {t.projects.title}
+            </motion.h1>
+          </div>
+
+          {/* Proje dizini: tıklayınca ilgili projeye kayar */}
+          <motion.ol
+            initial="hidden"
+            animate="visible"
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.4 } } }}
+            className="mt-12 flex flex-wrap gap-x-8 gap-y-3"
           >
-            {t.projects.title}
-          </motion.h1>
+            {projects.map((project, i) => (
+              <motion.li
+                key={project.slug}
+                variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } } }}
+              >
+                <a href={`#${project.slug}`} className="inline-flex items-baseline gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="font-mono text-xs">{String(i + 1).padStart(2, "0")}</span>
+                  {project.translations[language].title}
+                </a>
+              </motion.li>
+            ))}
+          </motion.ol>
         </div>
-      </div>
+      </section>
 
-      {/* Ana içerik: projeler solda, robot sağda (sticky) */}
-      <section className="relative">
-        <div className="flex flex-col lg:flex-row items-start">
-          {/* Sol: Projeler */}
-          <div className="w-full lg:w-2/3 px-5 sm:px-8 lg:px-12 pb-12 sm:pb-32 order-1 lg:order-1">
-            <div className="max-w-3xl mx-auto lg:mx-0 space-y-20 sm:space-y-32 md:space-y-40">
-              {projects.map((project, i) => {
-                const tr = project.translations[language];
-                return (
-                <motion.div
-                  key={project.slug}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.7, ease: easeOut }}
-                >
-                  <Link href={`/projelerimiz/${project.slug}`} className="group block">
-                    <span className="text-sm font-mono text-muted-foreground block mb-5 sm:mb-6">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {project.image && (
-                      <div className="aspect-[16/9] overflow-hidden rounded-xl sm:rounded-2xl bg-white/[0.02] mb-6 sm:mb-10">
-                        <img
-                          src={project.image}
-                          alt={tr.title}
-                          width={1280}
-                          height={720}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
-                        />
-                      </div>
-                    )}
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white group-hover:text-neutral-200 transition-colors leading-tight tracking-tight mb-4 sm:mb-6">
-                      {tr.title}
-                    </h2>
-                    <p className="text-sm sm:text-base text-neutral-400 leading-relaxed mb-6 sm:mb-8">
-                      {tr.description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-sm sm:text-base text-white group-hover:text-neutral-300 transition-colors">
-                      {t.projects.detail}
-                      <ArrowUpRight className="h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </div>
-                  </Link>
-                </motion.div>
-                );
-              })}
+      {/* Projeler */}
+      <section className="px-5 sm:px-8 lg:px-12 pb-24 sm:pb-32">
+        <div className="max-w-7xl mx-auto space-y-24 sm:space-y-36">
+          {projects.map((project, i) => (
+            <div key={project.slug} id={project.slug} className="scroll-mt-28">
+              <ProjectRow project={project} index={i} />
             </div>
-          </div>
-
-          {/* Sağ: Robot (sticky) */}
-          <div className="w-full lg:w-1/3 order-2 lg:order-2 lg:sticky lg:top-24 lg:self-start z-20">
-            <div className="relative h-[42vh] sm:h-[50vh] lg:h-[calc(100vh-6rem)] overflow-hidden">
-              <InteractiveRobotSpline scene={ROBOT_SCENE_URL} className="w-full h-full" />
-              <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-background via-background/95 to-transparent pointer-events-none z-10" />
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* 2021 - 2025 Çalışmaları */}
-      <section className="relative py-20 md:py-28">
-        <div className="max-w-4xl mx-auto px-4 sm:px-8">
+      <section className="px-5 sm:px-8 lg:px-12 py-20 md:py-28">
+        <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: easeOut }}
           >
-            <span className="eyebrow">
-              {language === "tr" ? "Geçmiş" : "History"}
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-10">
+            <span className="eyebrow">{language === "tr" ? "Geçmiş" : "History"}</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-foreground tracking-[-0.035em] mt-4 mb-12">
               {language === "tr" ? "2021 - 2025 Çalışmaları" : "2021 - 2025 Work"}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Item label="Yangın Tespit ve Analiz Dron'u" en="Fire Detection & Analysis Drone" />
-              <Item label="Yangın Müdahale Kapsülü" en="Fire Intervention Capsule" />
-              <Item label="AquaVista Denizaltı Sistemi" en="AquaVista Submarine System" />
-              <Item label="Engelsiz Kampüs Mobil Uygulama" en="Barrier-Free Campus Mobile App" />
-              <Item label="Karşı Ateş Teknikli İHA" en="Counter-Fire UAV" />
-              <Item label="Çeşitli Mobil Uygulamalar" en="Various Mobile Applications" />
-            </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Biz Kimiz */}
-      <section className="relative py-28 md:py-36">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: easeOut }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
-          >
-            <div className="order-2 lg:order-1">
-              <span className="eyebrow">
-                {t.home.about.label}
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-8">
-                {t.home.about.title}
-              </h2>
-              <div className="space-y-6 text-neutral-400 leading-relaxed">
-                <p>{t.home.about.p1}</p>
-                <p>{t.home.about.p2}</p>
-                <div>
-                  <p className="mb-4 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {t.home.about.achievementsList.map((item) => {
-                      const { Icon, text } = achievementParts(item);
-                      return (
-                        <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
-                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" />
-                          <span className="leading-snug">{text}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easeOut }}
-              className="order-1 lg:order-2"
-            >
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-white/[0.02]">
-                <img
-                  src="/4.jpg"
-                  alt="Merkutech Ekibi"
-                  width={800}
-                  height={1000}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {pastWork.map((item, i) => (
+              <motion.div
+                key={item.tr}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: easeOut }}
+                className="group relative overflow-hidden rounded-2xl bg-foreground/[0.03] p-6 min-h-[9rem] flex flex-col justify-between"
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-0 bg-foreground origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 />
-              </div>
-            </motion.div>
-          </motion.div>
+                <span className="relative font-mono text-xs text-muted-foreground group-hover:text-background/60 transition-colors duration-500">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="relative mt-8 text-lg font-medium leading-snug text-foreground group-hover:text-background transition-colors duration-500">
+                  {language === "tr" ? item.tr : item.en}
+                </span>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
