@@ -96,7 +96,7 @@ export default function Home() {
                     transition={{ duration: 0.5, ease: easeOut, delay: 0.7 + i * 0.1 }}
                     className="flex items-center gap-3 text-sm text-muted-foreground"
                   >
-                    <Icon className="h-4 w-4 shrink-0 text-brand" />
+                    <Icon className="h-4 w-4 shrink-0 text-foreground/60" />
                     {item}
                   </motion.li>
                 );
@@ -182,7 +182,7 @@ export default function Home() {
                       const { Icon, text } = achievementParts(item);
                       return (
                         <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
-                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" />
                           <span className="leading-snug">{text}</span>
                         </li>
                       );
@@ -518,7 +518,7 @@ function MarqueeSection() {
                 <span className="text-base md:text-lg lg:text-xl font-medium text-muted-foreground tracking-tight whitespace-nowrap px-5 md:px-8">
                   {stripEmoji(text)}
                 </span>
-                <span aria-hidden className="h-1.5 w-1.5 rotate-45 bg-brand/70 select-none" />
+                <span aria-hidden className="text-muted-foreground/40 select-none">/</span>
               </span>
             ))}
           </div>
@@ -544,10 +544,6 @@ function RecruitingBadge() {
         className="group inline-flex items-center gap-2.5 rounded-full bg-foreground/[0.05] py-1.5 pl-2 pr-3.5 text-left transition-colors hover:bg-foreground/[0.09]"
       >
         <span className="relative flex h-6 items-center gap-2 rounded-full bg-foreground px-2.5 text-[11px] font-semibold uppercase tracking-wider text-background">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
-          </span>
           {t.home.recruiting.badge}
         </span>
         <span className="hidden sm:inline text-xs text-muted-foreground group-hover:text-foreground transition-colors">

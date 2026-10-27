@@ -144,7 +144,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   transition={{ duration: 0.4, delay: i * 0.08 }}
                   className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-foreground/[0.03]"
                 >
-                  <Check className="h-4 w-4 shrink-0 text-brand" />
+                  <Check className="h-4 w-4 shrink-0 text-foreground/60" />
                   <span className="text-sm text-foreground/85">{feature}</span>
                 </motion.div>
               ))}

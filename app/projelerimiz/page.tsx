@@ -22,7 +22,6 @@ function Item({ label, en }: { label: string; en: string }) {
       transition={{ duration: 0.4, ease: easeOut }}
       className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-foreground/[0.03] hover:bg-foreground/[0.05] transition-colors"
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-brand/80 shrink-0" />
       <span className="text-sm text-neutral-300">{language === "tr" ? label : en}</span>
     </motion.div>
   );
@@ -168,7 +167,7 @@ export default function ProjelerimizPage() {
                       const { Icon, text } = achievementParts(item);
                       return (
                         <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
-                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" />
                           <span className="leading-snug">{text}</span>
                         </li>
                       );

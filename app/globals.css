@@ -652,15 +652,6 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
-.eyebrow::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 9999px;
-  background: var(--brand);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent);
-  flex-shrink: 0;
-}
 
 
 ::selection {
