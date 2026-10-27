@@ -311,51 +311,72 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <main id="main-content" className="flex-1">{children}</main>
 
-      <div className="px-4 pb-4">
-        <footer className="site-footer max-w-4xl mx-auto rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-4 sm:px-5 py-4">
-          <div className="flex items-center justify-between mb-3">
-            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              <img
-                src="/logo-white.png"
-                alt={t.footer.brand}
-                className="h-10 w-auto object-contain"
-              />
-              <span className="site-header-brand text-xs font-semibold tracking-tight text-white whitespace-nowrap">
-                {t.footer.brand}
-              </span>
-            </Link>
-            <div className="flex items-center gap-2">
+      <div className="px-4 pb-4 pt-16">
+        <footer className="site-footer relative max-w-6xl mx-auto overflow-hidden rounded-3xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-6 sm:px-10 pt-10 pb-6">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+            <div>
+              <Link href="/" className="flex items-center gap-2.5">
+                <img
+                  src="/logo-white.png"
+                  alt={t.footer.brand}
+                  className="h-10 w-auto object-contain"
+                />
+                <span className="site-header-brand text-sm font-semibold tracking-tight text-white whitespace-nowrap">
+                  {t.footer.brand}
+                </span>
+              </Link>
+              <p className="mt-4 max-w-xs text-sm leading-relaxed text-neutral-500">{t.home.subtitle}</p>
+            </div>
+
+            <nav aria-label={language === "tr" ? "Sayfalar" : "Pages"}>
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-neutral-600">
+                {language === "tr" ? "Sayfalar" : "Pages"}
+              </p>
+              <ul className="space-y-2 text-sm">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-neutral-400 hover:text-white transition-colors">{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div>
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-neutral-600">
+                {language === "tr" ? "Topluluk" : "Community"}
+              </p>
+              <ul className="space-y-2 text-sm">
+                <li><a href={APPLY_URL} className="text-neutral-400 hover:text-white transition-colors">{t.footer.apply}</a></li>
+                <li><a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">{t.footer.whatsapp}</a></li>
+                <li><a href="https://www.instagram.com/arelsavunma" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">{t.footer.instagram}</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-12 flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <span className="text-xs text-neutral-600">&copy; {new Date().getFullYear()} {t.footer.brand}</span>
+            <div className="flex items-center gap-1 -ml-2 sm:ml-0 sm:-mr-2">
               <SocialIcon href="https://www.instagram.com/merkutech/" label="Merkutech Instagram">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                 </svg>
               </SocialIcon>
               <SocialIcon href="https://www.youtube.com/@merkutech" label="Merkutech YouTube">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
                   <path d="m10 15 5-3-5-3z"/>
                 </svg>
               </SocialIcon>
               <SocialIcon href="https://www.linkedin.com/company/merkutech" label="Merkutech LinkedIn">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                   <rect width="4" height="12" x="2" y="9"/>
                   <circle cx="4" cy="4" r="2"/>
                 </svg>
               </SocialIcon>
             </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] text-neutral-500">
-            <a href={APPLY_URL} className="hover:text-white transition-colors">{t.footer.apply}</a>
-            <span className="text-neutral-800">·</span>
-            <a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.whatsapp}</a>
-            <span className="text-neutral-800">·</span>
-            <a href="https://www.instagram.com/arelsavunma" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t.footer.instagram}</a>
-            <span className="text-neutral-800">·</span>
-            <span className="text-neutral-700">&copy; {new Date().getFullYear()}</span>
           </div>
         </footer>
       </div>
