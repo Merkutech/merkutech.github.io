@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { applicationTeams } from "@/lib/applications";
-import { TeamAnimation } from "./team-animations";
+import { TeamApplyCard } from "@/components/ui/team-apply-card";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -58,7 +57,7 @@ export default function BasvuruPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: easeOut, delay: 0.3 }}
-              className="text-xs font-mono uppercase tracking-[0.3em] text-white/70"
+              className="text-xs uppercase tracking-widest text-white/70"
             >
               {c.label}
             </motion.p>
@@ -77,7 +76,7 @@ export default function BasvuruPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-xs sm:text-sm font-mono text-neutral-500"
+          className="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-xs sm:text-sm font-medium text-neutral-500"
         >
           {c.facts.map((fact) => (
             <li key={fact}>{fact}</li>
@@ -85,52 +84,22 @@ export default function BasvuruPage() {
         </motion.ul>
 
         {/* Ekipler */}
-        <p className="mt-20 sm:mt-24 mb-6 text-xs font-mono uppercase tracking-[0.3em] text-neutral-600">
+        <p className="mt-20 sm:mt-24 mb-6 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           {c.pick}
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {applicationTeams.map((team, i) => (
-            <motion.a
+            <TeamApplyCard
               key={team.id}
               id={team.id}
+              team={team}
+              index={i}
+              lang={lang}
               href={team.formUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: easeOut }}
-              className="group relative flex flex-col justify-between p-4 sm:p-6 lg:p-7 rounded-2xl bg-foreground/[0.03] overflow-hidden"
-            >
-              <span
-                aria-hidden
-                className="absolute inset-0 bg-foreground origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-              />
-
-              <span className="relative font-mono text-sm text-muted-foreground group-hover:text-background/60 transition-colors duration-500">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-
-              <div className="relative flex-1 flex items-center py-6 sm:py-8">
-                <div className="w-full max-w-[11rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
-                  <TeamAnimation id={team.id} />
-                </div>
-              </div>
-
-              <div className="relative">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tighter leading-[1.05] text-foreground group-hover:text-background transition-colors duration-500">
-                  {team.title[lang]}
-                </h2>
-                <p className="mt-3 text-xs sm:text-sm leading-relaxed text-muted-foreground group-hover:text-background/70 transition-colors duration-500">
-                  {team.description[lang]}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-foreground group-hover:text-background transition-colors duration-500">
-                  {c.form}
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </div>
-            </motion.a>
+              cta={c.form}
+              external
+            />
           ))}
         </div>
 

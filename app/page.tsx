@@ -11,6 +11,7 @@ import {
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
 import { applicationTeams } from "@/lib/applications";
+import { TeamApplyCard } from "@/components/ui/team-apply-card";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -781,25 +782,14 @@ function TeamsSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {applicationTeams.map((team, i) => (
-            <motion.div
+            <TeamApplyCard
               key={team.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: easeOut }}
-            >
-              <Link
-                href={`/basvuru/#${team.id}`}
-                className="group flex h-full flex-col rounded-2xl border border-border bg-card/40 p-6 transition-colors duration-300 hover:border-foreground/15 hover:bg-card/70"
-              >
-                <h3 className="text-xl font-semibold tracking-tight text-foreground">{team.title[lang]}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{team.description[lang]}</p>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground">
-                  {c.apply}
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </Link>
-            </motion.div>
+              team={team}
+              index={i}
+              lang={lang}
+              href={`/basvuru/#${team.id}`}
+              cta={c.apply}
+            />
           ))}
         </div>
       </div>
