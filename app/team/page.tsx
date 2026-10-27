@@ -71,6 +71,17 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
   );
 }
 
+const SINGLE_COLS: Record<number, string> = {
+  1: "",
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+};
+
+function GroupTitle({ children }: { children: React.ReactNode }) {
+  return <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{children}</h2>;
+}
+
 export default function TeamPage() {
   const { language } = useLanguage();
   const lang = language as "tr" | "en";
@@ -91,6 +102,8 @@ export default function TeamPage() {
   const groups = teamGroups
     .map((g) => ({ ...g, members: teamMembers.filter((m) => m.team === g.id) }))
     .filter((g) => g.members.length > 0);
+  const singles = groups.filter((g) => g.members.length === 1);
+  const multis = groups.filter((g) => g.members.length > 1);
 
   return (
     <div className="min-h-screen pt-28 sm:pt-32 pb-24 px-5 sm:px-8">
@@ -101,19 +114,27 @@ export default function TeamPage() {
           transition={{ duration: 0.6, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">{c.label}</p>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">{c.label}</p>
           <h1 className="mt-4 text-5xl sm:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>
 
         <div className="mt-14 border-t border-border">
-          {groups.map((group) => (
-            <section
-              key={group.id}
-              id={`ekip-${group.id}`}
-              className="scroll-mt-28 grid grid-cols-1 md:grid-cols-[180px_minmax(0,1fr)] gap-4 md:gap-8 border-b border-border py-8 md:py-10"
-            >
-              <h2 className="text-sm font-mono uppercase tracking-[0.2em] text-foreground md:pt-2">{group.title[lang]}</h2>
+          {/* Tek kişilik ekipler yan yana, boş alan kalmasın */}
+          {singles.length > 0 && (
+            <div className={`grid grid-cols-1 gap-8 sm:gap-4 border-b border-border py-8 md:py-10 ${SINGLE_COLS[Math.min(singles.length, 4)]}`}>
+              {singles.map((group) => (
+                <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28">
+                  <GroupTitle>{group.title[lang]}</GroupTitle>
+                  <MemberCard member={group.members[0]} index={0} />
+                </section>
+              ))}
+            </div>
+          )}
+
+          {multis.map((group) => (
+            <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 border-b border-border py-8 md:py-10">
+              <GroupTitle>{group.title[lang]}</GroupTitle>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                 {group.members.map((member, i) => (
                   <MemberCard key={member.id} member={member} index={i} />
