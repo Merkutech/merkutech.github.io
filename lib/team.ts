@@ -42,6 +42,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "ahmet-yusuf-can",
     name: "Ahmet Yusuf CAN",
+    image: "/team/ahmet-yusuf-can.png",
     role: { tr: "Mekanik Kaptanı", en: "Mechanical Captain" },
     bio: { tr: "", en: "" },
   },
