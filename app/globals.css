@@ -668,3 +668,42 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
   background: #e5e7eb !important;
   color: #0f172a !important;
 }
+
+/* Neler Yapıyoruz: alan animasyonları */
+@keyframes area-swing-a { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(8deg); } }
+@keyframes area-swing-b { 0%, 100% { transform: rotate(16deg); } 50% { transform: rotate(-12deg); } }
+@keyframes area-grip { 0%, 40%, 100% { transform: scaleY(1); } 55%, 85% { transform: scaleY(0.35); } }
+@keyframes area-signal { from { stroke-dashoffset: 12; } to { stroke-dashoffset: -88; } }
+@keyframes area-node { 0%, 100% { fill-opacity: 0; } 40% { fill-opacity: 1; } 70% { fill-opacity: 0; } }
+@keyframes area-hover { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+@keyframes area-rotor { to { transform: rotate(360deg); } }
+@keyframes area-rotor-rev { to { transform: rotate(-360deg); } }
+@keyframes area-twinkle {
+  0%, 100% { transform: scale(0.2); opacity: 0; }
+  30% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(0.4); opacity: 0.2; }
+}
+
+.area-swing-a, .area-swing-b, .area-grip, .area-rotor, .area-rotor-rev, .area-twinkle { transform-origin: 0 0; }
+.area-swing-a { animation: area-swing-a 4s ease-in-out infinite; }
+.area-swing-b { animation: area-swing-b 4s ease-in-out infinite; }
+.area-grip { animation: area-grip 4s ease-in-out infinite; }
+.area-signal, .area-data { animation: area-signal 1.8s linear infinite; }
+.area-node { fill-opacity: 0; animation: area-node 2.4s ease-in-out infinite; }
+.area-hover { animation: area-hover 3s ease-in-out infinite; }
+.area-rotor { animation: area-rotor 0.35s linear infinite; }
+.area-rotor-rev { animation: area-rotor-rev 0.35s linear infinite; }
+.area-twinkle { animation: area-twinkle 2.4s ease-in-out infinite; }
+
+/* Üstüne gelince hızlansın */
+.group:hover .area-swing-a, .group:hover .area-swing-b, .group:hover .area-grip { animation-duration: 2s; }
+.group:hover .area-signal, .group:hover .area-data { animation-duration: 0.9s; }
+.group:hover .area-rotor, .group:hover .area-rotor-rev { animation-duration: 0.18s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .area-swing-a, .area-swing-b, .area-grip, .area-signal, .area-data, .area-node,
+  .area-hover, .area-rotor, .area-rotor-rev, .area-twinkle {
+    animation: none;
+    opacity: 1;
+  }
+}

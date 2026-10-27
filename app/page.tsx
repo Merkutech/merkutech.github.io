@@ -1,17 +1,15 @@
 'use client'
 
 import { SplineScene } from "@/components/ui/splite";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState, useEffect } from "react";
-import {
-  ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
-  Layers, Zap, Users, Trophy, Plane, Award,
-} from "lucide-react";
+import { useRef, useEffect } from "react";
+import { ArrowUpRight, Users, Trophy, Plane, Award } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
 import { applicationTeams } from "@/lib/applications";
 import { TeamApplyCard } from "@/components/ui/team-apply-card";
+import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { achievementParts, stripEmoji } from "@/lib/achievements";
@@ -256,21 +254,10 @@ export default function Home() {
             </h2>
           </BlurFade>
 
-          <div className="space-y-1">
-            {t.home.areas.items.map((item, i) => {
-              const icons = [<Bot className="h-5 w-5" key="bot"/>, <Cpu className="h-5 w-5" key="cpu"/>, <Radio className="h-5 w-5" key="radio"/>, <CircuitBoard className="h-5 w-5" key="cb"/>, <Layers className="h-5 w-5" key="layers"/>, <Zap className="h-5 w-5" key="zap"/>];
-              return (
-                <StaggerRow
-                  key={item.num}
-                  num={item.num}
-                  title={item.title}
-                  desc={item.desc}
-                  tags={item.tags}
-                  icon={icons[i]}
-                  index={i}
-                />
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {t.home.areas.items.map((item, i) => (
+              <AreaCard key={item.num} item={item} index={i} />
+            ))}
           </div>
         </div>
       </section>
@@ -709,49 +696,45 @@ function BlurFade({ children, delay = 0, className = "" }: { children: React.Rea
   );
 }
 
-/* Stagger Row */
-function StaggerRow({ num, title, desc, tags, icon, index }: {
-  num: string; title: string; desc: string; tags: readonly string[]; icon: React.ReactNode; index: number;
+/* Neler Yapıyoruz kartı: başvuru kartlarıyla aynı dil, alana özel animasyon */
+function AreaCard({ item, index }: {
+  item: { num: string; title: string; desc: string; tags: readonly string[] };
+  index: number;
 }) {
-  const [hovered, setHovered] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: -15 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.4, delay: index * 0.06, ease: easeOut }}
-      className={`rounded-2xl px-4 md:px-6 cursor-pointer transition-colors duration-300 ${hovered ? "bg-foreground/[0.04]" : ""}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: easeOut }}
+      className="group relative flex flex-col p-6 lg:p-7 rounded-2xl bg-foreground/[0.03] overflow-hidden"
     >
-      <div className="flex items-center justify-between py-6 md:py-8">
-        <div className="flex items-center gap-6 md:gap-10">
-          <span className="text-sm font-mono text-neutral-700 w-8">{num}</span>
-          <h3 className={`text-xl md:text-2xl font-semibold transition-colors duration-300 ${hovered ? 'text-neutral-300' : 'text-white'}`}>{title}</h3>
+      <span
+        aria-hidden
+        className="absolute inset-0 bg-foreground origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+      />
+
+      <span className="relative text-sm font-medium tabular-nums text-muted-foreground group-hover:text-background/60 transition-colors duration-500">
+        {item.num}
+      </span>
+
+      <div className="relative flex h-40 items-center justify-center">
+        <div className="w-full max-w-[12rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
+          <AreaAnimation index={index} />
         </div>
-        <motion.div animate={{ rotate: hovered ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex items-center justify-center text-neutral-500">
-          <ArrowUpRight className="h-5 w-5" />
-        </motion.div>
       </div>
 
-      <AnimatePresence>
-        {hovered && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: easeOut }} className="overflow-hidden">
-            <div className="pb-8 pl-14 md:pl-[4.5rem] flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="max-w-lg">
-                <p className="text-sm text-neutral-500 leading-relaxed mb-4">{desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag) => <span key={tag} className="px-2.5 py-1 bg-white/[0.04] rounded-md text-[11px] font-mono text-neutral-500">{tag}</span>)}
-                </div>
-              </div>
-              <div className="text-neutral-400 shrink-0 [&>svg]:h-6 [&>svg]:w-6">{icon}</div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="relative">
+        <h3 className="text-2xl lg:text-3xl font-semibold tracking-tight text-foreground group-hover:text-background transition-colors duration-500">
+          {item.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground group-hover:text-background/70 transition-colors duration-500">
+          {item.desc}
+        </p>
+        <p className="mt-5 text-xs font-medium text-muted-foreground/80 group-hover:text-background/60 transition-colors duration-500">
+          {item.tags.join(" / ")}
+        </p>
+      </div>
     </motion.div>
   );
 }
