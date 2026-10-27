@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, FileText, MessageCircle, Sun, Moon } from "lucide-react";
+import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, FileText, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SearchTrigger, SearchInput } from "@/components/ui/search-bar";
@@ -12,67 +12,35 @@ import { useLanguage } from "@/lib/i18n/language-context";
 
 const APPLY_URL = "/basvuru/";
 
-function FlagTR() {
-  return (
-    <svg viewBox="0 0 30 20" width="16" height="12" className="rounded-[2px] overflow-hidden shrink-0">
-      <rect width="30" height="20" fill="#E30A17" />
-      <circle cx="11" cy="10" r="3.4" fill="#fff" />
-      <circle cx="12.4" cy="10" r="2.7" fill="#E30A17" />
-      <polygon
-        points="16,10 14.85,10.7 15.2,9.4 14.2,8.6 15.55,8.5 16,7.3 16.45,8.5 17.8,8.6 16.8,9.4 17.15,10.7"
-        fill="#fff"
-      />
-    </svg>
-  );
-}
-
-function FlagEN() {
-  return (
-    <svg viewBox="0 0 30 20" width="16" height="12" className="rounded-[2px] overflow-hidden shrink-0">
-      <rect width="30" height="20" fill="#012169" />
-      <path d="M0,0 L30,20 M30,0 L0,20" stroke="#fff" strokeWidth="3" />
-      <path d="M0,0 L30,20 M30,0 L0,20" stroke="#C8102E" strokeWidth="1.4" />
-      <rect x="13" y="0" width="4" height="20" fill="#fff" />
-      <rect x="0" y="8" width="30" height="4" fill="#fff" />
-      <rect x="14" y="0" width="2" height="20" fill="#C8102E" />
-      <rect x="0" y="9" width="30" height="2" fill="#C8102E" />
-    </svg>
-  );
-}
-
-function LanguageSwitcher() {
+function LanguageSwitcher({ className = "" }: { className?: string }) {
   const { language, setLanguage, t } = useLanguage();
+  const options = [
+    { code: "tr", label: t.language.tr },
+    { code: "en", label: t.language.en },
+  ] as const;
+
   return (
     <div
+      role="group"
+      aria-label={language === "tr" ? "Dil" : "Language"}
       suppressHydrationWarning
-      className="inline-flex h-8 rounded-full border border-white/[0.1] bg-white/[0.04] p-0.5"
+      className={`seg-control seg-lang ${className}`}
     >
-      <button
-        type="button"
-        onClick={() => setLanguage("tr")}
-        aria-label={`${t.language.tr} diline geç`}
-        className={`inline-flex items-center gap-1 h-full px-2.5 rounded-full text-[10px] font-mono font-semibold tracking-wider transition-all duration-300 ${
-          language === "tr"
-            ? "bg-white/[0.12] text-white"
-            : "text-neutral-400 hover:text-white"
-        }`}
-      >
-        <FlagTR />
-        TR
-      </button>
-      <button
-        type="button"
-        onClick={() => setLanguage("en")}
-        aria-label={`${t.language.en} diline geç`}
-        className={`inline-flex items-center gap-1 h-full px-2.5 rounded-full text-[10px] font-mono font-semibold tracking-wider transition-all duration-300 ${
-          language === "en"
-            ? "bg-white/[0.12] text-white"
-            : "text-neutral-400 hover:text-white"
-        }`}
-      >
-        <FlagEN />
-        EN
-      </button>
+      <span className="seg-thumb" aria-hidden="true" />
+      {options.map((o) => (
+        <button
+          key={o.code}
+          type="button"
+          onClick={() => setLanguage(o.code)}
+          aria-pressed={language === o.code}
+          aria-label={o.label}
+          title={o.label}
+          data-lang={o.code}
+          className="seg-option"
+        >
+          {o.code.toUpperCase()}
+        </button>
+      ))}
     </div>
   );
 }
@@ -94,13 +62,8 @@ function SocialIcon({ href, label, children }: { href: string; label: string; ch
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [mobileTheme, setMobileTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    setMobileTheme(document.documentElement.classList.contains("light") ? "light" : "dark");
-  }, []);
   const pathname = usePathname();
-  const { t, language, setLanguage } = useLanguage();
+  const { t, language } = useLanguage();
 
   const openSearch = useCallback(() => {
     setSearchOpen(true);
@@ -333,72 +296,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setLanguage("tr")}
-                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
-                      language === "tr"
-                        ? "bg-foreground text-background"
-                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
-                    }`}
-                  >
-                    <FlagTR />
-                    Türkçe
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setLanguage("en")}
-                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
-                      language === "en"
-                        ? "bg-foreground text-background"
-                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
-                    }`}
-                  >
-                    <FlagEN />
-                    English
-                  </button>
+                <div className="flex items-center justify-between gap-3 px-1">
+                  <span className="text-sm text-muted-foreground">{language === "tr" ? "Dil" : "Language"}</span>
+                  <LanguageSwitcher />
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMobileTheme("light");
-                      const root = document.documentElement;
-                      root.classList.add("light"); root.classList.remove("dark");
-                      root.style.colorScheme = "light";
-                      const link = document.querySelector<HTMLLinkElement>("link[rel='icon'][data-theme-aware]");
-                      if (link) link.href = "/logo-black.png";
-                    }}
-                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
-                      mobileTheme === "light"
-                        ? "bg-foreground text-background"
-                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
-                    }`}
-                  >
-                    <Sun className="h-4 w-4" />
-                    {language === "tr" ? "Açık" : "Light"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMobileTheme("dark");
-                      const root = document.documentElement;
-                      root.classList.remove("light"); root.classList.add("dark");
-                      root.style.colorScheme = "dark";
-                      const link = document.querySelector<HTMLLinkElement>("link[rel='icon'][data-theme-aware]");
-                      if (link) link.href = "/logo-white.png";
-                    }}
-                    className={`flex-1 flex items-center justify-center gap-2 rounded-2xl py-3 text-sm font-medium transition-all ${
-                      mobileTheme === "dark"
-                        ? "bg-foreground text-background"
-                        : "text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20"
-                    }`}
-                  >
-                    <Moon className="h-4 w-4" />
-                    {language === "tr" ? "Koyu" : "Dark"}
-                  </button>
+                <div className="flex items-center justify-between gap-3 px-1">
+                  <span className="text-sm text-muted-foreground">{language === "tr" ? "Tema" : "Theme"}</span>
+                  <ThemeToggle />
                 </div>
               </div>
             </motion.div>

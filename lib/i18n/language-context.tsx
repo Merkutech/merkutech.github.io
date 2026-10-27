@@ -17,6 +17,10 @@ const STORAGE_KEY = "merkutech-language";
 
 function detectBrowserLanguage(): Language {
   try {
+    if (typeof window !== "undefined") {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored === "tr" || stored === "en") return stored;
+    }
     if (typeof navigator !== "undefined" && navigator.language?.startsWith("tr")) {
       return "tr";
     }

@@ -247,10 +247,6 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-.theme-toggle-button {
-  color: var(--theme-muted-text);
-}
-
 .tech-demo-card {
   --tech-muted-node: #404040;
   --tech-blue-line: #1e3a5f;
@@ -280,22 +276,10 @@
   background: rgba(255, 255, 255, 0.12) !important;
 }
 
-:root.light .theme-toggle-button {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
-  color: #dbe3ef !important;
-}
-
 :root.light .site-mobile-menu-button {
   background: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(255, 255, 255, 0.16) !important;
   color: #dbe3ef !important;
-}
-
-:root.light .theme-toggle-button:hover {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.24) !important;
-  color: #ffffff !important;
 }
 
 :root.light .site-mobile-menu-button:hover {
@@ -570,4 +554,95 @@ div:has(> a[href*="spline"]) {
     animation: none;
     opacity: 1;
   }
+}
+
+/* Segment kontrolleri — dil ve tema seçici (kayan gösterge) */
+.seg-control {
+  position: relative;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  height: 32px;
+  padding: 3px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.12),
+    inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.seg-lang { width: 68px; }
+.seg-theme { width: 92px; }
+
+.seg-thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  border-radius: 13px;
+  background: linear-gradient(rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.1));
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.17),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.3);
+}
+
+.seg-lang .seg-thumb { width: calc((100% - 6px) / 2); }
+.seg-theme .seg-thumb { width: calc((100% - 6px) / 3); }
+
+.seg-option {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #a0a0a0;
+  cursor: pointer;
+  transition: color 0.28s, transform 0.22s cubic-bezier(0.2, 0.9, 0.25, 1.3);
+}
+
+.seg-option:hover { color: #e5e5e5; }
+.seg-option:active { transform: scale(0.92); }
+.seg-option:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.4); outline-offset: -2px; border-radius: 12px; }
+
+html[lang="en"] .seg-lang .seg-thumb { transform: translateX(100%); }
+html[lang="tr"] .seg-lang [data-lang="tr"],
+html[lang="en"] .seg-lang [data-lang="en"] { color: #e5e5e5; }
+
+html[data-theme-choice="system"] .seg-theme .seg-thumb { transform: translateX(100%); }
+html[data-theme-choice="dark"] .seg-theme .seg-thumb { transform: translateX(200%); }
+html[data-theme-choice="light"] .seg-theme [data-choice="light"],
+html[data-theme-choice="system"] .seg-theme [data-choice="system"],
+html[data-theme-choice="dark"] .seg-theme [data-choice="dark"] { color: #e5e5e5; }
+
+/* Açık temada mobil menü açık zeminli — kontroller de açık */
+:root.light .site-mobile-menu .seg-control {
+  background: rgba(120, 120, 120, 0.14);
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.55),
+    inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+:root.light .site-mobile-menu .seg-thumb {
+  background: linear-gradient(#ffffff, rgba(255, 255, 255, 0.82));
+  box-shadow:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.9),
+    0 1px 3px rgba(0, 0, 0, 0.16);
+}
+:root.light .site-mobile-menu .seg-option { color: #8b95a6; }
+:root.light .site-mobile-menu .seg-option:hover,
+html.light[lang="tr"] .site-mobile-menu .seg-lang [data-lang="tr"],
+html.light[lang="en"] .site-mobile-menu .seg-lang [data-lang="en"],
+html.light[data-theme-choice="light"] .site-mobile-menu .seg-theme [data-choice="light"],
+html.light[data-theme-choice="system"] .site-mobile-menu .seg-theme [data-choice="system"],
+html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="dark"] { color: #172033; }
+
+@media (prefers-reduced-motion: reduce) {
+  .seg-thumb, .seg-option { transition: none; }
 }

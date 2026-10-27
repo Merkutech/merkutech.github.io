@@ -4,7 +4,20 @@ import "./globals.css";
 
 const themeScript = `
 try {
-  var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  var choice = 'system';
+  try {
+    var stored = localStorage.getItem('merkutech-theme');
+    if (stored === 'light' || stored === 'dark' || stored === 'system') choice = stored;
+  } catch (_) {}
+  var theme = choice === 'system'
+    ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+    : choice;
+  document.documentElement.dataset.themeChoice = choice;
+  try {
+    var lang = localStorage.getItem('merkutech-language');
+    if (lang !== 'tr' && lang !== 'en') lang = (navigator.language || '').indexOf('tr') === 0 ? 'tr' : 'en';
+    document.documentElement.lang = lang;
+  } catch (_) {}
   document.documentElement.classList.toggle('light', theme === 'light');
   document.documentElement.classList.toggle('dark', theme === 'dark');
   document.documentElement.style.colorScheme = theme;
