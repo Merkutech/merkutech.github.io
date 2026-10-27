@@ -61,6 +61,13 @@ export const teamMembers: TeamMember[] = [
     bio: { tr: "", en: "" },
   },
   {
+    id: "beyzanur-musuk",
+    name: "Beyzanur MUSUK",
+    image: "/team/beyzanur-musuk.png",
+    role: { tr: "Yazılım Ekip Üyesi", en: "Software Team Member" },
+    bio: { tr: "", en: "" },
+  },
+  {
     id: "merve-keziban-zerdali",
     name: "Merve Keziban ZERDALİ",
     image: "/team/merve-keziban-zerdali.png",
