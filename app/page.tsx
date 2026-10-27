@@ -44,7 +44,7 @@ export default function Home() {
 
       {/* HERO */}
       <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
-        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center py-20 sm:py-24 lg:py-0">
+        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center pt-20 pb-10 sm:py-24 lg:py-0">
           {/* Sol: Başlık ve açıklama */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -126,7 +126,7 @@ export default function Home() {
       <SponsorsSection />
 
       {/* BİZ KİMİZ: Ana Sayfa */}
-      <section className="relative py-24 md:py-32 cv-auto">
+      <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
@@ -193,7 +193,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.9, ease: easeOut, delay: 0.2 }}
             >
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-white/[0.02]">
+              <div className="aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-2xl bg-foreground/[0.03]">
                 <img
                   src="/4.jpg"
                   alt="Merkutech Ekibi"
@@ -213,7 +213,7 @@ export default function Home() {
       <TeamCarousel />
 
       {/* PROJELER */}
-      <section className="relative py-24 md:py-32 cv-auto">
+      <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
@@ -231,7 +231,7 @@ export default function Home() {
             </Link>
           </BlurFade>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+          <div className="mobile-rail flex gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 md:gap-4">
             {projects.slice(0, 3).map((project, i) => (
               <MaskCard key={project.slug} project={project} index={i} />
             ))}
@@ -240,7 +240,7 @@ export default function Home() {
       </section>
 
       {/* NE YAPIYORUZ */}
-      <section className="relative py-24 md:py-32 cv-auto">
+      <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="mb-4">
             <p className="eyebrow mb-3">{t.home.areas.label}</p>
@@ -441,7 +441,7 @@ function TeamCarousel() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-28 overflow-hidden cv-auto">
+    <section ref={sectionRef} className="relative py-14 sm:py-20 md:py-28 overflow-hidden cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-10">
         <motion.span
           initial={{ opacity: 0, filter: "blur(8px)" }}
@@ -595,7 +595,7 @@ function SponsorsSection() {
   return (
       <section
       ref={ref}
-      className="relative py-20 md:py-24 overflow-hidden cv-auto"
+      className="relative py-14 sm:py-20 md:py-24 overflow-hidden cv-auto"
     >
       <motion.div
         aria-hidden
@@ -644,7 +644,7 @@ function SponsorsSection() {
             hidden: {},
             visible: { transition: { staggerChildren: 0.08, delayChildren: 0.4 } },
           }}
-          className="flex flex-wrap justify-center gap-3 md:gap-4"
+          className="mobile-rail flex gap-3 sm:flex-wrap sm:justify-center md:gap-4"
         >
           {sponsors.map((sponsor) => {
             const initials = sponsor.name
@@ -701,7 +701,7 @@ function SponsorsSection() {
                   },
                 }}
                 whileHover={{ y: -4, transition: { duration: 0.25, ease: easeOut } }}
-                className="w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-1.5rem)/3)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-4rem)/5)]"
+                className="w-[44%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/3)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-4rem)/5)]"
               >
                 {sponsor.url ? (
                   <a
@@ -754,7 +754,7 @@ function AreaCard({ item, index }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: easeOut }}
-      className="group relative flex flex-col p-6 lg:p-7 rounded-2xl bg-foreground/[0.03] overflow-hidden"
+      className="group relative flex flex-col p-5 sm:p-6 lg:p-7 rounded-2xl bg-foreground/[0.03] overflow-hidden"
     >
       <span
         aria-hidden
@@ -765,7 +765,7 @@ function AreaCard({ item, index }: {
         {item.num}
       </span>
 
-      <div className="relative flex h-40 items-center justify-center">
+      <div className="relative flex h-32 sm:h-40 items-center justify-center">
         <div className="w-full max-w-[12rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
           <AreaAnimation index={index} />
         </div>
@@ -799,7 +799,7 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: easeOut }}
-      className="h-full"
+      className="h-full w-[82%] shrink-0 snap-start sm:w-auto"
     >
       <Link
         href={`/projelerimiz/${project.slug}`}
@@ -851,7 +851,7 @@ function TeamsSection() {
       : { label: "Applications open", title: "Our Teams", apply: "Apply" };
 
   return (
-    <section className="relative py-24 md:py-32 cv-auto">
+    <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <BlurFade>
           <p className="eyebrow mb-3">{c.label}</p>
