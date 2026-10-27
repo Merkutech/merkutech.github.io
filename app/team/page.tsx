@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
 import { Users, Mail } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { teamGroups, teamMembers } from "@/lib/team";
@@ -119,17 +119,14 @@ export default function TeamPage() {
 
         <div className="mt-14 border-t border-border">
           {/* Tek kişilik ekipler aynı satırda ama ayrı ekip oldukları belli olsun:
-              kart genişliği ızgarayla aynı, aralarında boşluk ve ayraç var */}
+              kart genişliği ızgarayla aynı, aralarında geniş boşluk var */}
           {singles.length > 0 && (
-            <div className="flex flex-wrap gap-8 lg:gap-x-0 border-b border-border py-8 md:py-10">
-              {singles.map((group, i) => (
-                <Fragment key={group.id}>
-                  {i > 0 && <span aria-hidden className="hidden lg:block w-px self-stretch bg-border mx-8" />}
-                  <section id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
-                    <GroupTitle>{group.title[lang]}</GroupTitle>
-                    <MemberCard member={group.members[0]} index={0} />
-                  </section>
-                </Fragment>
+            <div className="flex flex-wrap gap-8 lg:justify-between border-b border-border py-8 md:py-10">
+              {singles.map((group) => (
+                <section key={group.id} id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
+                  <GroupTitle>{group.title[lang]}</GroupTitle>
+                  <MemberCard member={group.members[0]} index={0} />
+                </section>
               ))}
             </div>
           )}
