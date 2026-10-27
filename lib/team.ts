@@ -81,4 +81,11 @@ export const teamMembers: TeamMember[] = [
     role: { tr: "Tanıtım ve Sponsorluk Ekip Üyesi", en: "Promotion & Sponsorship Team Member" },
     bio: { tr: "", en: "" },
   },
+  {
+    id: "ibrahim-toprak",
+    name: "İbrahim TOPRAK",
+    image: "/team/ibrahim-toprak.png",
+    role: { tr: "Tanıtım ve Sponsorluk Ekip Üyesi", en: "Promotion & Sponsorship Team Member" },
+    bio: { tr: "", en: "" },
+  },
 ];
