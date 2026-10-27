@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
   ArrowUpRight, Bot, Cpu, CircuitBoard, Radio,
-  Layers, Zap, Users
+  Layers, Zap, Users, Trophy, Plane, Award, Medal, FileCheck, Mic,
+  type LucideIcon,
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
@@ -46,7 +47,7 @@ export default function Home() {
       {/* HERO */}
       <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
         <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center py-20 sm:py-24 lg:py-0">
-          {/* Sol — Başlık ve açıklama */}
+          {/* Sol: Başlık ve açıklama */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -55,36 +56,55 @@ export default function Home() {
           >
             <RecruitingBadge />
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-semibold text-foreground tracking-[-0.045em] leading-[0.92]">
               {t.home.brand}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-neutral-400 mt-3 sm:mt-4 max-w-md">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/80 mt-5 sm:mt-6 max-w-md">
               {t.home.subtitle}
             </p>
-            <p className="text-sm md:text-base text-neutral-500 mt-5 sm:mt-6 leading-relaxed max-w-md">
+            <p className="text-sm md:text-base text-muted-foreground mt-3 leading-relaxed max-w-md">
               {t.home.description}
             </p>
 
-            {/* Mobil — Hızlı erişim butonları */}
-            <div className="flex sm:hidden items-center gap-3 mt-8 w-full">
+            {/* Hızlı erişim */}
+            <div className="flex items-center gap-3 mt-8 w-full sm:w-auto">
               <Link
                 href="/projelerimiz"
-                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-neutral-200 transition-colors"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-foreground text-background text-sm font-semibold hover:bg-foreground/85 transition-colors"
               >
                 {t.home.heroCta.projects}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/iletisim"
-                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition-colors"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-foreground/[0.06] text-foreground text-sm font-semibold hover:bg-foreground/[0.1] transition-colors"
               >
                 {t.home.heroCta.contact}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
+
+            {/* Öne çıkan başarılar */}
+            <ul className="mt-10 grid w-full gap-2.5 text-left">
+              {t.home.highlights.map((item, i) => {
+                const Icon = [Trophy, Plane, Award][i] ?? Award;
+                return (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease: easeOut, delay: 0.7 + i * 0.1 }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
+                    <Icon className="h-4 w-4 shrink-0 text-brand" />
+                    {item}
+                  </motion.li>
+                );
+              })}
+            </ul>
           </motion.div>
 
-          {/* Sağ — Robot */}
+          {/* Sağ: Robot */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -110,7 +130,7 @@ export default function Home() {
       {/* SPONSORLAR */}
       <SponsorsSection />
 
-      {/* BİZ KİMİZ — Ana Sayfa */}
+      {/* BİZ KİMİZ: Ana Sayfa */}
       <section className="relative py-24 md:py-32 cv-auto">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -155,13 +175,18 @@ export default function Home() {
                   whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
-                  className="text-neutral-300"
                 >
-                  <p className="mb-3">{t.home.about.achievements}</p>
-                  <ul className="space-y-2 list-disc list-inside">
-                    {t.home.about.achievementsList.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
+                  <p className="mb-4 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {t.home.about.achievementsList.map((item) => {
+                      const { Icon, text } = achievementParts(item);
+                      return (
+                        <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
+                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                          <span className="leading-snug">{text}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </motion.div>
               </div>
@@ -189,7 +214,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EKİBİMİZ — Kayan kartlar */}
+      {/* EKİBİMİZ: Kayan kartlar */}
       <TeamCarousel />
 
       {/* PROJELER */}
@@ -250,13 +275,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EKİPLERİMİZ — başvuru */}
+      {/* EKİPLERİMİZ: başvuru */}
       <TeamsSection />
     </div>
   );
 }
 
-/* Scroll progress — passive listener, writes CSS var without re-render */
+/* Metindeki baştaki emojiyi ayıkla: yerine ikon kullanıyoruz */
+const EMOJI_RE = /^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u;
+
+function stripEmoji(text: string) {
+  return text.replace(EMOJI_RE, "");
+}
+
+const EMOJI_ICONS: [string, LucideIcon][] = [
+  ["🏆", Trophy],
+  ["🥇", Medal],
+  ["🥈", Medal],
+  ["🥉", Medal],
+  ["🏅", Medal],
+  ["🎖", Award],
+  ["📋", FileCheck],
+  ["🎤", Mic],
+];
+
+function achievementParts(item: string): { Icon: LucideIcon; text: string } {
+  const Icon = EMOJI_ICONS.find(([e]) => item.startsWith(e))?.[1] ?? Award;
+  return { Icon, text: stripEmoji(item) };
+}
+
+/* Scroll progress: passive listener, writes CSS var without re-render */
 function ScrollProgressDriver() {
   useEffect(() => {
     let ticking = false;
@@ -471,7 +519,7 @@ function TeamCarousel() {
   );
 }
 
-/* Marquee — sonsuz, seamless */
+/* Marquee: sonsuz, seamless */
 function MarqueeSection() {
   const { t } = useLanguage();
   const achievements = t.home.marquee;
@@ -485,15 +533,15 @@ function MarqueeSection() {
       <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       <div className="flex animate-marquee whitespace-nowrap w-max will-change-transform">
-        {/* İki aynı satır — CSS -50% animasyonu seamless döngü sağlar */}
+        {/* İki aynı satır: CSS -50% animasyonu seamless döngü sağlar */}
         {[0, 1].map((si) => (
           <div key={si} className="flex items-center shrink-0">
             {row.map((text, i) => (
               <span key={`${si}-${i}`} className="flex items-center shrink-0">
-                <span className="text-base md:text-lg lg:text-xl font-medium text-neutral-400 tracking-tight whitespace-nowrap px-4 md:px-6">
-                  {text}
+                <span className="text-base md:text-lg lg:text-xl font-medium text-muted-foreground tracking-tight whitespace-nowrap px-5 md:px-8">
+                  {stripEmoji(text)}
                 </span>
-                <span className="text-neutral-700 select-none">·</span>
+                <span aria-hidden className="h-1.5 w-1.5 rotate-45 bg-brand/70 select-none" />
               </span>
             ))}
           </div>
@@ -514,14 +562,21 @@ function RecruitingBadge() {
       transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
       className="mb-6 sm:mb-8 self-center sm:self-start"
     >
-      <Link href="/basvuru/" className="group inline-flex items-stretch text-left">
-        <span className="inline-flex items-center gap-2 bg-white text-black px-3.5 py-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-[0.18em] transition-colors group-hover:bg-neutral-200">
+      <Link
+        href="/basvuru/"
+        className="group inline-flex items-center gap-2.5 rounded-full bg-foreground/[0.05] py-1.5 pl-2 pr-3.5 text-left transition-colors hover:bg-foreground/[0.09]"
+      >
+        <span className="relative flex h-6 items-center gap-2 rounded-full bg-foreground px-2.5 text-[11px] font-semibold uppercase tracking-wider text-background">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
+          </span>
           {t.home.recruiting.badge}
-          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
-        <span className="hidden sm:inline-flex items-center border border-l-0 border-white/20 px-3.5 text-xs font-mono text-neutral-400 group-hover:text-white transition-colors">
+        <span className="hidden sm:inline text-xs text-muted-foreground group-hover:text-foreground transition-colors">
           {t.home.recruiting.teams}
         </span>
+        <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
       </Link>
     </motion.div>
   );
@@ -761,7 +816,7 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
   );
 }
 
-/* Ekiplerimiz — her ekipten başvuru sayfasına */
+/* Ekiplerimiz: her ekipten başvuru sayfasına */
 function TeamsSection() {
   const { language } = useLanguage();
   const lang = language as "tr" | "en";
