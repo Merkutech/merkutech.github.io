@@ -221,7 +221,7 @@ export default function Home() {
           <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
               <p className="eyebrow mb-3">{t.home.projects.label}</p>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">
                 {t.home.projects.title}
               </h2>
             </div>
@@ -234,7 +234,7 @@ export default function Home() {
             </Link>
           </BlurFade>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {projects.slice(0, 3).map((project, i) => (
               <MaskCard key={project.slug} project={project} index={i} />
             ))}
@@ -249,7 +249,7 @@ export default function Home() {
             <p className="eyebrow mb-3">{t.home.areas.label}</p>
           </BlurFade>
           <BlurFade className="mb-16" delay={0.1}>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">
               {t.home.areas.title}
             </h2>
           </BlurFade>
@@ -739,33 +739,55 @@ function AreaCard({ item, index }: {
   );
 }
 
-/* Mask Card */
+/* Öne çıkan proje kartı: Projelerimiz sayfasıyla aynı dil */
 function MaskCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const tr = project.translations[language];
 
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: index * 0.1, ease: easeOut }}>
-      <Link href={`/projelerimiz/${project.slug}`} className="group block rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-white/[0.12] transition-all duration-500">
-        <div className="aspect-[16/10] overflow-hidden relative">
-          <motion.img
-            src={project.image}
-            alt={tr.title}
-            width={640}
-            height={400}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-            initial={{ clipPath: "inset(0 100% 0 0)" }}
-            animate={isInView ? { clipPath: "inset(0 0% 0 0)" } : {}}
-            transition={{ duration: 0.7, delay: index * 0.1 + 0.15, ease: easeOut }}
-          />
-        </div>
-        <div className="p-5">
-          <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-neutral-200 transition-colors duration-300">{tr.title}</h3>
-          <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2">{tr.description}</p>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: easeOut }}
+      className="h-full"
+    >
+      <Link
+        href={`/projelerimiz/${project.slug}`}
+        className="group flex h-full flex-col rounded-2xl bg-foreground/[0.03] p-3 transition-colors duration-500 hover:bg-foreground/[0.06]"
+      >
+        <motion.div
+          initial={{ clipPath: "inset(10% 10% 10% 10% round 14px)", opacity: 0 }}
+          animate={isInView ? { clipPath: "inset(0% 0% 0% 0% round 14px)", opacity: 1 } : {}}
+          transition={{ duration: 1, delay: index * 0.1 + 0.1, ease: easeOut }}
+          className="aspect-[16/10] overflow-hidden rounded-[14px] bg-foreground/[0.04]"
+        >
+          <div className="h-full w-full transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]">
+            <motion.img
+              src={project.image}
+              alt={tr.title}
+              width={640}
+              height={400}
+              loading="lazy"
+              decoding="async"
+              initial={{ scale: 1.15 }}
+              animate={isInView ? { scale: 1 } : {}}
+              transition={{ duration: 1.3, delay: index * 0.1 + 0.1, ease: easeOut }}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </motion.div>
+
+        <div className="flex flex-1 flex-col px-3 pt-5 pb-3">
+          <span className="font-mono text-xs text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+          <h3 className="mt-3 text-xl lg:text-2xl font-semibold tracking-tight text-foreground">{tr.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-2">{tr.description}</p>
+          <span className="mt-auto pt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground">
+            {t.projects.detail}
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
         </div>
       </Link>
     </motion.div>
