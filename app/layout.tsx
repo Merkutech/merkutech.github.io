@@ -1,6 +1,19 @@
+import { Geist, Geist_Mono } from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
 import { LanguageProvider } from "@/lib/i18n/language-context";
 import "./globals.css";
+
+const geistSans = Geist({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 const themeScript = `
 try {
@@ -45,7 +58,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className="h-full antialiased"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <title>MCT SENSOR Merkutech</title>
