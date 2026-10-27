@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
+import { applicationTeams } from "@/lib/applications";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -248,8 +249,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SÜREÇ — nasıl katılınır */}
-      <ProcessSection />
+      {/* EKİPLERİMİZ — başvuru */}
+      <TeamsSection />
     </div>
   );
 }
@@ -759,120 +760,47 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
   );
 }
 
-/* Süreç — bağlantılı yol (path/steps) */
-function ProcessSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const { t } = useLanguage();
-
-  const steps = t.home.process.steps;
+/* Ekiplerimiz — her ekipten başvuru sayfasına */
+function TeamsSection() {
+  const { language } = useLanguage();
+  const lang = language as "tr" | "en";
+  const c =
+    lang === "tr"
+      ? { label: "Başvurular açık", title: "Ekiplerimiz", apply: "Başvur" }
+      : { label: "Applications open", title: "Our Teams", apply: "Apply" };
 
   return (
-    <section ref={ref} className="relative py-32 md:py-40 border-t border-white/[0.06] overflow-hidden cv-auto">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="text-center mb-20">
-          <BlurFade>
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.process.label}</p>
-          </BlurFade>
-          <BlurFade delay={0.1}>
-            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">{t.home.process.title}</h2>
-          </BlurFade>
-        </div>
+    <section className="relative py-24 md:py-32 border-t border-border cv-auto">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <BlurFade>
+          <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground mb-3">{c.label}</p>
+        </BlurFade>
+        <BlurFade delay={0.1} className="mb-12">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h2>
+        </BlurFade>
 
-        {/* Desktop: Yatay Path */}
-        <div className="hidden md:block relative h-[420px]">
-          {/* Yatal bağlantı çizgisi */}
-          <motion.div
-            className="absolute top-1/2 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, ease: easeOut, delay: 0.2 }}
-            style={{ originX: 0 }}
-          />
-
-          <div className="flex justify-between items-center h-full px-[10%]">
-            {steps.map((step, i) => {
-              const isBottom = i === 1;
-              return (
-                <div key={step.num} className="relative flex-1 flex flex-col items-center h-full">
-                  {/* Node dairesi */}
-                  <motion.div
-                    className="absolute top-1/2 -translate-y-1/2 z-10"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                    transition={{ duration: 0.5, delay: i * 0.25 + 0.5, ease: easeOut }}
-                  >
-                    <div className="relative flex items-center justify-center w-12 h-12 rounded-full bg-neutral-900 border border-white/20 shadow-[0_0_0_4px_rgba(0,0,0,0.5)]">
-                      <span className="text-xs font-mono text-neutral-400">{step.num}</span>
-                      <motion.div
-                        className="absolute inset-0 rounded-full border border-white/10"
-                        animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
-                        transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.4 }}
-                      />
-                    </div>
-                  </motion.div>
-
-                  {/* Kart */}
-                  <motion.div
-                    className={`absolute w-72 ${isBottom ? 'top-1/2 mt-10' : 'bottom-1/2 mb-10'}`}
-                    initial={{ opacity: 0, y: isBottom ? 30 : -30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: i * 0.25 + 0.6, ease: easeOut }}
-                  >
-                    <div className="group relative p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 text-center">
-                      <div className={`absolute left-1/2 -translate-x-1/2 w-px h-6 bg-white/10 ${isBottom ? '-top-6' : '-bottom-6'}`} />
-                      <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{step.title}</h3>
-                      <p className="text-sm text-neutral-500 leading-relaxed">{step.desc}</p>
-                    </div>
-                  </motion.div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Mobile: Dikey Path */}
-        <div className="md:hidden relative pl-12">
-          {/* Dikey bağlantı çizgisi */}
-          <motion.div
-            className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent"
-            initial={{ scaleY: 0 }}
-            animate={isInView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.2, ease: easeOut, delay: 0.2 }}
-            style={{ originY: 0 }}
-          />
-
-          <div className="space-y-16">
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                className="relative"
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: i * 0.25 + 0.4, ease: easeOut }}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          {applicationTeams.map((team, i) => (
+            <motion.div
+              key={team.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: easeOut }}
+            >
+              <Link
+                href={`/basvuru/#${team.id}`}
+                className="group flex h-full flex-col rounded-2xl border border-border bg-card/40 p-6 transition-colors duration-300 hover:border-foreground/15 hover:bg-card/70"
               >
-                {/* Node */}
-                <motion.div
-                  className="absolute left-6 -translate-x-1/2 top-0 z-10"
-                  initial={{ scale: 0 }}
-                  animate={isInView ? { scale: 1 } : {}}
-                  transition={{ duration: 0.4, delay: i * 0.25 + 0.6, ease: easeOut }}
-                >
-                  <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-neutral-900 border border-white/20 shadow-[0_0_0_4px_rgba(0,0,0,0.5)]">
-                    <span className="text-[10px] font-mono text-neutral-400">{step.num}</span>
-                  </div>
-                </motion.div>
-
-                {/* Kart */}
-                <div className="pl-8">
-                  <div className="group p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500">
-                    <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{step.title}</h3>
-                    <p className="text-sm text-neutral-500 leading-relaxed">{step.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                <h3 className="text-xl font-semibold tracking-tight text-foreground">{team.title[lang]}</h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{team.description[lang]}</p>
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                  {c.apply}
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

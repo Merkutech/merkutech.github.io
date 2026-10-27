@@ -65,15 +65,6 @@ export const translations = {
           { num: "06", title: "Yarışmalar", desc: "Teknofest ve uluslararası robotik yarışmalarına aktif katılım ve hazırlık.", tags: ["Teknofest", "Robotaksi", "Uluslararası"] },
         ],
       },
-      process: {
-        label: "Nasıl Başlarız",
-        title: "Süreç",
-        steps: [
-          { num: "01", title: "Keşfet", desc: "Kulübümüzü ziyaret et, mevcut projeleri gör ve hangi alan sana uygun keşfet." },
-          { num: "02", title: "Öğren", desc: "Atölye çalışmaları, eğitimler ve mentorluk ile yeni beceriler kazan." },
-          { num: "03", title: "Üret", desc: "Kendi projeni başlat veya mevcut bir ekibe katıl. Beraber üret, beraber büyü." },
-        ],
-      },
     },
     sponsors: {
       label: "Sponsorlarımız",
@@ -179,15 +170,6 @@ export const translations = {
           { num: "04", title: "Embedded Systems", desc: "Microcontrollers, PCB design and real-time embedded software development.", tags: ["STM32", "Arduino", "Embedded C"] },
           { num: "05", title: "3D Modeling", desc: "From idea to product with CAD, simulation and rapid prototyping.", tags: ["SolidWorks", "AutoCAD", "Gazebo"] },
           { num: "06", title: "Competitions", desc: "Active participation and preparation for Teknofest and international robotics competitions.", tags: ["Teknofest", "Robotaxi", "International"] },
-        ],
-      },
-      process: {
-        label: "How We Start",
-        title: "Process",
-        steps: [
-          { num: "01", title: "Explore", desc: "Visit our club, see current projects and discover which area suits you." },
-          { num: "02", title: "Learn", desc: "Gain new skills through workshops, trainings and mentoring." },
-          { num: "03", title: "Build", desc: "Start your own project or join an existing team. Build together, grow together." },
         ],
       },
     },
