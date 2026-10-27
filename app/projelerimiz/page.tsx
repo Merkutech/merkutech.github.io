@@ -38,7 +38,7 @@ export default function ProjelerimizPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase"
+            className="eyebrow"
           >
             {t.projects.label}
           </motion.span>
@@ -122,7 +122,7 @@ export default function ProjelerimizPage() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: easeOut }}
           >
-            <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
+            <span className="eyebrow">
               {language === "tr" ? "Geçmiş" : "History"}
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-10">
@@ -151,7 +151,7 @@ export default function ProjelerimizPage() {
             className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
           >
             <div className="order-2 lg:order-1">
-              <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
+              <span className="eyebrow">
                 {t.home.about.label}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mt-4 mb-8">

@@ -172,7 +172,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       href={APPLY_URL}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.97 }}
-                      className="site-header-cta inline-flex items-center px-3 py-1.5 rounded-full bg-white text-black text-[10px] font-semibold hover:bg-neutral-200 transition-colors relative overflow-hidden group"
+                      className="site-header-cta inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-semibold transition-colors relative overflow-hidden group"
                     >
                       <span className="relative z-10 whitespace-nowrap">{t.cta.apply}</span>
                       <motion.div

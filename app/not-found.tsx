@@ -32,7 +32,7 @@ export default function NotFound() {
 
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
         <div>
-          <p className="mb-5 text-xs font-mono uppercase tracking-[0.3em] text-neutral-600">
+          <p className="eyebrow mb-5">
             {labels.signal}
           </p>
           <h1 className="text-5xl font-bold tracking-tighter text-white sm:text-7xl lg:text-8xl">

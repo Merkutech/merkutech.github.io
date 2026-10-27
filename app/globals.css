@@ -306,16 +306,6 @@
   color: rgba(226, 232, 240, 0.68) !important;
 }
 
-:root.light .site-header-panel .site-header-cta {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
-}
-
-:root.light .site-header-panel .site-header-cta:hover {
-  background: #e5e7eb !important;
-  color: #0f172a !important;
-}
 
 :root.light .tech-demo-card {
   --tech-muted-node: rgba(23, 32, 51, 0.32);
@@ -463,15 +453,6 @@ div:has(> a[href*="spline"]) {
   background: rgba(255, 255, 255, 0.12) !important;
 }
 
-:root.light body .site-header-panel .site-header-cta {
-  background: #ffffff !important;
-  color: #0f172a !important;
-}
-
-:root.light body .site-header-panel .site-header-cta:hover {
-  background: #e5e7eb !important;
-  color: #0f172a !important;
-}
 
 /* Footer — light temada header ile birebir aynı görünüm */
 :root.light .site-footer,
@@ -659,4 +640,40 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
   background:
     radial-gradient(120% 70% at 50% 100%, color-mix(in srgb, var(--foreground) 9%, transparent), transparent 70%),
     linear-gradient(180deg, color-mix(in srgb, var(--foreground) 2%, var(--card)), var(--card));
+}
+
+/* Bölüm etiketi — sitenin her yerinde aynı */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent);
+  flex-shrink: 0;
+}
+
+/* Başvuru butonu — marka kırmızısı, her iki temada */
+.site-header-cta {
+  background: var(--brand) !important;
+  color: var(--brand-foreground) !important;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--brand) 35%, transparent);
+}
+.site-header-cta:hover {
+  background: color-mix(in srgb, var(--brand) 88%, #000) !important;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand) 30%, transparent);
 }

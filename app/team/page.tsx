@@ -77,7 +77,7 @@ const CARD_GRID = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4
 const CARD_WIDTH = "w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]";
 
 function GroupTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{children}</h2>;
+  return <h2 className="eyebrow mb-4">{children}</h2>;
 }
 
 export default function TeamPage() {
@@ -112,7 +112,7 @@ export default function TeamPage() {
           transition={{ duration: 0.6, ease: easeOut }}
           className="max-w-2xl"
         >
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">{c.label}</p>
+          <p className="eyebrow">{c.label}</p>
           <h1 className="mt-4 text-5xl sm:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>

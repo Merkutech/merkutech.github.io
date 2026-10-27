@@ -33,7 +33,7 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 h-[2px] bg-foreground/20 z-[100] origin-left pointer-events-none"
       >
         <div
-          className="h-full w-full bg-foreground/60 origin-left"
+          className="h-full w-full bg-brand origin-left"
           style={{
             transform: 'scaleX(var(--scroll, 0))',
             transition: 'transform 80ms linear',
@@ -120,7 +120,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, ease: easeOut }}
-                className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase block"
+                className="eyebrow"
               >
                 {t.home.about.label}
               </motion.span>
@@ -197,7 +197,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
-              <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.projects.label}</p>
+              <p className="eyebrow mb-3">{t.home.projects.label}</p>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
                 {t.home.projects.title}
               </h2>
@@ -223,7 +223,7 @@ export default function Home() {
       <section className="relative py-24 md:py-32 cv-auto">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <BlurFade className="mb-4">
-            <p className="text-xs uppercase tracking-widest text-neutral-600 mb-3">{t.home.areas.label}</p>
+            <p className="eyebrow mb-3">{t.home.areas.label}</p>
           </BlurFade>
           <BlurFade className="mb-16" delay={0.1}>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
@@ -392,7 +392,7 @@ function TeamCarousel() {
           whileInView={{ opacity: 1, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: easeOut }}
-          className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase block"
+          className="eyebrow"
         >
           {language === "tr" ? "Merkutech" : "Merkutech"}
         </motion.span>
@@ -556,7 +556,7 @@ function SponsorsSection() {
             initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.6, ease: easeOut, delay: 0.1 }}
-            className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase mb-3"
+            className="eyebrow mb-3"
           >
             {t.sponsors.label}
           </motion.p>
@@ -774,7 +774,7 @@ function TeamsSection() {
     <section className="relative py-24 md:py-32 cv-auto">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <BlurFade>
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">{c.label}</p>
+          <p className="eyebrow mb-3">{c.label}</p>
         </BlurFade>
         <BlurFade delay={0.1} className="mb-12">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h2>

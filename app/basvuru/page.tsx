@@ -57,7 +57,7 @@ export default function BasvuruPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: easeOut, delay: 0.3 }}
-              className="text-xs uppercase tracking-widest text-white/70"
+              className="eyebrow !text-white/80"
             >
               {c.label}
             </motion.p>
@@ -84,7 +84,7 @@ export default function BasvuruPage() {
         </motion.ul>
 
         {/* Ekipler */}
-        <p className="mt-20 sm:mt-24 mb-6 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+        <p className="eyebrow mt-20 sm:mt-24 mb-6">
           {c.pick}
         </p>
 

@@ -89,7 +89,7 @@ export default function IletisimPage() {
           transition={{ duration: 0.7, ease: easeOut, delay: 0.2 }}
           className="max-w-md mx-auto lg:mx-0 w-full"
         >
-          <span className="text-xs font-mono text-neutral-600 tracking-[0.3em] uppercase">
+          <span className="eyebrow">
             {t.contact.label}
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter mt-3 mb-3 sm:mb-4">
