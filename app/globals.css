@@ -664,16 +664,18 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
   flex-shrink: 0;
 }
 
-/* Başvuru butonu — marka kırmızısı, her iki temada */
-.site-header-cta {
-  background: var(--brand) !important;
-  color: var(--brand-foreground) !important;
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--brand) 35%, transparent);
-}
-.site-header-cta:hover {
-  background: color-mix(in srgb, var(--brand) 88%, #000) !important;
-}
 
 ::selection {
   background: color-mix(in srgb, var(--brand) 30%, transparent);
+}
+
+:root.light .site-header-panel .site-header-cta {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+}
+
+:root.light .site-header-panel .site-header-cta:hover {
+  background: #e5e7eb !important;
+  color: #0f172a !important;
 }
