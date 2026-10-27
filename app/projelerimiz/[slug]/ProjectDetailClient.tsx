@@ -48,10 +48,10 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               {iconMap[project.icon] || <Code2 className="h-8 w-8" />}
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="gradient-text">{tr.title}</span>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.045em] text-foreground mb-6">
+              {tr.title}
             </h1>
-            <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
               {tr.description}
             </p>
           </motion.div>
@@ -67,7 +67,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="rounded-3xl overflow-hidden glass"
+              className="rounded-3xl overflow-hidden bg-foreground/[0.03]"
             >
               <img
                 src={project.image}
@@ -112,34 +112,29 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
       )}
 
-      {/* Description */}
-      <section className="py-20 cv-auto">
-        <div className="container max-w-3xl mx-auto px-4 md:px-8">
+      {/* Açıklama ve özellikler */}
+      <section className="py-20 md:py-28 cv-auto">
+        <div className="container max-w-5xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-2xl font-bold mb-6 gradient-text">{labels.about}</h2>
-            <p className="text-neutral-400 leading-relaxed text-lg">
+            <h2 className="eyebrow mb-6">{labels.about}</h2>
+            <p className="text-foreground/80 leading-relaxed text-lg">
               {tr.longDescription}
             </p>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Features */}
-      <section className="py-20 cv-auto">
-        <div className="container max-w-3xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h2 className="text-2xl font-bold mb-8 gradient-text">{labels.features}</h2>
-            <div className="space-y-4">
+            <h2 className="eyebrow mb-6">{labels.features}</h2>
+            <div className="space-y-2">
               {tr.features.map((feature, i) => (
                 <motion.div
                   key={i}
@@ -147,10 +142,10 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]"
+                  className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-foreground/[0.03]"
                 >
                   <Check className="h-4 w-4 shrink-0 text-brand" />
-                  <span className="text-sm text-neutral-300">{feature}</span>
+                  <span className="text-sm text-foreground/85">{feature}</span>
                 </motion.div>
               ))}
             </div>
