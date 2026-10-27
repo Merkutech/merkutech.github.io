@@ -20,7 +20,7 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.45, delay: (index % 4) * 0.05, ease: easeOut }}
-      className="group scroll-mt-28 flex flex-col items-center text-center rounded-2xl border border-border bg-card/40 px-4 pt-6 pb-5 transition-colors duration-300 hover:border-foreground/15 hover:bg-card/70"
+      className="group scroll-mt-28 flex h-full flex-1 flex-col items-center text-center rounded-2xl border border-border bg-card/40 px-4 pt-6 pb-5 transition-colors duration-300 hover:border-foreground/15 hover:bg-card/70"
     >
       <div className="team-avatar h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-full border border-border transition-transform duration-500 group-hover:scale-[1.03]">
         {member.image ? (
@@ -71,12 +71,8 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
   );
 }
 
-const SINGLE_COLS: Record<number, string> = {
-  1: "",
-  2: "sm:grid-cols-2",
-  3: "sm:grid-cols-3",
-  4: "sm:grid-cols-2 lg:grid-cols-4",
-};
+// Her yerde aynı ızgara: tüm kartlar aynı genişlikte
+const CARD_GRID = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4";
 
 function GroupTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{children}</h2>;
@@ -122,9 +118,9 @@ export default function TeamPage() {
         <div className="mt-14 border-t border-border">
           {/* Tek kişilik ekipler yan yana, boş alan kalmasın */}
           {singles.length > 0 && (
-            <div className={`grid grid-cols-1 gap-8 sm:gap-4 border-b border-border py-8 md:py-10 ${SINGLE_COLS[Math.min(singles.length, 4)]}`}>
+            <div className={`${CARD_GRID} border-b border-border py-8 md:py-10`}>
               {singles.map((group) => (
-                <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28">
+                <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 flex flex-col">
                   <GroupTitle>{group.title[lang]}</GroupTitle>
                   <MemberCard member={group.members[0]} index={0} />
                 </section>
@@ -135,7 +131,7 @@ export default function TeamPage() {
           {multis.map((group) => (
             <section key={group.id} id={`ekip-${group.id}`} className="scroll-mt-28 border-b border-border py-8 md:py-10">
               <GroupTitle>{group.title[lang]}</GroupTitle>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+              <div className={CARD_GRID}>
                 {group.members.map((member, i) => (
                   <MemberCard key={member.id} member={member} index={i} />
                 ))}
