@@ -113,7 +113,7 @@ export default function TeamPage() {
           className="max-w-2xl"
         >
           <p className="eyebrow">{c.label}</p>
-          <h1 className="mt-4 text-5xl sm:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h1>
+          <h1 className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.045em] text-foreground">{c.title}</h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>
 

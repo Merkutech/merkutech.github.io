@@ -17,7 +17,7 @@ function GhostCard({ index }: { index: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.15 + index * 0.1, ease: easeOut }}
-      className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.015] p-5"
+      className="relative overflow-hidden rounded-2xl bg-foreground/[0.03] p-6"
     >
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent"
@@ -41,20 +41,18 @@ export default function BlogPage() {
   const { language } = useLanguage();
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-4">
+    <div className="min-h-screen pt-28 sm:pt-32 pb-24 px-5 sm:px-8">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: easeOut }}
         >
-          <p className="text-sm font-mono text-primary/80 mb-2">
-            {language === "tr" ? "Merkutech" : "Merkutech"}
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tighter">
+          <p className="eyebrow">Merkutech</p>
+          <h1 className="mt-4 mb-5 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.045em] text-foreground">
             {language === "tr" ? "Blog" : "Blog"}
           </h1>
-          <p className="text-neutral-400 text-lg max-w-xl leading-relaxed">
+          <p className="text-muted-foreground text-lg max-w-xl leading-relaxed">
             {language === "tr"
               ? "Projelerimiz, etkinliklerimiz ve teknoloji üzerine yazılarımız."
               : "Our projects, events, and writings on technology."}

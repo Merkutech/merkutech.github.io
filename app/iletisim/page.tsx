@@ -92,10 +92,10 @@ export default function IletisimPage() {
           <span className="eyebrow">
             {t.contact.label}
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tighter mt-3 mb-3 sm:mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.045em] text-foreground mt-4 mb-3 sm:mb-4">
             {t.contact.title}
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-500 mb-5 sm:mb-12 leading-relaxed hidden sm:block">
+          <p className="text-sm text-muted-foreground mb-5 sm:mb-10 leading-relaxed hidden sm:block">
             {t.contact.description}
           </p>
 
