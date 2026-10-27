@@ -25,7 +25,8 @@ interface SplineSceneProps {
   children?: React.ReactNode
 }
 
-const REVEAL_TIMEOUT = 4500
+// Kare sayısıyla ölçülür: sekme arka plandayken kamera da durur, sayaç da
+const REVEAL_MAX_FRAMES = 480
 
 function getThemeBackground() {
   if (typeof document === 'undefined') {
@@ -71,10 +72,11 @@ export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoad
     }
 
     // Kamera son konumuna gelince göster
-    const start = performance.now()
+    let frames = 0
     const wait = () => {
+      frames++
       const settled = Math.abs(camera.position.z - revealWhenCamera.z) < 2
-      if (settled || performance.now() - start > REVEAL_TIMEOUT) {
+      if (settled || frames > REVEAL_MAX_FRAMES) {
         setIsReady(true)
         return
       }

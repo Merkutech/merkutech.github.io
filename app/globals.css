@@ -262,8 +262,7 @@
 }
 
 :root.light .site-header-panel,
-:root.light .site-mobile-header,
-:root.light .site-mobile-menu {
+:root.light .site-mobile-header {
   background: linear-gradient(
     180deg,
     rgba(17, 24, 39, 0.9),
@@ -420,8 +419,7 @@ div:has(> a[href*="spline"]) {
 }
 
 :root.light body .site-header-panel,
-:root.light body .site-mobile-header,
-:root.light body .site-mobile-menu {
+:root.light body .site-mobile-header {
   background: linear-gradient(
     180deg,
     rgba(17, 24, 39, 0.9),
@@ -436,14 +434,11 @@ div:has(> a[href*="spline"]) {
 :root.light body .site-header-panel .site-header-brand,
 :root.light body .site-mobile-header .site-header-brand,
 :root.light body .site-header-panel nav a:hover,
-:root.light body .site-header-panel nav a.text-white,
-:root.light body .site-mobile-menu a.text-white,
-:root.light body .site-mobile-menu a:hover {
+:root.light body .site-header-panel nav a.text-white {
   color: #ffffff !important;
 }
 
-:root.light body .site-header-panel nav a,
-:root.light body .site-mobile-menu a {
+:root.light body .site-header-panel nav a {
   color: rgba(226, 232, 240, 0.7) !important;
 }
 
@@ -466,10 +461,8 @@ div:has(> a[href*="spline"]) {
 
 :root.light .site-header-panel,
 :root.light .site-mobile-header,
-:root.light .site-mobile-menu,
 :root.light body .site-header-panel,
-:root.light body .site-mobile-header,
-:root.light body .site-mobile-menu {
+:root.light body .site-mobile-header {
   background: rgba(17, 24, 39, 0.9) !important;
 }
 
@@ -608,26 +601,7 @@ html[data-theme-choice="light"] .seg-theme [data-choice="light"],
 html[data-theme-choice="system"] .seg-theme [data-choice="system"],
 html[data-theme-choice="dark"] .seg-theme [data-choice="dark"] { color: #e5e5e5; }
 
-/* Açık temada mobil menü açık zeminli: kontroller de açık */
-:root.light .site-mobile-menu .seg-control {
-  background: rgba(120, 120, 120, 0.14);
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.55),
-    inset 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-:root.light .site-mobile-menu .seg-thumb {
-  background: linear-gradient(#ffffff, rgba(255, 255, 255, 0.82));
-  box-shadow:
-    inset 0 0 0 0.5px rgba(255, 255, 255, 0.9),
-    0 1px 3px rgba(0, 0, 0, 0.16);
-}
-:root.light .site-mobile-menu .seg-option { color: #8b95a6; }
-:root.light .site-mobile-menu .seg-option:hover,
-html.light[lang="tr"] .site-mobile-menu .seg-lang [data-lang="tr"],
-html.light[lang="en"] .site-mobile-menu .seg-lang [data-lang="en"],
-html.light[data-theme-choice="light"] .site-mobile-menu .seg-theme [data-choice="light"],
-html.light[data-theme-choice="system"] .site-mobile-menu .seg-theme [data-choice="system"],
-html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="dark"] { color: #172033; }
+
 
 @media (prefers-reduced-motion: reduce) {
   .seg-thumb, .seg-option { transition: none; }
@@ -751,4 +725,56 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
     animation: none;
     opacity: 1;
   }
+}
+
+/* Header ikonları: header her iki temada da koyu */
+header .site-header-icon,
+header .site-mobile-menu-button { color: #a3a3a3 !important; }
+header .site-header-icon:hover,
+header .site-mobile-menu-button:hover,
+header .site-mobile-menu-button[aria-expanded="true"] { color: #ffffff !important; }
+
+.mm-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 1.75px;
+  margin: -0.875px 0 0 -9px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Mobil menü: her iki temada koyu yüzey */
+.mobile-sheet {
+  background: #0e0e10;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+}
+:root.light .mobile-sheet { background: #111827; }
+.mobile-sheet .mm-link { color: rgba(255, 255, 255, 0.5); transition: color 0.25s; }
+.mobile-sheet .mm-link:hover,
+.mobile-sheet .mm-link[aria-current="page"] { color: #ffffff; }
+.mobile-sheet .mm-num { color: rgba(255, 255, 255, 0.35); }
+.mobile-sheet .mm-link[aria-current="page"] .mm-num { color: rgba(255, 255, 255, 0.7); }
+.mobile-sheet .mm-cta { background: #ffffff; color: #0a0a0a; }
+.mobile-sheet .mm-cta:active { background: #e5e5e5; }
+.mobile-sheet .mm-social { color: rgba(255, 255, 255, 0.5); }
+.mobile-sheet .mm-social:hover { color: #ffffff; }
+
+/* Mobilde yatay kaydırılan kart şeridi (sm ve üstünde normal düzen) */
+@media (max-width: 639px) {
+  .mobile-rail {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.25rem;
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+  .mobile-rail::-webkit-scrollbar { display: none; }
 }
