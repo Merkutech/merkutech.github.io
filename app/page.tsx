@@ -447,9 +447,9 @@ function TeamCarousel() {
         {doubled.map((member, i) => (
           <div
             key={`${member.id}-${i}`}
-            className="shrink-0 w-40 sm:w-48 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 flex flex-col items-center text-center gap-3 pointer-events-none"
+            className="shrink-0 w-40 sm:w-48 rounded-2xl bg-foreground/[0.03] px-4 pt-6 pb-5 flex flex-col items-center text-center gap-4 pointer-events-none"
           >
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/[0.04] border border-primary/10 flex items-center justify-center overflow-hidden">
+            <div className="team-avatar w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-border flex items-center justify-center overflow-hidden">
               {member.image ? (
                 <img
                   src={member.image}
@@ -465,8 +465,8 @@ function TeamCarousel() {
               )}
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-medium text-white leading-tight">{member.name}</p>
-              <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 leading-tight">
+              <p className="text-xs sm:text-sm font-semibold text-foreground leading-tight">{member.name}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 leading-tight">
                 {member.role[language as keyof typeof member.role]}
               </p>
             </div>
@@ -579,7 +579,7 @@ function SponsorsSection() {
             initial={{ opacity: 0, y: 28, filter: "blur(14px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
-            className="text-3xl md:text-4xl font-bold text-white tracking-tight"
+            className="text-4xl md:text-6xl font-bold text-foreground tracking-tighter"
           >
             {t.sponsors.title}
           </motion.h2>
@@ -613,9 +613,9 @@ function SponsorsSection() {
 
             const inner = (
               <>
-                <div className="aspect-[5/3] shrink-0 overflow-hidden flex items-center justify-center p-2 sm:p-3 md:p-4">
+                <div className="aspect-[5/3] shrink-0 overflow-hidden flex items-center justify-center">
                   {sponsor.logo ? (
-                    <div className="flex h-full w-full items-center justify-center rounded-lg bg-white p-2 sm:p-2.5 md:p-3 [container-type:size]">
+                    <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-white p-3 sm:p-4 [container-type:size] transition-transform duration-500 group-hover:scale-[0.98]">
                       {/* Eşit görsel alan: genişlik oranın kareköküyle ölçeklenir */}
                       <img
                         src={sponsor.logo}
@@ -632,10 +632,13 @@ function SponsorsSection() {
                     </span>
                   )}
                 </div>
-                <div className="px-4 pb-3">
-                  <p className="text-[11px] md:text-xs text-neutral-500 group-hover:text-neutral-300 text-center font-medium transition-colors duration-500 truncate">
+                <div className="flex items-start justify-between gap-2 px-2 pt-4 pb-1.5">
+                  <p className="text-xs md:text-sm font-medium leading-snug text-foreground/80 group-hover:text-foreground transition-colors duration-500">
                     {sponsor.name}
                   </p>
+                  {sponsor.url && (
+                    <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  )}
                 </div>
               </>
             );
@@ -661,12 +664,12 @@ function SponsorsSection() {
                     href={sponsor.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-col rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 overflow-hidden h-full"
+                    className="group flex flex-col rounded-2xl bg-foreground/[0.03] hover:bg-foreground/[0.06] p-3 transition-colors duration-500 overflow-hidden h-full"
                   >
                     {inner}
                   </a>
                 ) : (
-                  <div className="group flex flex-col rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-500 overflow-hidden h-full">
+                  <div className="group flex flex-col rounded-2xl bg-foreground/[0.03] hover:bg-foreground/[0.06] p-3 transition-colors duration-500 overflow-hidden h-full">
                     {inner}
                   </div>
                 )}
