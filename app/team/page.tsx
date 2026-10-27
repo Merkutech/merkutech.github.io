@@ -8,6 +8,9 @@ import { teamMembers } from "@/lib/team";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+// Herkes eşit: rütbeye göre değil, isme göre sıralanır
+const members = [...teamMembers].sort((a, b) => a.name.localeCompare(b.name, "tr"));
+
 function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
@@ -17,32 +20,34 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
     <motion.div
       ref={ref}
       id={member.id}
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay: index * 0.04, ease: easeOut }}
-      className="group flex items-center gap-4 sm:flex-col sm:items-center sm:text-center sm:gap-0 p-3 sm:p-5 rounded-xl border border-border bg-card/40 hover:bg-card/60 hover:border-foreground/10 transition-all duration-300"
+      transition={{ duration: 0.5, delay: (index % 4) * 0.06, ease: easeOut }}
+      className="group scroll-mt-28"
     >
-      <div className="w-14 h-14 sm:w-24 sm:h-24 shrink-0 group-hover:scale-[1.02] transition-transform">
+      <div className="team-photo relative aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-card transition-colors duration-500 group-hover:border-foreground/15">
         {member.image ? (
           <img
             src={member.image}
             alt={member.name}
             loading="lazy"
-            className="w-full h-full rounded-full object-cover object-center border border-primary/10 group-hover:border-primary/30 transition-colors"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-bottom transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
         ) : (
-          <div className="w-full h-full rounded-full bg-gradient-to-br from-primary/20 to-primary/[0.04] border border-primary/10 flex items-center justify-center group-hover:border-primary/30 transition-colors">
-            <Users className="h-6 w-6 sm:h-10 sm:w-10 text-primary/40" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Users className="h-10 w-10 text-muted-foreground/40" />
           </div>
         )}
       </div>
-      <div className="flex-1 min-w-0 sm:flex-initial sm:w-full">
-        <h3 className="text-sm sm:text-base font-semibold text-foreground truncate">{member.name}</h3>
-        <p className="text-xs sm:text-sm text-muted-foreground truncate">
+
+      <div className="mt-3 px-0.5">
+        <h3 className="text-sm sm:text-[15px] font-semibold text-foreground leading-snug">{member.name}</h3>
+        <p className="mt-0.5 text-xs sm:text-[13px] text-muted-foreground leading-snug">
           {member.role[language as keyof typeof member.role]}
         </p>
         {member.links && (
-          <div className="flex items-center gap-2 mt-1.5 sm:justify-center">
+          <div className="flex items-center gap-2.5 mt-2">
             {member.links.github && (
               <a href={member.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-foreground transition-colors" aria-label="GitHub">
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -72,32 +77,43 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
 export default function TeamPage() {
   const { language } = useLanguage();
 
-  const title = language === "tr" ? "Ekibimiz" : "Our Team";
-  const subtitle = language === "tr" ? "Merkutech" : "Merkutech";
-  const count = language === "tr" ? `${teamMembers.length} Üye` : `${teamMembers.length} Members`;
-  const description =
+  const c =
     language === "tr"
-      ? "Merkutech ailesinin bir parçası olan takım üyelerimiz."
-      : "Our team members who are part of the Merkutech family.";
+      ? {
+          label: "Merkutech",
+          title: "Ekibimiz",
+          description: "Tasarlayan, kodlayan, lehimleyen ve uçuran insanlar. Unvanlar sadece kimin neyle uğraştığını gösteriyor; burada herkes aynı masada.",
+          unit: "kişi",
+        }
+      : {
+          label: "Merkutech",
+          title: "Our Team",
+          description: "The people who design, code, solder and fly. Titles only say who works on what; everyone sits at the same table here.",
+          unit: "people",
+        };
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-4">
-      <div className="max-w-5xl mx-auto">
-        <motion.div
+    <div className="min-h-screen pt-28 sm:pt-32 pb-24 px-5 sm:px-8">
+      <div className="max-w-6xl mx-auto">
+        <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: easeOut }}
+          className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-border pb-10"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <p className="text-sm font-mono text-primary/80">{subtitle}</p>
-            <span className="text-xs font-mono text-muted-foreground/50 px-2 py-0.5 rounded-full border border-border">{count}</span>
+          <div className="max-w-2xl">
+            <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">{c.label}</p>
+            <h1 className="mt-4 text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-foreground">{c.title}</h1>
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-3 tracking-tighter">{title}</h1>
-          <p className="text-muted-foreground text-lg max-w-xl">{description}</p>
-        </motion.div>
+          <p className="shrink-0 font-mono text-sm text-muted-foreground">
+            <span className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground tabular-nums">{members.length}</span>
+            <span className="ml-2">{c.unit}</span>
+          </p>
+        </motion.header>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
-          {teamMembers.map((member, i) => (
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-5 sm:gap-y-10">
+          {members.map((member, i) => (
             <MemberCard key={member.id} member={member} index={i} />
           ))}
         </div>
