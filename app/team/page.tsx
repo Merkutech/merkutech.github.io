@@ -4,12 +4,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Users, Mail } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { teamMembers } from "@/lib/team";
+import { teamGroups, teamMembers } from "@/lib/team";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
-
-// Herkes eşit: rütbeye göre değil, isme göre sıralanır
-const members = [...teamMembers].sort((a, b) => a.name.localeCompare(b.name, "tr"));
 
 function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -20,34 +17,34 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
     <motion.div
       ref={ref}
       id={member.id}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: (index % 4) * 0.06, ease: easeOut }}
-      className="group scroll-mt-28"
+      transition={{ duration: 0.45, delay: (index % 4) * 0.05, ease: easeOut }}
+      className="group scroll-mt-28 flex flex-col items-center text-center rounded-2xl border border-border bg-card/40 px-4 pt-6 pb-5 transition-colors duration-300 hover:border-foreground/15 hover:bg-card/70"
     >
-      <div className="team-photo relative aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-card transition-colors duration-500 group-hover:border-foreground/15">
+      <div className="team-avatar h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-full border border-border transition-transform duration-500 group-hover:scale-[1.03]">
         {member.image ? (
           <img
             src={member.image}
             alt={member.name}
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-bottom transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            className="h-full w-full object-cover object-center"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Users className="h-10 w-10 text-muted-foreground/40" />
+          <div className="flex h-full w-full items-center justify-center">
+            <Users className="h-8 w-8 text-muted-foreground/40" />
           </div>
         )}
       </div>
 
-      <div className="mt-3 px-0.5">
+      <div className="mt-4 w-full">
         <h3 className="text-sm sm:text-[15px] font-semibold text-foreground leading-snug">{member.name}</h3>
         <p className="mt-0.5 text-xs sm:text-[13px] text-muted-foreground leading-snug">
           {member.role[language as keyof typeof member.role]}
         </p>
         {member.links && (
-          <div className="flex items-center gap-2.5 mt-2">
+          <div className="flex items-center justify-center gap-2.5 mt-2">
             {member.links.github && (
               <a href={member.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground/60 hover:text-foreground transition-colors" aria-label="GitHub">
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -76,21 +73,24 @@ function MemberCard({ member, index }: { member: (typeof teamMembers)[0]; index:
 
 export default function TeamPage() {
   const { language } = useLanguage();
+  const lang = language as "tr" | "en";
 
   const c =
-    language === "tr"
+    lang === "tr"
       ? {
           label: "Merkutech",
           title: "Ekibimiz",
-          description: "Tasarlayan, kodlayan, lehimleyen ve uçuran insanlar. Unvanlar sadece kimin neyle uğraştığını gösteriyor; burada herkes aynı masada.",
-          unit: "kişi",
+          description: "Merkutech ailesinin bir parçası olan takım üyelerimiz.",
         }
       : {
           label: "Merkutech",
           title: "Our Team",
-          description: "The people who design, code, solder and fly. Titles only say who works on what; everyone sits at the same table here.",
-          unit: "people",
+          description: "Our team members who are part of the Merkutech family.",
         };
+
+  const groups = teamGroups
+    .map((g) => ({ ...g, members: teamMembers.filter((m) => m.team === g.id) }))
+    .filter((g) => g.members.length > 0);
 
   return (
     <div className="min-h-screen pt-28 sm:pt-32 pb-24 px-5 sm:px-8">
@@ -99,22 +99,27 @@ export default function TeamPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: easeOut }}
-          className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-border pb-10"
+          className="max-w-2xl"
         >
-          <div className="max-w-2xl">
-            <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">{c.label}</p>
-            <h1 className="mt-4 text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-foreground">{c.title}</h1>
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
-          </div>
-          <p className="shrink-0 font-mono text-sm text-muted-foreground">
-            <span className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground tabular-nums">{members.length}</span>
-            <span className="ml-2">{c.unit}</span>
-          </p>
+          <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">{c.label}</p>
+          <h1 className="mt-4 text-5xl sm:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h1>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{c.description}</p>
         </motion.header>
 
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-5 sm:gap-y-10">
-          {members.map((member, i) => (
-            <MemberCard key={member.id} member={member} index={i} />
+        <div className="mt-14 border-t border-border">
+          {groups.map((group) => (
+            <section
+              key={group.id}
+              id={`ekip-${group.id}`}
+              className="scroll-mt-28 grid grid-cols-1 md:grid-cols-[180px_minmax(0,1fr)] gap-4 md:gap-8 border-b border-border py-8 md:py-10"
+            >
+              <h2 className="text-sm font-mono uppercase tracking-[0.2em] text-foreground md:pt-2">{group.title[lang]}</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                {group.members.map((member, i) => (
+                  <MemberCard key={member.id} member={member} index={i} />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       </div>

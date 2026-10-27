@@ -647,8 +647,8 @@ html.light[data-theme-choice="dark"] .site-mobile-menu .seg-theme [data-choice="
   .seg-thumb, .seg-option { transition: none; }
 }
 
-/* Ekip — portre zemini (dekupe fotoğrafların arkası) */
-.team-photo {
+/* Ekip — avatar zemini (dekupe fotoğrafların arkası) */
+.team-avatar {
   background:
     radial-gradient(120% 70% at 50% 100%, color-mix(in srgb, var(--foreground) 9%, transparent), transparent 70%),
     linear-gradient(180deg, color-mix(in srgb, var(--foreground) 2%, var(--card)), var(--card));
