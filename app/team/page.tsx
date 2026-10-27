@@ -119,7 +119,7 @@ export default function TeamPage() {
           {/* Tek kişilik ekipler aynı satırda, ortada; aralarındaki boşluk
               ekip içindeki boşluktan geniş ki ayrı ekipler oldukları belli olsun */}
           {singles.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-x-10 lg:gap-x-16 gap-y-10">
+            <div className="flex flex-wrap justify-center gap-x-3 sm:gap-x-10 lg:gap-x-16 gap-y-10">
               {singles.map((group) => (
                 <section key={group.id} id={`ekip-${group.id}`} className={`scroll-mt-28 flex flex-col ${CARD_WIDTH}`}>
                   <GroupTitle>{group.title[lang]}</GroupTitle>

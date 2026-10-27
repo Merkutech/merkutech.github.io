@@ -28,7 +28,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-28 sm:pt-32 pb-8 sm:pb-20 overflow-hidden">
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] animate-pulse-glow" />
         <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10">
           <motion.div
@@ -60,7 +60,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
       {/* Kapak Görseli: varsa */}
       {project.image && (
-        <section className="py-10">
+        <section className="py-4 sm:py-10">
           <div className="container max-w-5xl mx-auto px-4 md:px-8">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
