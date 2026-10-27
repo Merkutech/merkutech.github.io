@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Search, X, ArrowRight, Globe, Users, Wrench, FileText, BookOpen, Hash } from "lucide-react";
+import { Search, X, ArrowRight, Globe, Users, Wrench, BookOpen, Hash } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { searchIndex, type SearchEntry } from "@/lib/search-index";
 
@@ -39,7 +39,6 @@ function resultIcon(href: string) {
   if (href.startsWith("/team")) return Users;
   if (href.startsWith("/suas")) return Wrench;
   if (href.startsWith("/projelerimiz")) return Globe;
-  if (href.startsWith("/blog")) return FileText;
   if (href.startsWith("/iletisim")) return Hash;
   return BookOpen;
 }

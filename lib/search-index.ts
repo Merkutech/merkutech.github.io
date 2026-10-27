@@ -27,7 +27,7 @@ function pageIndex(): SearchEntry[] {
       href: "/iletisim",
       title: { tr: "İletişim", en: "Contact" },
       description: { tr: "Merkutech iletişim kanalları ve sosyal medya", en: "Merkutech contact channels and social media" },
-      content: { tr: "iletişim sosyal medya Instagram YouTube LinkedIn GitHub WhatsApp Google Form başvuru takım Arel Savunma Sanayi @merkutech @arelsavunma", en: "contact social media Instagram YouTube LinkedIn GitHub WhatsApp Google Form application team Arel Defense Industry @merkutech @arelsavunma" },
+      content: { tr: "iletişim sosyal medya Instagram YouTube LinkedIn GitHub WhatsApp Google Form başvuru takım Arel Savunma Sanayi Kulübü @merkutech @arelsavunma", en: "contact social media Instagram YouTube LinkedIn GitHub WhatsApp Google Form application team Arel Defense Industry @merkutech @arelsavunma" },
     },
     {
       href: "/team",
@@ -40,12 +40,6 @@ function pageIndex(): SearchEntry[] {
       title: { tr: "Takıma Başvur", en: "Apply to the Team" },
       description: { tr: "Aviyonik, mekanik, yazılım, tanıtım ve sponsorluk ekiplerine başvuru", en: "Apply to the avionics, mechanical, software, promotion and sponsorship teams" },
       content: { tr: "başvuru başvur form takım ekip aviyonik elektronik mekanik yazılım tanıtım sponsorluk", en: "application apply form team avionics electronics mechanical software promotion sponsorship" },
-    },
-    {
-      href: "/blog",
-      title: { tr: "Blog", en: "Blog" },
-      description: { tr: "Merkutech projeleri, etkinlikleri ve teknoloji yazıları", en: "Merkutech projects, events, and technology writings" },
-      content: { tr: "blog yazılar projeler etkinlikler teknoloji robotik yapay zeka drone güncellemeler duyurular", en: "blog posts projects events technology robotics AI drone updates announcements" },
     },
   ];
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, FileText, MessageCircle } from "lucide-react";
+import { Menu, X, ArrowUpRight, Home, Users, FolderOpen, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 import { SpotlightCursor } from "@/components/ui/spotlight-cursor";
@@ -75,7 +75,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     { href: "/", label: t.nav.home },
     { href: "/team", label: t.nav.team },
     { href: "/projelerimiz", label: t.nav.projects },
-    { href: "/blog", label: t.nav.blog },
     { href: "/iletisim", label: t.nav.contact },
   ];
 
@@ -261,7 +260,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       "/": Home,
                       "/team": Users,
                       "/projelerimiz": FolderOpen,
-                      "/blog": FileText,
                       "/iletisim": MessageCircle,
                     };
                     const Icon = icons[link.href] || Home;

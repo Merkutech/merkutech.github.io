@@ -6,7 +6,6 @@ export const translations = {
       home: "Ana Sayfa",
       projects: "Projelerimiz",
       team: "Ekibimiz",
-      blog: "Blog",
       contact: "İletişim",
     },
     cta: {
@@ -94,8 +93,8 @@ export const translations = {
     footer: {
       brand: "MCT SENSOR Merkutech",
       apply: "Takım Başvurusu",
-      whatsapp: "Arel Savunma Sanayi WhatsApp",
-      instagram: "Arel Savunma Sanayi Instagram",
+      whatsapp: "Arel Savunma Sanayi Kulübü WhatsApp",
+      instagram: "Arel Savunma Sanayi Kulübü Instagram",
       copyright: "©",
     },
     notFound: {
@@ -114,7 +113,6 @@ export const translations = {
       home: "Home",
       projects: "Projects",
       team: "Our Team",
-      blog: "Blog",
       contact: "Contact",
     },
     cta: {
@@ -202,8 +200,8 @@ export const translations = {
     footer: {
       brand: "MCT SENSOR Merkutech",
       apply: "Team Application",
-      whatsapp: "Arel Defense Industry WhatsApp",
-      instagram: "Arel Defense Industry Instagram",
+      whatsapp: "Arel Defense Industry Club WhatsApp",
+      instagram: "Arel Defense Industry Club Instagram",
       copyright: "©",
     },
     notFound: {
