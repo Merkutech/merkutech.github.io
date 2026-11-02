@@ -90,7 +90,7 @@ export default function Home() {
       {/* BİZ KİMİZ: Ana Sayfa */}
       <section className="home-section cv-auto">
         <div className="home-wrap">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-8 lg:gap-14 items-stretch">
             <div>
               <motion.span
                 initial={{ opacity: 0, filter: "blur(8px)" }}
@@ -106,11 +106,11 @@ export default function Home() {
                 whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                className="home-title mt-4 mb-8"
+                className="home-title mt-3 mb-4"
               >
                 {t.home.about.title}
               </motion.h2>
-              <div className="space-y-5 text-neutral-400 leading-relaxed">
+              <div className="space-y-3 text-[15px] text-neutral-400 leading-relaxed">
                 <motion.p
                   initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
                   whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
@@ -133,12 +133,12 @@ export default function Home() {
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
                 >
-                  <p className="mb-4 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
+                  <p className="mb-2 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {t.home.about.achievementsList.map((item) => {
                       const { Icon, text } = achievementParts(item);
                       return (
-                        <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
+                        <li key={item} className="flex items-start gap-2.5 rounded-xl bg-foreground/[0.03] px-3 py-2 text-[13px] text-foreground/85">
                           <Icon className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" />
                           <span className="leading-snug">{text}</span>
                         </li>
@@ -155,7 +155,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.9, ease: easeOut, delay: 0.2 }}
             >
-              <div className="aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-2xl bg-foreground/[0.03]">
+              <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full overflow-hidden rounded-2xl bg-foreground/[0.03]">
                 <img
                   src="/4.jpg"
                   alt="Merkutech Ekibi"
@@ -163,7 +163,7 @@ export default function Home() {
                   height={1000}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
             </motion.div>
@@ -177,7 +177,7 @@ export default function Home() {
       {/* PROJELER */}
       <section className="home-section cv-auto">
         <div className="home-wrap">
-          <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
             <div>
               <p className="eyebrow mb-3">{t.home.projects.label}</p>
               <h2 className="home-title">
@@ -207,7 +207,7 @@ export default function Home() {
           <BlurFade className="mb-4">
             <p className="eyebrow mb-3">{t.home.areas.label}</p>
           </BlurFade>
-          <BlurFade className="mb-16" delay={0.1}>
+          <BlurFade className="mb-6" delay={0.1}>
             <h2 className="home-title">
               {t.home.areas.title}
             </h2>
@@ -482,7 +482,7 @@ function SponsorsSection() {
       className="home-section overflow-hidden cv-auto"
     >
       <div className="home-wrap">
-        <div className="mb-10 md:mb-14">
+        <div className="mb-6">
           <motion.p
             initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
@@ -626,19 +626,19 @@ function AreaCard({ item, index }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: easeOut }}
-      className="group relative flex flex-col p-5 sm:p-6 lg:p-7 rounded-2xl bg-foreground/[0.03] overflow-hidden"
+      className="group relative flex flex-col lg:flex-row lg:items-center lg:gap-4 p-4 sm:p-5 rounded-2xl bg-foreground/[0.03] overflow-hidden"
     >
       <span
         aria-hidden
         className="absolute inset-0 bg-foreground origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
       />
 
-      <span className="relative text-sm font-medium tabular-nums text-muted-foreground group-hover:text-background/60 transition-colors duration-500">
+      <span className="relative lg:absolute lg:right-4 lg:top-3 text-sm font-medium tabular-nums text-muted-foreground group-hover:text-background/60 transition-colors duration-500">
         {item.num}
       </span>
 
-      <div className="relative flex h-32 sm:h-40 items-center justify-center">
-        <div className="w-full max-w-[12rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
+      <div className="relative flex h-16 sm:h-20 lg:w-24 lg:shrink-0 items-center justify-center">
+        <div className="w-full max-w-[6.5rem] text-foreground/80 group-hover:text-background transition-colors duration-500">
           <AreaAnimation index={index} />
         </div>
       </div>
@@ -728,7 +728,7 @@ function TeamsSection() {
         <BlurFade>
           <p className="eyebrow mb-3">{c.label}</p>
         </BlurFade>
-        <BlurFade delay={0.1} className="mb-12">
+        <BlurFade delay={0.1} className="mb-6">
           <h2 className="home-title">{c.title}</h2>
         </BlurFade>
 

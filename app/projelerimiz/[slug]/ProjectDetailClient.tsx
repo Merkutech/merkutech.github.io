@@ -50,7 +50,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               {iconMap[project.icon] || <Code2 className="h-8 w-8" />}
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.045em] text-foreground mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.045em] text-foreground mb-6">
               {tr.title}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
@@ -77,7 +77,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 width={1280}
                 height={720}
                 decoding="async"
-                className="w-full h-[300px] md:h-[500px] object-cover"
+                className="w-full h-[260px] md:h-[min(420px,56vh)] object-cover"
               />
             </motion.div>
           </div>

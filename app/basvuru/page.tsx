@@ -65,7 +65,7 @@ export default function BasvuruPage() {
               initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: easeOut, delay: 0.4 }}
-              className="mt-3 text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tighter leading-[0.95] text-[#fff]"
+              className="mt-3 text-5xl sm:text-6xl font-bold tracking-tighter leading-[0.95] text-[#fff]"
             >
               {c.title}
             </motion.h1>

@@ -139,7 +139,7 @@ export default function ProjelerimizPage() {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 0.9, ease: easeOut, delay: 0.1 }}
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold text-foreground tracking-[-0.05em] mt-4 leading-[0.95]"
+              className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-foreground tracking-[-0.05em] mt-4 leading-[0.95]"
             >
               {t.projects.title}
             </motion.h1>
