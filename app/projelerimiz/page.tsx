@@ -150,14 +150,14 @@ export default function ProjelerimizPage() {
             initial="hidden"
             animate="visible"
             variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.4 } } }}
-            className="mt-12 flex flex-wrap gap-x-8 gap-y-3"
+            className="mt-8 sm:mt-12 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-0 sm:gap-y-3"
           >
             {projects.map((project, i) => (
               <motion.li
                 key={project.slug}
                 variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } } }}
               >
-                <a href={`#${project.slug}`} className="inline-flex items-baseline gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a href={`#${project.slug}`} className="inline-flex items-baseline gap-2 py-2 sm:py-0 text-sm text-muted-foreground hover:text-foreground transition-colors">
                   <span className="font-mono text-xs">{String(i + 1).padStart(2, "0")}</span>
                   {project.translations[language].title}
                 </a>

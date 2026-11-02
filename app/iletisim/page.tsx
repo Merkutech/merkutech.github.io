@@ -92,7 +92,7 @@ export default function IletisimPage() {
       </div>
 
       {/* Linkler: mobilde üstte, masaüstünde sağda */}
-      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-20 pb-2 sm:py-16 lg:py-24">
+      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-16 pt-24 pb-2 sm:py-16 lg:py-24">
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -126,10 +126,10 @@ export default function IletisimPage() {
                   {config.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] sm:text-sm font-medium text-white truncate">
+                  <p className="text-sm font-medium leading-snug text-white sm:truncate">
                     {tr.name}
                   </p>
-                  <p className="text-[10px] sm:text-xs text-neutral-600 mt-0.5">
+                  <p className="text-xs text-neutral-500 sm:text-neutral-600 mt-0.5">
                     {tr.handle}
                   </p>
                 </div>
