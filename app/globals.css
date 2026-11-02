@@ -574,7 +574,7 @@ html:not(.light) .mark-on-dark { display: block; }
   white-space: nowrap;
   color: var(--theme-ink);
 }
-.hero-wordmark span { display: block; width: max-content; padding-bottom: 0.03em; font-size: 17cqw; animation: hero-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-wordmark span { display: block; width: max-content; padding-bottom: 0.03em; font-size: 16.1cqw; animation: hero-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
