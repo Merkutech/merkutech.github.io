@@ -48,13 +48,13 @@ export default function Home() {
 
       {/* HERO */}
       <section className="home-hero relative w-full sm:min-h-screen overflow-hidden bg-background">
-        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 sm:min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-2 sm:gap-6 lg:gap-6 items-center pt-[4.75rem] pb-6 sm:py-24 lg:py-0">
+        <div className="home-hero-grid relative z-10 mx-auto px-5 sm:px-8 lg:px-12 sm:min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-2 sm:gap-6 lg:gap-6 items-center pt-[4.75rem] pb-6 sm:py-24 lg:py-0">
           {/* Sol: Başlık ve açıklama */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: easeOut }}
-            className="order-2 lg:order-1 flex flex-col items-start max-w-xl w-full text-left sm:mx-auto lg:mx-0"
+            className="home-hero-text order-2 lg:order-1 flex flex-col items-start max-w-xl w-full text-left sm:mx-auto lg:mx-0"
           >
             <RecruitingBadge />
 
@@ -107,7 +107,7 @@ export default function Home() {
           </motion.div>
 
           {/* Sağ: Robot */}
-          <div className="order-1 lg:order-2 relative h-[32svh] min-h-[220px] sm:min-h-0 sm:h-[55vh] lg:h-screen">
+          <div className="home-hero-robot order-1 lg:order-2 relative h-[32svh] min-h-[220px] sm:min-h-0 sm:h-[55vh] lg:h-screen">
             <div className="absolute inset-0 overflow-hidden">
               <HeroRobot />
             </div>

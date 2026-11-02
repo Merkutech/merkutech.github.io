@@ -532,6 +532,16 @@
 html.light .hero-poster-light { display: block; }
 html.light .hero-poster-dark { display: none; }
 
+/* Yatay telefon: robot ve metin yan yana, başlık ve butonlar ilk ekranda kalır */
+@media (orientation: landscape) and (max-height: 560px) {
+  .home-hero, .home-hero-grid { min-height: 0; }
+  .home-hero-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; padding-top: 76px; padding-bottom: 20px; }
+  .home-hero-text { order: 1; margin-inline: 0; }
+  .home-hero-robot { order: 2; height: calc(100svh - 96px); min-height: 0; align-self: start; }
+  .home-hero h1 { font-size: 40px; }
+  .home-hero-text p + p { display: none; }
+}
+
 /* Spline canvas: temaya duyarlı arka plan */
 .spline-scene-container canvas {
   background-color: transparent !important;
