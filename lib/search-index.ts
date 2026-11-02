@@ -14,7 +14,7 @@ function pageIndex(): SearchEntry[] {
     {
       href: "/",
       title: { tr: "Ana Sayfa", en: "Home" },
-      description: { tr: "İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü", en: "Istanbul Arel University Robotics and Technology Club" },
+      description: { tr: "Arel Savunma Sanayi ve Teknoloji Kulübü Takımı", en: "The team of the Arel Defence Industry and Technology Club" },
       content: { tr: "robotik otonom sistemler drone teknolojileri yapay zeka projeler Teknofest uluslararası yarışmalar ROS OpenCV Python TensorFlow PyTorch Computer Vision MAVLink DroneKit Swarm AI STM32 Arduino Embedded C SolidWorks AutoCAD Gazebo gömülü sistemler 3D modelleme keşfet öğren üret başarılar Teknofest Şampiyonlar Ligi Şampiyonu SUAS AUVSI sponsorlar MCT Sensor MCT Technic Würth Ekom Robomer çalışma alanları İstanbul Arel Üniversitesi", en: "robotics autonomous systems drone technologies artificial intelligence projects Teknofest international competitions ROS OpenCV Python TensorFlow PyTorch Computer Vision MAVLink DroneKit Swarm AI STM32 Arduino Embedded C SolidWorks AutoCAD Gazebo embedded systems 3D modeling explore learn build achievements Teknofest Champions League Champion SUAS AUVSI sponsors MCT Sensor MCT Technic Würth Ekom Robomer work areas Istanbul Arel University" },
     },
     {
@@ -27,7 +27,7 @@ function pageIndex(): SearchEntry[] {
       href: "/iletisim",
       title: { tr: "İletişim", en: "Contact" },
       description: { tr: "Merkutech iletişim kanalları ve sosyal medya", en: "Merkutech contact channels and social media" },
-      content: { tr: "iletişim sosyal medya Instagram YouTube LinkedIn GitHub WhatsApp Google Form başvuru takım Arel Savunma Sanayi Kulübü @merkutech @arelsavunma", en: "contact social media Instagram YouTube LinkedIn GitHub WhatsApp Google Form application team Arel Defense Industry @merkutech @arelsavunma" },
+      content: { tr: "iletişim sosyal medya Instagram YouTube LinkedIn GitHub WhatsApp Google Form başvuru takım Arel Savunma Sanayi ve Teknoloji Kulübü @merkutech @arelsavunma @arelssz", en: "contact social media Instagram YouTube LinkedIn GitHub WhatsApp Google Form application team Arel Defense Industry @merkutech @arelsavunma" },
     },
     {
       href: "/team",

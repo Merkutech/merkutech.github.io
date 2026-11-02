@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, Globe, Shield, Flame, Cpu, Heart, Layers, Code2, Check } from "lucide-react";
+import { ArrowLeft, Globe, Shield, Flame, Cpu, Heart, Layers, Code2, Check, Waves, Leaf } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -13,6 +13,8 @@ const iconMap: Record<string, React.ReactNode> = {
   Cpu: <Cpu className="h-6 w-6" />,
   Heart: <Heart className="h-6 w-6" />,
   Layers: <Layers className="h-6 w-6" />,
+  Waves: <Waves className="h-6 w-6" />,
+  Leaf: <Leaf className="h-6 w-6" />,
 };
 
 export default function ProjectDetailClient({ project }: { project: Project }) {

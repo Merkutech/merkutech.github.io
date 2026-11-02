@@ -13,7 +13,7 @@ export const translations = {
     },
     home: {
       brand: "MCT Sensor Merkutech",
-      subtitle: "İstanbul Arel Üniversitesi Robotik ve Teknoloji Kulübü",
+      subtitle: "Arel Savunma Sanayi ve Teknoloji Kulübü Takımı",
       description:
         "Robotik, otonom sistemler, drone teknolojileri ve yapay zeka alanlarında projeler üreten; Teknofest ve uluslararası yarışmalara katılan bir öğrenci topluluğu.",
       recruiting: {
@@ -34,12 +34,12 @@ export const translations = {
       about: {
         label: "Hakkımızda",
         title: "Biz Kimiz?",
-        p1: "Merkutech, İstanbul Arel Üniversitesi bünyesinde faaliyet gösteren bir robotik ve teknoloji kulübüdür. Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.",
+        p1: "Merkutech, İstanbul Arel Üniversitesi Arel Savunma Sanayi ve Teknoloji Kulübü’nün İHA ve savunma ekibidir. Öğrencilerin teorik bilgiyi pratiğe dökmesi, yenilikçi projeler geliştirmesi ve teknoloji dünyasında kendini kanıtlaması için gereken ortamı ve kaynakları sunuyoruz.",
         p2: "Teknofest ve uluslararası robotik yarışmalarına aktif olarak katılıyor, otonom sistemler, robotik manipülatörler, drone teknolojileri ve yapay zeka alanlarında projeler üretiyoruz.",
         achievements: "Sahip olduğumuz başarılar:",
         achievementsList: [
           "🏆 Teknofest Şampiyonlar Ligi Şampiyonu",
-          "🥈 Teknofest 2025 Turizm İkincisi",
+          "🥈 Teknofest KKTC 2025 Turizm Teknolojileri İkincisi",
           "🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü",
           "🎖️ AUVSI SUAS 2024, USA",
           "🏅 3x Teknofest Finali (13,17,25/40.000)",
@@ -82,9 +82,10 @@ export const translations = {
       description: "Tüm sosyal medya hesaplarımız ve iletişim kanallarımız burada. Takip et, bize katıl.",
       links: [
         { name: "Takıma Başvur", handle: "Aviyonik · Mekanik · Yazılım · Tanıtım" },
-        { name: "Arel Savunma Sanayi Kulübü WhatsApp Grubu", handle: "WhatsApp Community" },
+        { name: "Arel Savunma Sanayi ve Teknoloji Kulübü WhatsApp Grubu", handle: "WhatsApp Community" },
         { name: "Merkutech Instagram", handle: "@merkutech" },
-        { name: "Arel Savunma Sanayi Kulübü Instagram", handle: "@arelsavunma" },
+        { name: "Arel Savunma Sanayi ve Teknoloji Kulübü Instagram", handle: "@arelsavunma" },
+        { name: "Arel Savunma Sanayii Zirvesi Instagram", handle: "@arelssz" },
         { name: "Merkutech YouTube", handle: "Merkutech" },
         { name: "Merkutech LinkedIn", handle: "Merkutech" },
         { name: "Merkutech GitHub", handle: "Merkutech" },
@@ -93,8 +94,8 @@ export const translations = {
     footer: {
       brand: "MCT SENSOR Merkutech",
       apply: "Takım Başvurusu",
-      whatsapp: "Arel Savunma Sanayi Kulübü WhatsApp",
-      instagram: "Arel Savunma Sanayi Kulübü Instagram",
+      whatsapp: "Arel Savunma Sanayi ve Teknoloji Kulübü WhatsApp",
+      instagram: "Arel Savunma Sanayi ve Teknoloji Kulübü Instagram",
       copyright: "©",
     },
     notFound: {
@@ -120,7 +121,7 @@ export const translations = {
     },
     home: {
       brand: "MCT Sensor Merkutech",
-      subtitle: "Istanbul Arel University Robotics and Technology Club",
+      subtitle: "The team of the Arel Defence Industry and Technology Club",
       description:
         "A student community producing projects in robotics, autonomous systems, drone technologies and artificial intelligence; participating in Teknofest and international competitions.",
       recruiting: {
@@ -141,12 +142,12 @@ export const translations = {
       about: {
         label: "About Us",
         title: "Who We Are?",
-        p1: "Merkutech is a robotics and technology club operating under Istanbul Arel University. We provide the environment and resources students need to put theoretical knowledge into practice, develop innovative projects, and prove themselves in the technology world.",
+        p1: "Merkutech is the UAV and defence team of the Arel Defence Industry and Technology Club at Istanbul Arel University. We provide the environment and resources students need to put theoretical knowledge into practice, develop innovative projects, and prove themselves in the technology world.",
         p2: "We actively participate in Teknofest and national/international robotics competitions, producing projects in autonomous systems, robotic manipulators, drone technologies, and artificial intelligence.",
         achievements: "Our achievements:",
         achievementsList: [
           "🏆 Teknofest Champions League Champion",
-          "🥈 Teknofest 2025 Tourism Runner-up",
+          "🥈 Teknofest TRNC 2025 Tourism Technologies Runner-up",
           "🥉 Teknofest 2024 Unmanned Settlement Team Third",
           "🎖️ AUVSI SUAS 2024, USA",
           "🏅 3x Teknofest Finalist (13,17,25/40,000)",
@@ -189,9 +190,10 @@ export const translations = {
       description: "All our social media accounts and communication channels are here. Follow us, join us.",
       links: [
         { name: "Apply to Team", handle: "Avionics · Mechanical · Software · Promotion" },
-        { name: "Arel Defense Industry Club WhatsApp Group", handle: "WhatsApp Community" },
+        { name: "Arel Defence Industry and Technology Club WhatsApp Group", handle: "WhatsApp Community" },
         { name: "Merkutech Instagram", handle: "@merkutech" },
-        { name: "Arel Defense Industry Club Instagram", handle: "@arelsavunma" },
+        { name: "Arel Defence Industry and Technology Club Instagram", handle: "@arelsavunma" },
+        { name: "Arel Defence Industry Summit Instagram", handle: "@arelssz" },
         { name: "Merkutech YouTube", handle: "Merkutech" },
         { name: "Merkutech LinkedIn", handle: "Merkutech" },
         { name: "Merkutech GitHub", handle: "Merkutech" },
@@ -200,8 +202,8 @@ export const translations = {
     footer: {
       brand: "MCT SENSOR Merkutech",
       apply: "Team Application",
-      whatsapp: "Arel Defense Industry Club WhatsApp",
-      instagram: "Arel Defense Industry Club Instagram",
+      whatsapp: "Arel Defence Industry and Technology Club WhatsApp",
+      instagram: "Arel Defence Industry and Technology Club Instagram",
       copyright: "©",
     },
     notFound: {

@@ -141,6 +141,60 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "aquavista",
+    icon: "Waves",
+    image: "/aquavista.webp",
+    translations: {
+      tr: {
+        title: "AquaVista",
+        description: "Su altı ekosistemlerini keşfetmek ve korumak için drone tabanlı 3B haritalama ve sanal müze teknolojisi.",
+        longDescription: "AquaVista, su altı ekosistemlerinin keşfedilmesi ve korunması için drone tabanlı üç boyutlu haritalama ve sanal müze teknolojisi geliştiren projemizdir. Teknofest KKTC 2025 Turizm Teknolojileri kategorisinde ikincilik kazandı.",
+        features: [
+          "Teknofest KKTC 2025 Turizm Teknolojileri İkincisi",
+          "Drone tabanlı 3B haritalama",
+          "Sanal müze teknolojisi",
+          "Su altı ekosistemlerinin korunması",
+        ],
+      },
+      en: {
+        title: "AquaVista",
+        description: "Drone-based 3D mapping and virtual museum technology for exploring and protecting underwater ecosystems.",
+        longDescription: "AquaVista develops drone-based 3D mapping and virtual museum technology for exploring and protecting underwater ecosystems. It won second place in the Tourism Technologies category at Teknofest TRNC 2025.",
+        features: [
+          "Runner-up, Teknofest TRNC 2025 Tourism Technologies",
+          "Drone-based 3D mapping",
+          "Virtual museum technology",
+          "Protecting underwater ecosystems",
+        ],
+      },
+    },
+  },
+  {
+    slug: "biodivmap",
+    icon: "Leaf",
+    image: "/biodivmap.webp",
+    translations: {
+      tr: {
+        title: "BioDivMap",
+        description: "Teknofest KKTC 2025 Dijital Tarım ve Veri Yönetimi kategorisi için geliştirilen finalist projemiz.",
+        longDescription: "BioDivMap, Teknofest KKTC 2025 Dijital Tarım ve Veri Yönetimi kategorisi kapsamında geliştirdiğimiz ve finale kalan projemizdir.",
+        features: [
+          "Teknofest KKTC 2025 Finalisti",
+          "Dijital Tarım ve Veri Yönetimi kategorisi",
+        ],
+      },
+      en: {
+        title: "BioDivMap",
+        description: "Our finalist project for the Digital Agriculture and Data Management category at Teknofest TRNC 2025.",
+        longDescription: "BioDivMap is our finalist project, developed for the Digital Agriculture and Data Management category at Teknofest TRNC 2025.",
+        features: [
+          "Finalist, Teknofest TRNC 2025",
+          "Digital Agriculture and Data Management category",
+        ],
+      },
+    },
+  },
+  {
     slug: "insanlik-yarina-teknoloji",
     icon: "Heart",
     image: "/5.jpg",
