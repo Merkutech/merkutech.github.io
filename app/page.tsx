@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import { ArrowUpRight, Users } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
@@ -11,7 +11,7 @@ import { TeamApplyCard } from "@/components/ui/team-apply-card";
 import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
-import { achievementParts, stripEmoji } from "@/lib/achievements";
+import { achievementParts } from "@/lib/achievements";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -84,92 +84,35 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* MARQUEE */}
-      <MarqueeSection />
-
       {/* SPONSORLAR */}
       <SponsorsSection />
 
-      {/* BİZ KİMİZ: Ana Sayfa */}
-      <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <motion.span
-                initial={{ opacity: 0, filter: "blur(8px)" }}
-                whileInView={{ opacity: 1, filter: "blur(0px)" }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, ease: easeOut }}
-                className="eyebrow"
-              >
-                {t.home.about.label}
-              </motion.span>
-              <motion.h2
-                initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
-                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-                className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4 mb-8"
-              >
-                {t.home.about.title}
-              </motion.h2>
-              <div className="space-y-5 text-neutral-400 leading-relaxed">
-                <motion.p
-                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
-                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, ease: easeOut, delay: 0.25 }}
-                >
-                  {t.home.about.p1}
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
-                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
-                >
-                  {t.home.about.p2}
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
-                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
-                >
-                  <p className="mb-4 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {t.home.about.achievementsList.map((item) => {
-                      const { Icon, text } = achievementParts(item);
-                      return (
-                        <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
-                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" />
-                          <span className="leading-snug">{text}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </motion.div>
-              </div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.9, ease: easeOut, delay: 0.2 }}
-            >
-              <div className="aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-2xl bg-foreground/[0.03]">
-                <img
-                  src="/4.jpg"
-                  alt="Merkutech Ekibi"
-                  width={800}
-                  height={1000}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+      {/* BİZ KİMİZ */}
+      <section className="home-section cv-auto">
+        <div className="home-wrap">
+          <BlurFade>
+            <p className="eyebrow mb-3">{t.home.about.label}</p>
+            <h2 className="home-title">{t.home.about.title}</h2>
+          </BlurFade>
+          <div className="home-about">
+            <BlurFade delay={0.1} className="home-about-text">
+              <p>{t.home.about.p1}</p>
+              <p>{t.home.about.p2}</p>
+            </BlurFade>
+            <BlurFade delay={0.2}>
+              <p className="home-about-caption">{t.home.about.achievements}</p>
+              <ul className="home-about-list">
+                {t.home.about.achievementsList.map((item) => {
+                  const { Icon, text } = achievementParts(item);
+                  return (
+                    <li key={item}>
+                      <Icon className="h-5 w-5 shrink-0" />
+                      <span>{text}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </BlurFade>
           </div>
         </div>
       </section>
@@ -178,12 +121,12 @@ export default function Home() {
       <TeamCarousel />
 
       {/* PROJELER */}
-      <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <section className="home-section cv-auto">
+        <div className="home-wrap">
           <BlurFade className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div>
               <p className="eyebrow mb-3">{t.home.projects.label}</p>
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">
+              <h2 className="home-title">
                 {t.home.projects.title}
               </h2>
             </div>
@@ -205,13 +148,13 @@ export default function Home() {
       </section>
 
       {/* NE YAPIYORUZ */}
-      <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <section className="home-section cv-auto">
+        <div className="home-wrap">
           <BlurFade className="mb-4">
             <p className="eyebrow mb-3">{t.home.areas.label}</p>
           </BlurFade>
           <BlurFade className="mb-16" delay={0.1}>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">
+            <h2 className="home-title">
               {t.home.areas.title}
             </h2>
           </BlurFade>
@@ -359,8 +302,8 @@ function TeamCarousel() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-14 sm:py-20 md:py-28 overflow-hidden cv-auto">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-10">
+    <section ref={sectionRef} className="home-section overflow-hidden cv-auto">
+      <div className="home-wrap mb-10">
         <motion.span
           initial={{ opacity: 0, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, filter: "blur(0px)" }}
@@ -376,7 +319,7 @@ function TeamCarousel() {
             whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold text-white tracking-tighter mt-4"
+            className="home-title mt-4"
           >
             {language === "tr" ? "Ekibimiz" : "Our Team"}
           </motion.h2>
@@ -446,37 +389,6 @@ function TeamCarousel() {
 }
 
 /* Marquee: sonsuz, seamless */
-function MarqueeSection() {
-  const { t } = useLanguage();
-  const achievements = t.home.marquee;
-
-  // Tek satırda ekranı dolduracak kadar tekrarla
-  const row = Array.from({ length: 4 }, () => achievements).flat();
-
-  return (
-    <section className="relative py-8 md:py-10 overflow-hidden">
-      <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-
-      <div className="flex animate-marquee whitespace-nowrap w-max will-change-transform">
-        {/* İki aynı satır: CSS -50% animasyonu seamless döngü sağlar */}
-        {[0, 1].map((si) => (
-          <div key={si} className="flex items-center shrink-0">
-            {row.map((text, i) => (
-              <span key={`${si}-${i}`} className="flex items-center shrink-0">
-                <span className="text-base md:text-lg lg:text-xl font-medium text-muted-foreground tracking-tight whitespace-nowrap px-5 md:px-8">
-                  {stripEmoji(text)}
-                </span>
-                <span aria-hidden className="text-muted-foreground/40 select-none">/</span>
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 /* Recruiting Badge */
 function RecruitingBadge() {
   const { t } = useLanguage();
@@ -513,22 +425,10 @@ function SponsorsSection() {
   return (
       <section
       ref={ref}
-      className="relative py-14 sm:py-20 md:py-24 overflow-hidden cv-auto"
+      className="home-section overflow-hidden cv-auto"
     >
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[60rem] h-[20rem] rounded-full"
-        style={{
-          background:
-            "radial-gradient(closest-side, color-mix(in srgb, var(--foreground) 6%, transparent), transparent 70%)",
-        }}
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 1.4, ease: easeOut }}
-      />
-
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="text-center mb-10 md:mb-14 overflow-hidden">
+      <div className="home-wrap">
+        <div className="mb-10 md:mb-14">
           <motion.p
             initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
@@ -541,7 +441,7 @@ function SponsorsSection() {
             initial={{ opacity: 0, y: 28, filter: "blur(14px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.8, ease: easeOut, delay: 0.2 }}
-            className="text-4xl md:text-6xl font-bold text-foreground tracking-tighter"
+            className="home-title"
           >
             {t.sponsors.title}
           </motion.h2>
@@ -549,7 +449,7 @@ function SponsorsSection() {
             initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
             animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.6, ease: easeOut, delay: 0.35 }}
-            className="text-sm text-neutral-500 mt-4 max-w-md mx-auto leading-relaxed"
+            className="home-lede"
           >
             {t.sponsors.description}
           </motion.p>
@@ -562,7 +462,7 @@ function SponsorsSection() {
             hidden: {},
             visible: { transition: { staggerChildren: 0.08, delayChildren: 0.4 } },
           }}
-          className="mobile-rail flex gap-3 sm:flex-wrap sm:justify-center md:gap-4"
+          className="mobile-rail flex gap-3 sm:flex-wrap md:gap-4"
         >
           {sponsors.map((sponsor) => {
             const initials = sponsor.name
@@ -769,13 +669,13 @@ function TeamsSection() {
       : { label: "Applications open", title: "Our Teams", apply: "Apply" };
 
   return (
-    <section className="relative py-16 sm:py-24 md:py-32 cv-auto">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+    <section className="home-section cv-auto">
+      <div className="home-wrap">
         <BlurFade>
           <p className="eyebrow mb-3">{c.label}</p>
         </BlurFade>
         <BlurFade delay={0.1} className="mb-12">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground">{c.title}</h2>
+          <h2 className="home-title">{c.title}</h2>
         </BlurFade>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
