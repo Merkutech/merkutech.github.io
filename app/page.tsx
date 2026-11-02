@@ -11,6 +11,7 @@ import { featuredProjects, type Project } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
 import { applicationTeams } from "@/lib/applications";
 import { TeamApplyCard } from "@/components/ui/team-apply-card";
+import { HomeMobile } from "@/components/home-mobile";
 import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
@@ -46,6 +47,10 @@ export default function Home() {
         <ScrollProgressDriver />
       </div>
 
+      {/* Telefon sürümü ayrı bileşende; aşağısı md ve üstü için */}
+      <HomeMobile />
+
+      <div className="hidden w-full flex-col md:flex">
       {/* HERO */}
       <section className="home-hero relative w-full sm:min-h-screen overflow-hidden bg-background">
         <div className="home-hero-grid relative z-10 mx-auto px-5 sm:px-8 lg:px-12 sm:min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-2 sm:gap-6 lg:gap-6 items-center pt-[4.75rem] pb-6 sm:py-24 lg:py-0">
@@ -256,6 +261,7 @@ export default function Home() {
 
       {/* EKİPLERİMİZ: başvuru */}
       <TeamsSection />
+      </div>
     </div>
   );
 }
@@ -271,7 +277,7 @@ function HeroRobot() {
   /* Poster HTML ile hemen gelir; canlı sahne sayfa boşa çıkınca yüklenir ve hazır olunca üstüne geçer */
   const [live, setLive] = useState(false);
   useEffect(() => {
-    if (isLowPowerDevice() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (isLowPowerDevice() || window.innerWidth < 768 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const start = () => setLive(true);
     if ("requestIdleCallback" in window) {
       const id = window.requestIdleCallback(start, { timeout: 1200 });
