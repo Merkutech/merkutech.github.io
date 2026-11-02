@@ -356,56 +356,51 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <main id="main-content" className="flex-1">{children}</main>
 
-      <div className="px-4 pb-4 pt-16">
-        <footer className="site-footer relative max-w-6xl mx-auto overflow-hidden rounded-3xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06] px-6 sm:px-10 pt-10 pb-6">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <footer className="site-footer">
+          <div className="site-footer-grid">
             <div>
               <Link href="/" className="flex items-center gap-2.5">
-                <img
-                  src="/logo-white.png"
-                  alt={t.footer.brand}
-                  className="h-10 w-auto object-contain"
-                />
-                <span className="site-header-brand text-sm font-semibold tracking-tight text-white whitespace-nowrap">
+                <img className="mark-on-light h-8 w-auto" src="/mark-on-light.svg" alt="" width="44" height="32" />
+                <img className="mark-on-dark h-8 w-auto" src="/mark-on-dark.svg" alt="" width="44" height="32" />
+                <span className="site-footer-brand">
                   {t.footer.brand}
                 </span>
               </Link>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-neutral-500">{t.home.subtitle}</p>
+              <p className="site-footer-text">{t.home.subtitle}</p>
             </div>
 
             <nav aria-label={language === "tr" ? "Sayfalar" : "Pages"}>
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-neutral-600">
+              <p className="site-footer-label">
                 {language === "tr" ? "Sayfalar" : "Pages"}
               </p>
-              <ul className="space-y-2 text-sm">
+              <ul className="site-footer-links">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-neutral-400 hover:text-white transition-colors">{link.label}</Link>
+                    <Link href={link.href}>{link.label}</Link>
                   </li>
                 ))}
               </ul>
             </nav>
 
             <div>
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-neutral-600">
+              <p className="site-footer-label">
                 {language === "tr" ? "Topluluk" : "Community"}
               </p>
-              <ul className="space-y-2 text-sm">
-                <li><a href={APPLY_URL} className="text-neutral-400 hover:text-white transition-colors">{t.footer.apply}</a></li>
-                <li><a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">{t.footer.whatsapp}</a></li>
-                <li><a href="https://www.instagram.com/arelsavunma" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">{t.footer.instagram}</a></li>
+              <ul className="site-footer-links">
+                <li><a href={APPLY_URL}>{t.footer.apply}</a></li>
+                <li><a href="https://chat.whatsapp.com/BDYclqEKqlI6JuJcusQuMZ" target="_blank" rel="noopener noreferrer">{t.footer.whatsapp}</a></li>
+                <li><a href="https://www.instagram.com/arelsavunma" target="_blank" rel="noopener noreferrer">{t.footer.instagram}</a></li>
               </ul>
             </div>
           </div>
 
-          <div className="mt-12 flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <span className="text-xs text-neutral-600">&copy; {new Date().getFullYear()} {t.footer.brand}</span>
-            <div className="flex items-center gap-1 -ml-2 sm:ml-0 sm:-mr-2">
-              <SocialLinks />
+          <div className="site-footer-bottom">
+            <span>&copy; {new Date().getFullYear()} {t.footer.brand}</span>
+            <div className="site-footer-social">
+              <SocialLinks itemClassName="inline-flex h-8 w-8 items-center justify-center" />
             </div>
           </div>
-        </footer>
-      </div>
+      </footer>
     </>
   );
 }

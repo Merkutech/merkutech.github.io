@@ -25,10 +25,10 @@ export const translations = {
         contact: "İletişim",
       },
       heroStats: [
-        { value: "1.", label: "TEKNOFEST 2024 Şampiyonlar Ligi" },
-        { value: "2.", label: "TEKNOFEST KKTC 2025 Turizm Teknolojileri" },
-        { value: "3.", label: "TEKNOFEST 2024 İnsanlık Yararına Teknoloji" },
-        { value: "3×", label: "TEKNOFEST finalisti" },
+        { value: "Şampiyon", label: "TEKNOFEST 2024 Şampiyonlar Ligi" },
+        { value: "İkinci", label: "TEKNOFEST KKTC 2025 Turizm Teknolojileri" },
+        { value: "Üçüncü", label: "TEKNOFEST 2024 İnsanlık Yararına Teknoloji" },
+        { value: "3 kez finalist", label: "TEKNOFEST" },
       ],
       about: {
         label: "Hakkımızda",
@@ -132,10 +132,10 @@ export const translations = {
         contact: "Contact",
       },
       heroStats: [
-        { value: "1st", label: "TEKNOFEST 2024 Champions League" },
-        { value: "2nd", label: "TEKNOFEST TRNC 2025 Tourism Technologies" },
-        { value: "3rd", label: "TEKNOFEST 2024 Technology for the Benefit of Humanity" },
-        { value: "3×", label: "TEKNOFEST finalist" },
+        { value: "Champion", label: "TEKNOFEST 2024 Champions League" },
+        { value: "Runner-up", label: "TEKNOFEST TRNC 2025 Tourism Technologies" },
+        { value: "Third place", label: "TEKNOFEST 2024 Technology for the Benefit of Humanity" },
+        { value: "3× finalist", label: "TEKNOFEST" },
       ],
       about: {
         label: "About Us",
