@@ -1,6 +1,9 @@
 'use client'
 
-import { SplineScene, type SplineObject, type SplineRuntime } from "@/components/ui/splite";
+import dynamic from "next/dynamic";
+import type { SplineObject, SplineRuntime } from "@/components/ui/splite";
+import { ProjectCover } from "@/components/ui/project-cover";
+import { isLowPowerDevice } from "@/lib/device";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef, useEffect, useState, useCallback } from "react";
@@ -13,6 +16,8 @@ import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { achievementParts, stripEmoji } from "@/lib/achievements";
+
+const SplineScene = dynamic(() => import("@/components/ui/splite").then((m) => m.SplineScene), { ssr: false });
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -103,17 +108,12 @@ export default function Home() {
           </motion.div>
 
           {/* Sağ: Robot */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
-            className="order-1 lg:order-2 relative h-[38vh] sm:h-[55vh] lg:h-screen"
-          >
+          <div className="order-1 lg:order-2 relative h-[38vh] sm:h-[55vh] lg:h-screen">
             <div className="absolute inset-0 rounded-3xl sm:rounded-none overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none z-[1] sm:hidden" />
               <HeroRobot />
             </div>
-          </motion.div>
+          </div>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
@@ -273,10 +273,31 @@ function HeroRobot() {
   const [torso, setTorso] = useState<SplineObject | null>(null);
   const onLoad = useCallback((spline: SplineRuntime) => setTorso(spline.findObjectByName?.("Top part") ?? null), []);
 
+  /* Poster HTML ile hemen gelir; canlı sahne sayfa boşa çıkınca yüklenir ve hazır olunca üstüne geçer */
+  const [live, setLive] = useState(false);
+  useEffect(() => {
+    if (isLowPowerDevice() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const start = () => setLive(true);
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(start, { timeout: 1200 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(start, 300);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
-    <SplineScene scene={HERO_SCENE} className="w-full h-full" revealWhenCamera={HERO_CAMERA} onLoad={onLoad}>
-      <ChestEmblem torso={torso} />
-    </SplineScene>
+    <>
+      <div className="hero-poster" aria-hidden="true">
+        <img className="hero-poster-dark" src="/robot-dark.webp" alt="" width={1100} height={1224} fetchPriority="high" decoding="async" draggable={false} />
+        <img className="hero-poster-light" src="/robot-light.webp" alt="" width={1100} height={1224} fetchPriority="high" decoding="async" draggable={false} />
+      </div>
+      {live && (
+        <SplineScene scene={HERO_SCENE} className="w-full h-full" revealWhenCamera={HERO_CAMERA} onLoad={onLoad}>
+          <ChestEmblem torso={torso} />
+        </SplineScene>
+      )}
+    </>
   );
 }
 
@@ -811,6 +832,7 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
           transition={{ duration: 1, delay: index * 0.1 + 0.1, ease: easeOut }}
           className="aspect-[16/10] overflow-hidden rounded-[14px] bg-foreground/[0.04]"
         >
+          {project.image ? (
           <div className="h-full w-full transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]">
             <motion.img
               src={project.image}
@@ -822,9 +844,12 @@ function MaskCard({ project, index }: { project: typeof projects[0]; index: numb
               initial={{ scale: 1.15 }}
               animate={isInView ? { scale: 1 } : {}}
               transition={{ duration: 1.3, delay: index * 0.1 + 0.1, ease: easeOut }}
-              className="h-full w-full object-cover"
+              className={project.imageFit === "contain" ? "project-img-contain" : "h-full w-full object-cover"}
             />
           </div>
+          ) : (
+            <ProjectCover icon={project.icon} title={tr.title} />
+          )}
         </motion.div>
 
         <div className="flex flex-1 flex-col px-3 pt-5 pb-3">

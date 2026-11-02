@@ -7,7 +7,7 @@ type Theme = "dark" | "light";
 export type ThemeChoice = "light" | "system" | "dark";
 
 const STORAGE_KEY = "merkutech-theme";
-const CHOICES: ThemeChoice[] = ["light", "system", "dark"];
+const CHOICES: ThemeChoice[] = ["system", "light", "dark"];
 
 function getSystemTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
@@ -120,34 +120,22 @@ export function ThemeToggle() {
 
   const labels =
     language === "tr"
-      ? { group: "Renk teması", light: "Açık tema", system: "Sistem teması", dark: "Koyu tema" }
-      : { group: "Color theme", light: "Light theme", system: "System theme", dark: "Dark theme" };
+      ? { light: "Açık tema", system: "Sistem teması", dark: "Koyu tema", hint: "değiştirmek için tıkla" }
+      : { light: "Light theme", system: "System theme", dark: "Dark theme", hint: "click to change" };
+
+  const next = CHOICES[(CHOICES.indexOf(choice) + 1) % CHOICES.length];
+  const Icon = ICONS[choice];
 
   return (
-    <div
-      role="group"
-      aria-label={labels.group}
+    <button
+      type="button"
+      onClick={() => setChoice(next)}
+      aria-label={`${labels[choice]}, ${labels.hint}`}
+      title={labels[choice]}
       suppressHydrationWarning
-      className="seg-control seg-theme"
+      className="theme-cycle"
     >
-      <span className="seg-thumb" aria-hidden="true" />
-      {CHOICES.map((c) => {
-        const Icon = ICONS[c];
-        return (
-          <button
-            key={c}
-            type="button"
-            onClick={() => setChoice(c)}
-            aria-pressed={choice === c}
-            aria-label={labels[c]}
-            title={labels[c]}
-            data-choice={c}
-            className="seg-option"
-          >
-            <Icon />
-          </button>
-        );
-      })}
-    </div>
+      <Icon />
+    </button>
   );
 }

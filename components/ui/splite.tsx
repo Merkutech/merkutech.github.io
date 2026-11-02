@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react'
 import Spline from '@splinetool/react-spline'
+import { isLowPowerDevice } from '@/lib/device'
 
 export interface SplineObject {
   position: { x: number; y: number; z: number }
@@ -37,17 +38,6 @@ function getThemeBackground() {
   }
 
   return document.documentElement.classList.contains('light') ? '#f7f8f4' : '#0a0a0a'
-}
-
-function isLowPowerDevice() {
-  if (typeof navigator === 'undefined') return false
-  const ua = navigator.userAgent
-  if (/Mobi|Android|iPhone|iPad/i.test(ua)) return true
-  const mem = (navigator as unknown as { deviceMemory?: number }).deviceMemory
-  if (typeof mem === 'number' && mem <= 4) return true
-  const cores = navigator.hardwareConcurrency
-  if (typeof cores === 'number' && cores <= 4) return true
-  return false
 }
 
 export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoadProp, children }: SplineSceneProps) {
@@ -142,7 +132,7 @@ export function SplineScene({ scene, className, revealWhenCamera, onLoad: onLoad
   return (
     <div
       ref={containerRef}
-      className="spline-scene-container relative w-full h-full overflow-hidden bg-background"
+      className="spline-scene-container absolute inset-0 overflow-hidden"
       style={{
         contain: 'layout paint size',
         transform: 'translateZ(0)',

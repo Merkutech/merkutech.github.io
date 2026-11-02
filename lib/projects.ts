@@ -9,6 +9,8 @@ export interface Project {
   slug: string;
   icon: string;
   image?: string;
+  /* Beyaz zeminli ürün görselleri kırpılmadan, büyütülmeden gösterilir */
+  imageFit?: "contain";
   gallery?: string[];
   translations: {
     tr: ProjectTranslation;
@@ -20,8 +22,6 @@ export const projects: Project[] = [
   {
     slug: "warscope",
     icon: "Globe",
-    image: "/1.jpeg",
-    gallery: ["/2.jpeg", "/3.jpeg", "/4.jpg", "/5.jpg"],
     translations: {
       tr: {
         title: "Warscope",
@@ -52,7 +52,6 @@ export const projects: Project[] = [
   {
     slug: "polis-drone-sistemi",
     icon: "Shield",
-    image: "/3.jpeg",
     translations: {
       tr: {
         title: "Polis Drone Sistemi",
@@ -114,7 +113,6 @@ export const projects: Project[] = [
   {
     slug: "t-rone",
     icon: "Cpu",
-    image: "/2.jpeg",
     translations: {
       tr: {
         title: "T-Rone",
@@ -144,6 +142,7 @@ export const projects: Project[] = [
     slug: "aquavista",
     icon: "Waves",
     image: "/aquavista.webp",
+    imageFit: "contain",
     translations: {
       tr: {
         title: "AquaVista",
@@ -173,6 +172,7 @@ export const projects: Project[] = [
     slug: "biodivmap",
     icon: "Leaf",
     image: "/biodivmap.webp",
+    imageFit: "contain",
     translations: {
       tr: {
         title: "BioDivMap",
@@ -197,7 +197,6 @@ export const projects: Project[] = [
   {
     slug: "insanlik-yarina-teknoloji",
     icon: "Heart",
-    image: "/5.jpg",
     translations: {
       tr: {
         title: "İnsanlık Yararına Teknoloji",

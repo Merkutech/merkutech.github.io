@@ -1,5 +1,6 @@
 'use client'
 
+import { ProjectCover } from "@/components/ui/project-cover";
 import { motion, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -40,6 +41,7 @@ function ProjectRow({ project, index }: { project: (typeof projects)[0]; index: 
           transition={{ duration: 1.1, ease: easeOut }}
           className="aspect-[16/10] overflow-hidden rounded-3xl bg-foreground/[0.04]"
         >
+          {!project.image && <ProjectCover icon={project.icon} title={tr.title} />}
           {project.image && (
             <div className="h-full w-full transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]">
             <motion.img
@@ -52,7 +54,7 @@ function ProjectRow({ project, index }: { project: (typeof projects)[0]; index: 
               initial={{ scale: 1.15 }}
               animate={inView ? { scale: 1 } : {}}
               transition={{ duration: 1.4, ease: easeOut }}
-              className="h-full w-full object-cover"
+              className={project.imageFit === "contain" ? "project-img-contain" : "h-full w-full object-cover"}
             />
             </div>
           )}

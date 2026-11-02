@@ -536,6 +536,54 @@ div:has(> a[href*="spline"]) {
 }
 
 /* Segment kontrolleri: dil ve tema seçici (kayan gösterge) */
+/* Tek düğmeli tema seçici: tıkladıkça sistem, açık, koyu arasında döner */
+.theme-cycle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+  color: #e5e5e5;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.22s cubic-bezier(0.2, 0.9, 0.25, 1.3);
+}
+.theme-cycle:hover { background: rgba(255, 255, 255, 0.18); }
+.theme-cycle:active { transform: scale(0.92); }
+.theme-cycle:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.4); outline-offset: 2px; }
+
+/* Hero posteri: Spline gibi yüksekliğe göre ölçeklenir, geçişte robot yerinde kalır */
+.hero-poster { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; }
+.hero-poster img { height: 100%; width: auto; max-width: none; flex: none; }
+.hero-poster-light { display: none; }
+html.light .hero-poster-light { display: block; }
+html.light .hero-poster-dark { display: none; }
+
+.project-cover {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--theme-muted-text);
+  background-color: var(--theme-surface-soft);
+  background-image: radial-gradient(var(--theme-border-soft) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.project-cover svg { width: 28%; height: auto; max-height: 56%; }
+
+.project-img-contain {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  object-fit: scale-down;
+  background: #;
+}
+
 .seg-control {
   position: relative;
   display: grid;
@@ -555,7 +603,6 @@ div:has(> a[href*="spline"]) {
 }
 
 .seg-lang { width: 68px; }
-.seg-theme { width: 92px; }
 
 .seg-thumb {
   position: absolute;
@@ -571,7 +618,6 @@ div:has(> a[href*="spline"]) {
 }
 
 .seg-lang .seg-thumb { width: calc((100% - 6px) / 2); }
-.seg-theme .seg-thumb { width: calc((100% - 6px) / 3); }
 
 .seg-option {
   position: relative;
@@ -595,11 +641,6 @@ html[lang="en"] .seg-lang .seg-thumb { transform: translateX(100%); }
 html[lang="tr"] .seg-lang [data-lang="tr"],
 html[lang="en"] .seg-lang [data-lang="en"] { color: #e5e5e5; }
 
-html[data-theme-choice="system"] .seg-theme .seg-thumb { transform: translateX(100%); }
-html[data-theme-choice="dark"] .seg-theme .seg-thumb { transform: translateX(200%); }
-html[data-theme-choice="light"] .seg-theme [data-choice="light"],
-html[data-theme-choice="system"] .seg-theme [data-choice="system"],
-html[data-theme-choice="dark"] .seg-theme [data-choice="dark"] { color: #e5e5e5; }
 
 
 

@@ -65,8 +65,8 @@ export default function RootLayout({
         <meta name="description" content="Merkutech, the UAV and defence team of the Arel Defence Industry and Technology Club at Istanbul Arel University" />
         <meta name="theme-color" content="#0a0a0a" />
         <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
-        <link rel="preload" as="fetch" href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" crossOrigin="anonymous" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
