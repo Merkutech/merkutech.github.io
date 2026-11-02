@@ -360,8 +360,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="site-footer-grid">
             <div>
               <Link href="/" className="flex items-center gap-2.5">
-                <img className="mark-on-light h-8 w-auto" src="/mark-on-light.svg" alt="" width="44" height="32" />
-                <img className="mark-on-dark h-8 w-auto" src="/mark-on-dark.svg" alt="" width="44" height="32" />
+                <img className="h-9 w-auto" src="/mark-on-dark.svg" alt="" width="50" height="36" />
                 <span className="site-footer-brand">
                   {t.footer.brand}
                 </span>
@@ -397,7 +396,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="site-footer-bottom">
             <span>&copy; {new Date().getFullYear()} {t.footer.brand}</span>
             <div className="site-footer-social">
-              <SocialLinks itemClassName="inline-flex h-8 w-8 items-center justify-center" />
+              <SocialLinks itemClassName="inline-flex h-9 w-9 items-center justify-center" />
             </div>
           </div>
       </footer>
