@@ -12,7 +12,7 @@ import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { achievementParts, stripEmoji } from "@/lib/achievements";
-import { HeroShowcase } from "@/components/ui/hero-showcase";
+import { HeroDrone } from "@/components/ui/hero-drone";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -102,9 +102,9 @@ export default function Home() {
             </ul>
           </motion.div>
 
-          {/* Sağ: Robot */}
+          {/* Sağ: İHA animasyonu */}
           <div className="order-1 lg:order-2 relative h-[42vh] sm:h-[55vh] lg:h-screen lg:py-24">
-            <HeroShowcase />
+            <HeroDrone />
           </div>
         </div>
 

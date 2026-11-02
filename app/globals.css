@@ -523,39 +523,79 @@
 .theme-cycle:active { transform: scale(0.92); }
 .theme-cycle:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.4); outline-offset: 2px; }
 
-/* Hero vitrini: gerçek fotoğraflar arasında yumuşak geçiş */
-.hero-showcase {
+/* Hero: eğik bakışlı İHA sahnesi */
+.hero-drone {
+  --tilt-x: 0deg;
+  --tilt-z: 0deg;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 24px;
-  background: #0a0a0a;
+  container-type: size;
+  perspective: 1500px;
+  color: var(--theme-ink);
 }
-.hero-showcase img {
+.hd-scene {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transform: scale(1.05);
-  transition: opacity 1s ease, transform 7s ease-out;
+  top: 50%;
+  left: 50%;
+  width: min(86cqw, 104cqh);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotateX(calc(54deg + var(--tilt-x))) rotateZ(calc(-28deg + var(--tilt-z)));
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.hero-showcase img[data-active="true"] { opacity: 1; transform: scale(1); }
-.hero-showcase::after {
-  content: "";
+.hd-ground, .hd-shadow, .hd-drone { position: absolute; }
+.hd-ground { inset: 0; width: 100%; height: 100%; overflow: visible; }
+.hd-shadow {
+  inset: 24%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--theme-ink), transparent);
+  opacity: 0.16;
+  animation: hd-shadow 5s ease-in-out infinite;
+}
+.hd-drone { inset: 16%; transform-style: preserve-3d; animation: hd-hover 5s ease-in-out infinite; }
+.hd-drone svg { width: 100%; height: 100%; overflow: visible; }
+.hd-plate { fill: var(--background); }
+.hd-hub { fill: var(--background); }
+.hd-logo-on-dark { display: none; }
+html:not(.light) .hd-logo-on-light { display: none; }
+html:not(.light) .hd-logo-on-dark { display: block; }
+.hd-rotor, .hd-rotor-rev { transform-origin: 0 0; }
+.hd-rotor { animation: area-rotor 0.28s linear infinite; }
+.hd-rotor-rev { animation: area-rotor-rev 0.28s linear infinite; }
+.hd-sweep { transform-origin: 400px 400px; animation: area-rotor 9s linear infinite; }
+.hd-route { stroke-dasharray: 10 12; opacity: 0.55; animation: hd-route 2.4s linear infinite; }
+.hd-ping { stroke: currentColor; transform-origin: 0 0; animation: hd-ping 3s ease-out infinite; }
+.hd-tags {
   position: absolute;
-  inset: 45% 0 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.78));
-  pointer-events: none;
+  inset: auto 0 clamp(8px, 6cqh, 72px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  list-style: none;
 }
-.hero-showcase-caption { position: absolute; left: 24px; right: 24px; bottom: 20px; z-index: 1; color: #fff; }
-.hero-showcase-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.76); }
-.hero-showcase-title { margin-top: 4px; font-size: clamp(18px, 2vw, 26px); font-weight: 600; line-height: 1.2; }
-.hero-showcase-dots { display: flex; gap: 6px; margin-top: 12px; }
-.hero-showcase-dots button { width: 28px; height: 4px; padding: 0; border: 0; border-radius: 2px; background: rgba(255, 255, 255, 0.35); cursor: pointer; }
-.hero-showcase-dots button[aria-pressed="true"] { background: #fff; }
+.hd-tags li {
+  padding: 6px 12px;
+  border: 1px solid var(--theme-border-soft);
+  border-radius: 999px;
+  background: var(--theme-surface-strong);
+  backdrop-filter: blur(8px);
+  color: var(--theme-soft);
+  font-size: 12px;
+  font-weight: 500;
+}
+@keyframes hd-hover { 0%, 100% { transform: translateZ(112px); } 50% { transform: translateZ(142px); } }
+@keyframes hd-shadow { 0%, 100% { opacity: 0.18; } 50% { opacity: 0.11; } }
+@keyframes hd-route { to { stroke-dashoffset: -44; } }
+@keyframes hd-ping { from { transform: scale(1); opacity: 0.6; } to { transform: scale(5); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .hd-drone, .hd-shadow, .hd-rotor, .hd-rotor-rev, .hd-sweep, .hd-route, .hd-ping { animation: none; }
+  .hd-drone { transform: translateZ(120px); }
+  .hd-scene { transition: none; }
+}
 
 .seg-control {
   position: relative;

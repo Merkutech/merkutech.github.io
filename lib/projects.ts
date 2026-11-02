@@ -201,6 +201,33 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "tespit-ve-mudahale-dronu",
+    icon: "Flame",
+    image: "/projects/tespit-dronu.webp",
+    translations: {
+      tr: {
+        title: "Tespit ve Müdahale Dronu",
+        description: "Yangını erken tespit edip analiz eden, taşıdığı söndürücü kapsüllerle küçük yangınlara anında müdahale eden dron. Takımın ilk projesi.",
+        longDescription: "Takımımızın ilk projesi olan bu dron, yangını erken tespit edip analiz eder ve üzerinde taşıdığı kimyevi söndürücü içerikli kapsülleri yangına bırakarak çok küçük çaplı yangınları tespit edildiği anda söndürebilir. Başakşehir Living Lab 10. İnovasyon Yarışması'nın üniversite kategorisinde birincilik kazandı.",
+        features: [
+          "10. İnovasyon Yarışması Üniversite Kategorisi Birincisi",
+          "Erken yangın tespiti ve analizi",
+          "Söndürücü kapsül bırakma",
+        ],
+      },
+      en: {
+        title: "Detection and Intervention Drone",
+        description: "A drone that detects and analyses fires early and responds to small fires at once with extinguisher capsules. The team's first project.",
+        longDescription: "Our team's first project, this drone detects and analyses fires early, then drops the chemical extinguisher capsules it carries to put out very small fires as soon as they are found. It won first place in the university category of the 10th Innovation Competition at Başakşehir Living Lab.",
+        features: [
+          "Winner, 10th Innovation Competition, University Category",
+          "Early fire detection and analysis",
+          "Extinguisher capsule release",
+        ],
+      },
+    },
+  },
+  {
     slug: "insanlik-yarina-teknoloji",
     icon: "Heart",
     image: "/projects/insanlik.webp",
