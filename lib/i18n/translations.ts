@@ -40,7 +40,7 @@ export const translations = {
         achievementsList: [
           "🏆 Teknofest Şampiyonlar Ligi Şampiyonu",
           "🥈 Teknofest KKTC 2025 Turizm Teknolojileri İkincisi",
-          "🥉 Teknofest 2024 İnsansız Yerleşim Takımı Üçüncüsü",
+          "🥉 Teknofest 2024 İnsanlık Yararına Teknoloji Üçüncüsü",
           "🎖️ AUVSI SUAS 2024, USA",
           "🏅 3x Teknofest Finali (13,17,25/40.000)",
           "🥇 10. İnovasyon Yarışması 1.si",
@@ -148,7 +148,7 @@ export const translations = {
         achievementsList: [
           "🏆 Teknofest Champions League Champion",
           "🥈 Teknofest TRNC 2025 Tourism Technologies Runner-up",
-          "🥉 Teknofest 2024 Unmanned Settlement Team Third",
+          "🥉 Teknofest 2024 Technology for the Benefit of Humanity, Third Place",
           "🎖️ AUVSI SUAS 2024, USA",
           "🏅 3x Teknofest Finalist (13,17,25/40,000)",
           "🥇 10th Innovation Competition 1st Place",

@@ -9,8 +9,6 @@ export interface Project {
   slug: string;
   icon: string;
   image?: string;
-  /* Beyaz zeminli ürün görselleri kırpılmadan, büyütülmeden gösterilir */
-  imageFit?: "contain";
   gallery?: string[];
   translations: {
     tr: ProjectTranslation;
@@ -22,12 +20,15 @@ export const projects: Project[] = [
   {
     slug: "warscope",
     icon: "Globe",
+    image: "/projects/warscope.webp",
+    gallery: ["/projects/warscope-2.webp", "/projects/warscope-3.webp", "/projects/warscope-4.webp"],
     translations: {
       tr: {
         title: "Warscope",
         description: "Dünya genelindeki savaş ve kriz verilerini gerçek zamanlı analiz edip harita üzerinde görselleştiren web tabanlı platform.",
         longDescription: "Warscope, dünya genelindeki savaş ve kriz verilerini gerçek zamanlı olarak analiz edip harita üzerinde görselleştiren web tabanlı bir platformdur. Sistem; çatışma bölgeleri, insani krizler ve güncel olaylarla ilgili verileri kullanıcıya anlaşılır ve interaktif bir şekilde sunmayı amaçlar. Proje, sosyal farkındalık oluşturma ve veri odaklı analiz sağlama amacıyla geliştirilmiştir. TEKNOFEST Şampiyonlar Ligi'nde birincilik elde eden takımın öne çıkan projelerinden biridir.",
         features: [
+          "TEKNOFEST 2024 Şampiyonlar Ligi Birincisi",
           "Gerçek zamanlı veri görselleştirme",
           "Dünya haritası entegrasyonu",
           "Kriz ve savaş analizi",
@@ -40,6 +41,7 @@ export const projects: Project[] = [
         description: "Web-based platform that analyzes and visualizes real-time war and crisis data on a global map.",
         longDescription: "Warscope is a web-based platform that analyzes and visualizes real-time war and crisis data on a global map. The system aims to present data about conflict zones, humanitarian crises, and current events to users in an understandable and interactive way. The project was developed to create social awareness and provide data-driven analysis. It is one of the standout projects from the team that won first place in the TEKNOFEST Champions League.",
         features: [
+          "Winner, TEKNOFEST 2024 Champions League",
           "Real-time data visualization",
           "World map integration",
           "Crisis and war analysis",
@@ -52,6 +54,7 @@ export const projects: Project[] = [
   {
     slug: "polis-drone-sistemi",
     icon: "Shield",
+    image: "/projects/polis-drone.webp",
     translations: {
       tr: {
         title: "Polis Drone Sistemi",
@@ -82,7 +85,7 @@ export const projects: Project[] = [
   {
     slug: "f-rone-iha",
     icon: "Flame",
-    image: "/6.jpg",
+    image: "/projects/f-rone.webp",
     translations: {
       tr: {
         title: "F-Rone İHA Sistemi",
@@ -113,6 +116,7 @@ export const projects: Project[] = [
   {
     slug: "t-rone",
     icon: "Cpu",
+    image: "/projects/t-rone.webp",
     translations: {
       tr: {
         title: "T-Rone",
@@ -141,8 +145,7 @@ export const projects: Project[] = [
   {
     slug: "aquavista",
     icon: "Waves",
-    image: "/aquavista.webp",
-    imageFit: "contain",
+    image: "/projects/aquavista.webp",
     translations: {
       tr: {
         title: "AquaVista",
@@ -171,25 +174,28 @@ export const projects: Project[] = [
   {
     slug: "biodivmap",
     icon: "Leaf",
-    image: "/biodivmap.webp",
-    imageFit: "contain",
+    image: "/projects/biodivmap.webp",
     translations: {
       tr: {
         title: "BioDivMap",
-        description: "Teknofest KKTC 2025 Dijital Tarım ve Veri Yönetimi kategorisi için geliştirilen finalist projemiz.",
-        longDescription: "BioDivMap, Teknofest KKTC 2025 Dijital Tarım ve Veri Yönetimi kategorisi kapsamında geliştirdiğimiz ve finale kalan projemizdir.",
+        description: "Koruma alanlarındaki biyoçeşitliliği izlemek ve modellemek için geliştirilen drone tabanlı proje.",
+        longDescription: "BioDivMap, koruma alanlarındaki biyoçeşitliliği izlemek ve modellemek için geliştirdiğimiz drone tabanlı projedir. 5G haberleşme, gerçek zamanlı görüntü işleme ve tam otonom uçuş gibi drone teknolojilerini veri analitiğiyle birleştirir. Teknofest KKTC 2025 finalistidir.",
         features: [
           "Teknofest KKTC 2025 Finalisti",
-          "Dijital Tarım ve Veri Yönetimi kategorisi",
+          "5G haberleşme",
+          "Gerçek zamanlı görüntü işleme",
+          "Tam otonom uçuş",
         ],
       },
       en: {
         title: "BioDivMap",
-        description: "Our finalist project for the Digital Agriculture and Data Management category at Teknofest TRNC 2025.",
-        longDescription: "BioDivMap is our finalist project, developed for the Digital Agriculture and Data Management category at Teknofest TRNC 2025.",
+        description: "A drone-based project for monitoring and modelling biodiversity in protected areas.",
+        longDescription: "BioDivMap is our drone-based project for monitoring and modelling biodiversity in protected areas. It combines 5G communication, real-time image processing and fully autonomous flight with data analytics. It was a finalist at Teknofest TRNC 2025.",
         features: [
           "Finalist, Teknofest TRNC 2025",
-          "Digital Agriculture and Data Management category",
+          "5G communication",
+          "Real-time image processing",
+          "Fully autonomous flight",
         ],
       },
     },
@@ -197,6 +203,7 @@ export const projects: Project[] = [
   {
     slug: "insanlik-yarina-teknoloji",
     icon: "Heart",
+    image: "/projects/insanlik.webp",
     translations: {
       tr: {
         title: "İnsanlık Yararına Teknoloji",

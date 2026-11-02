@@ -64,8 +64,6 @@ export default function RootLayout({
         <title>MCT SENSOR Merkutech</title>
         <meta name="description" content="Merkutech, the UAV and defence team of the Arel Defence Industry and Technology Club at Istanbul Arel University" />
         <meta name="theme-color" content="#0a0a0a" />
-        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://prod.spline.design" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">

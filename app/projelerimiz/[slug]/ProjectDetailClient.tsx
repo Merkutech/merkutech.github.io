@@ -77,7 +77,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 width={1280}
                 height={720}
                 decoding="async"
-                className={project.imageFit === "contain" ? "project-img-contain w-full h-[300px] md:h-[440px]" : "w-full h-[300px] md:h-[500px] object-cover"}
+                className="w-full h-[300px] md:h-[500px] object-cover"
               />
             </motion.div>
           </div>

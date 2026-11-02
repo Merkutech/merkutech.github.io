@@ -172,12 +172,6 @@
   animation-play-state: paused;
 }
 
-/* Spline canvas: temaya duyarlı arka plan */
-.spline-scene-container canvas {
-  background-color: transparent !important;
-  image-rendering: auto;
-}
-
 /* ===== UTILİTY SINIFLAR ===== */
 
 .glass {
@@ -374,33 +368,6 @@
   background-color: var(--background) !important;
 }
 
-/* Spline watermark gizleme */
-a[href*="spline.design"],
-a[href*="spline.software"],
-a[href*="spline"],
-body a[href*="spline"],
-[class*="spline-watermark"],
-[class*="spline-logo"],
-[class*="watermark"],
-[id*="watermark"],
-canvas ~ a,
-canvas ~ div a,
-canvas ~ div ~ a,
-canvas + div,
-body > a[href*="spline"],
-body > div > a[href*="spline"],
-body > div > div > a[href*="spline"],
-a[target="_blank"][href*="spline"],
-div:has(> a[href*="spline"]) {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: hidden !important;
-}
-
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -556,33 +523,39 @@ div:has(> a[href*="spline"]) {
 .theme-cycle:active { transform: scale(0.92); }
 .theme-cycle:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.4); outline-offset: 2px; }
 
-/* Hero posteri: Spline gibi yüksekliğe göre ölçeklenir, geçişte robot yerinde kalır */
-.hero-poster { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; }
-.hero-poster img { height: 100%; width: auto; max-width: none; flex: none; }
-.hero-poster-light { display: none; }
-html.light .hero-poster-light { display: block; }
-html.light .hero-poster-dark { display: none; }
-
-.project-cover {
-  display: grid;
-  place-items: center;
+/* Hero vitrini: gerçek fotoğraflar arasında yumuşak geçiş */
+.hero-showcase {
+  position: relative;
   width: 100%;
   height: 100%;
-  color: var(--theme-muted-text);
-  background-color: var(--theme-surface-soft);
-  background-image: radial-gradient(var(--theme-border-soft) 1px, transparent 1px);
-  background-size: 22px 22px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #0a0a0a;
 }
-.project-cover svg { width: 28%; height: auto; max-height: 56%; }
-
-.project-img-contain {
-  display: block;
+.hero-showcase img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  padding: 16px;
-  object-fit: scale-down;
-  background: #FCFBFC;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1s ease, transform 7s ease-out;
 }
+.hero-showcase img[data-active="true"] { opacity: 1; transform: scale(1); }
+.hero-showcase::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.78));
+  pointer-events: none;
+}
+.hero-showcase-caption { position: absolute; left: 24px; right: 24px; bottom: 20px; z-index: 1; color: #fff; }
+.hero-showcase-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.76); }
+.hero-showcase-title { margin-top: 4px; font-size: clamp(18px, 2vw, 26px); font-weight: 600; line-height: 1.2; }
+.hero-showcase-dots { display: flex; gap: 6px; margin-top: 12px; }
+.hero-showcase-dots button { width: 28px; height: 4px; padding: 0; border: 0; border-radius: 2px; background: rgba(255, 255, 255, 0.35); cursor: pointer; }
+.hero-showcase-dots button[aria-pressed="true"] { background: #fff; }
 
 .seg-control {
   position: relative;
