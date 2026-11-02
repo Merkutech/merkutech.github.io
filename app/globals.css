@@ -517,9 +517,15 @@
   .site-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .site-footer-grid > :first-child { grid-column: 1 / -1; }
 }
+/* Telefonda bölümler arası boşluk ekran yüksekliğine bağlı büyümesin */
+@media (max-width: 639px) {
+  .home-section { padding-block: 44px; }
+  .cv-auto { contain-intrinsic-size: auto 600px; }
+  .site-footer { margin-top: 24px; padding-top: 48px; }
+}
 
 /* Hero posteri: Spline gibi yüksekliğe göre ölçeklenir, geçişte robot yerinde kalır */
-.hero-poster { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; -webkit-mask-image: linear-gradient(#000 84%, transparent); mask-image: linear-gradient(#000 84%, transparent); }
+.hero-poster { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 5%, #000 84%, transparent); mask-image: linear-gradient(transparent, #000 5%, #000 84%, transparent); }
 .home-hero h1 { font-size: clamp(44px, min(6.6vw, 11.5vh), 96px); line-height: 1; }
 .hero-poster img { height: 100%; width: auto; max-width: none; flex: none; }
 .hero-poster-light { display: none; }

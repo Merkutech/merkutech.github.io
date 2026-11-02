@@ -47,14 +47,14 @@ export default function Home() {
       </div>
 
       {/* HERO */}
-      <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
-        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center pt-20 pb-10 sm:py-24 lg:py-0">
+      <section className="home-hero relative w-full sm:min-h-screen overflow-hidden bg-background">
+        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 sm:min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-2 sm:gap-6 lg:gap-6 items-center pt-[4.75rem] pb-6 sm:py-24 lg:py-0">
           {/* Sol: Başlık ve açıklama */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: easeOut }}
-            className="order-2 lg:order-1 flex flex-col items-start max-w-xl text-center sm:text-left mx-auto lg:mx-0"
+            className="order-2 lg:order-1 flex flex-col items-start max-w-xl w-full text-left sm:mx-auto lg:mx-0"
           >
             <RecruitingBadge />
 
@@ -87,7 +87,7 @@ export default function Home() {
             </div>
 
             {/* Öne çıkan başarılar */}
-            <ul className="mt-10 grid w-full gap-2.5 text-left">
+            <ul className="mt-7 sm:mt-10 grid w-full gap-2.5 text-left">
               {t.home.highlights.map((item, i) => {
                 const Icon = [Trophy, Plane, Award][i] ?? Award;
                 return (
@@ -107,15 +107,14 @@ export default function Home() {
           </motion.div>
 
           {/* Sağ: Robot */}
-          <div className="order-1 lg:order-2 relative h-[38vh] sm:h-[55vh] lg:h-screen">
-            <div className="absolute inset-0 rounded-3xl sm:rounded-none overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none z-[1] sm:hidden" />
+          <div className="order-1 lg:order-2 relative h-[32svh] min-h-[220px] sm:min-h-0 sm:h-[55vh] lg:h-screen">
+            <div className="absolute inset-0 overflow-hidden">
               <HeroRobot />
             </div>
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+        <div className="hidden sm:block absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
       </section>
 
       {/* SPONSORLAR */}
@@ -247,7 +246,7 @@ export default function Home() {
             </h2>
           </BlurFade>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          <div className="mobile-rail flex gap-3 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 md:gap-5">
             {t.home.areas.items.map((item, i) => (
               <AreaCard key={item.num} item={item} index={i} />
             ))}
@@ -371,6 +370,7 @@ function TeamCarousel() {
   const startX = useRef(0);
   const startScroll = useRef(0);
   const rafRef = useRef(0);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const speed = 0.8;
 
   const doubled = [...teamMembers, ...teamMembers];
@@ -435,6 +435,7 @@ function TeamCarousel() {
     return () => {
       visIo.disconnect();
       stop();
+      clearTimeout(resumeTimer.current);
     };
   }, []);
 
@@ -489,26 +490,31 @@ function TeamCarousel() {
         </div>
       </div>
 
-      <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      {/* Mobilde solma yalnızca şeridin üstünde kalır, başlığı silmez */}
+      <div className="relative md:static">
+      <div className="absolute inset-y-0 left-0 w-6 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-6 md:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       <div
         ref={scrollRef}
-        className="flex gap-4 px-5 sm:px-8 lg:px-12 overflow-x-auto select-none"
+        className="flex gap-3 sm:gap-4 px-5 sm:px-8 lg:px-12 overflow-x-auto select-none"
         style={{ scrollbarWidth: "none", cursor: "grab" }}
         onMouseEnter={() => { paused.current = true; }}
         onMouseLeave={() => { paused.current = false; dragging.current = false; }}
         onMouseDown={(e) => onDown(e.clientX)}
         onMouseMove={(e) => onMove(e.clientX)}
         onMouseUp={onUp}
-        onTouchStart={(e) => { paused.current = true; onDown(e.touches[0].clientX); }}
-        onTouchMove={(e) => onMove(e.touches[0].clientX)}
-        onTouchEnd={() => { paused.current = false; onUp(); }}
+        onTouchStart={() => { clearTimeout(resumeTimer.current); paused.current = true; }}
+        onTouchEnd={() => {
+          /* Parmağın kaydırması ve ivmesi tarayıcıda; bitince otomatik akış geri gelir */
+          clearTimeout(resumeTimer.current);
+          resumeTimer.current = setTimeout(() => { paused.current = false; }, 2000);
+        }}
       >
         {doubled.map((member, i) => (
           <div
             key={`${member.id}-${i}`}
-            className="shrink-0 w-40 sm:w-48 rounded-2xl bg-foreground/[0.03] px-4 pt-6 pb-5 flex flex-col items-center text-center gap-4 pointer-events-none"
+            className="shrink-0 w-36 sm:w-48 rounded-2xl bg-foreground/[0.03] px-3 sm:px-4 pt-5 sm:pt-6 pb-4 sm:pb-5 flex flex-col items-center text-center gap-3 sm:gap-4 pointer-events-none"
           >
             <div className="team-avatar w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-border flex items-center justify-center overflow-hidden">
               {member.image ? (
@@ -527,12 +533,13 @@ function TeamCarousel() {
             </div>
             <div>
               <p className="text-xs sm:text-sm font-semibold text-foreground leading-tight">{member.name}</p>
-              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 leading-tight">
+              <p className="text-[11px] sm:text-xs text-muted-foreground mt-1 leading-tight">
                 {member.role[language as keyof typeof member.role]}
               </p>
             </div>
           </div>
         ))}
+      </div>
       </div>
 
       <style jsx>{`
@@ -728,7 +735,7 @@ function AreaCard({ item, index }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: easeOut }}
-      className="group relative flex flex-col lg:flex-row lg:items-center lg:gap-5 p-5 sm:p-6 rounded-2xl bg-foreground/[0.03] overflow-hidden"
+      className="group relative flex w-[82%] shrink-0 snap-start sm:w-auto flex-col lg:flex-row lg:items-center lg:gap-5 p-5 sm:p-6 rounded-2xl bg-foreground/[0.03] overflow-hidden"
     >
       <span
         aria-hidden
