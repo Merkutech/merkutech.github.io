@@ -2,8 +2,11 @@
 
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect } from "react";
-import { ArrowUpRight, Users } from "lucide-react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import dynamic from "next/dynamic";
+import { ArrowUpRight, Users, Trophy, Plane, Award } from "lucide-react";
+import type { SplineObject, SplineRuntime } from "@/components/ui/splite";
+import { isLowPowerDevice } from "@/lib/device";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
 import { applicationTeams } from "@/lib/applications";
@@ -12,6 +15,8 @@ import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { achievementParts } from "@/lib/achievements";
+
+const SplineScene = dynamic(() => import("@/components/ui/splite").then((m) => m.SplineScene), { ssr: false });
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -28,7 +33,7 @@ export default function Home() {
       {/* Scroll Progress (CSS-only, no scroll listener) */}
       <div
         aria-hidden
-        className="fixed top-0 left-0 right-0 h-[2px] bg-foreground/20 z-[100] origin-left pointer-events-none"
+        className="fixed top-0 left-0 right-0 h-[2px] z-[100] origin-left pointer-events-none"
       >
         <div
           className="h-full w-full bg-brand origin-left"
@@ -41,47 +46,76 @@ export default function Home() {
         <ScrollProgressDriver />
       </div>
 
-      {/* HERO: yalnızca marka ve dereceler; kişi fotoğrafı içermez */}
-      <section className="hero-brand">
-        <div className="hero-brand-top">
+      {/* HERO */}
+      <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
+        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center pt-20 pb-10 sm:py-24 lg:py-0">
+          {/* Sol: Başlık ve açıklama */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: easeOut }}
-            className="hero-brand-intro"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, ease: easeOut }}
+            className="order-2 lg:order-1 flex flex-col items-start max-w-xl text-center sm:text-left mx-auto lg:mx-0"
           >
             <RecruitingBadge />
-            <p className="hero-brand-subtitle">{t.home.subtitle}</p>
-            <p className="hero-brand-text">{t.home.description}</p>
-            <div className="hero-brand-actions">
-              <Link href="/projelerimiz" className="hero-btn hero-btn-primary">
+
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-semibold text-foreground tracking-[-0.045em] leading-[0.92]">
+              {t.home.brand}
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-foreground/80 mt-5 sm:mt-6 max-w-md">
+              {t.home.subtitle}
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground mt-3 leading-relaxed max-w-md">
+              {t.home.description}
+            </p>
+
+            {/* Hızlı erişim */}
+            <div className="flex items-center gap-3 mt-8 w-full sm:w-auto">
+              <Link
+                href="/projelerimiz"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-foreground text-background text-sm font-semibold hover:bg-foreground/85 transition-colors"
+              >
                 {t.home.heroCta.projects}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
-              <Link href="/iletisim" className="hero-btn">
+              <Link
+                href="/iletisim"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-foreground/[0.06] text-foreground text-sm font-semibold hover:bg-foreground/[0.1] transition-colors"
+              >
                 {t.home.heroCta.contact}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
+
+            {/* Öne çıkan başarılar */}
+            <ul className="mt-10 grid w-full gap-2.5 text-left">
+              {t.home.highlights.map((item, i) => {
+                const Icon = [Trophy, Plane, Award][i] ?? Award;
+                return (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease: easeOut, delay: 0.7 + i * 0.1 }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground"
+                  >
+                    <Icon className="h-4 w-4 shrink-0 text-foreground/60" />
+                    {item}
+                  </motion.li>
+                );
+              })}
+            </ul>
           </motion.div>
-          <div className="hero-brand-mark" aria-hidden="true">
-            <img className="mark-on-light" src="/mark-on-light.svg" alt="" width="540" height="390" />
-            <img className="mark-on-dark" src="/mark-on-dark.svg" alt="" width="540" height="390" />
+
+          {/* Sağ: Robot */}
+          <div className="order-1 lg:order-2 relative h-[38vh] sm:h-[55vh] lg:h-screen">
+            <div className="absolute inset-0 rounded-3xl sm:rounded-none overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none z-[1] sm:hidden" />
+              <HeroRobot />
+            </div>
           </div>
         </div>
 
-        <h1 className="hero-wordmark" aria-label={t.home.brand}>
-          <span aria-hidden="true">MERKUTECH</span>
-        </h1>
-
-        <ul className="hero-stats">
-          {t.home.heroStats.map((stat) => (
-            <li key={stat.label}>
-              <b>{stat.value}</b>
-              <span>{stat.label}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
       </section>
 
       {/* SPONSORLAR */}
@@ -223,6 +257,74 @@ export default function Home() {
 
       {/* EKİPLERİMİZ: başvuru */}
       <TeamsSection />
+    </div>
+  );
+}
+
+/* Hero robotu: açılış kamera hareketi gizlenir, göğsünde Merkutech amblemi */
+const HERO_SCENE = "/scene.splinecode";
+const HERO_CAMERA = { name: "Camera 2", z: 1000 };
+
+function HeroRobot() {
+  const [torso, setTorso] = useState<SplineObject | null>(null);
+  const onLoad = useCallback((spline: SplineRuntime) => setTorso(spline.findObjectByName?.("Top part") ?? null), []);
+
+  /* Poster HTML ile hemen gelir; canlı sahne sayfa boşa çıkınca yüklenir ve hazır olunca üstüne geçer */
+  const [live, setLive] = useState(false);
+  useEffect(() => {
+    if (isLowPowerDevice() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const start = () => setLive(true);
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(start, { timeout: 1200 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(start, 300);
+    return () => clearTimeout(id);
+  }, []);
+
+  return (
+    <>
+      <div className="hero-poster" aria-hidden="true">
+        <img className="hero-poster-dark" src="/robot-dark.webp" alt="" width={1100} height={1224} fetchPriority="high" decoding="async" draggable={false} />
+        <img className="hero-poster-light" src="/robot-light.webp" alt="" width={1100} height={1224} fetchPriority="high" decoding="async" draggable={false} />
+      </div>
+      {live && (
+        <SplineScene scene={HERO_SCENE} className="w-full h-full" revealWhenCamera={HERO_CAMERA} onLoad={onLoad}>
+          <ChestEmblem torso={torso} />
+        </SplineScene>
+      )}
+    </>
+  );
+}
+
+/* Göğüs amblemi: gövde fareye döndükçe aynı açıyla döner.
+   Konum ve ölçü sahne kutusunun yüksekliğine göre (cqh), çünkü kamera
+   dikey görüş açısını sabit tutuyor. */
+function ChestEmblem({ torso }: { torso: SplineObject | null }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !torso) return;
+    let raf = 0;
+    const tick = () => {
+      const { x, y, z } = torso.rotation;
+      el.style.transform = `perspective(90cqh) rotateX(${-x}rad) rotateY(${y}rad) rotateZ(${-z}rad)`;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [torso]);
+
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute left-1/2 top-[46%] flex w-[10cqh] -ml-[5cqh] -mt-[5cqh] flex-col items-center"
+      style={{ transformOrigin: "50% 24cqh -4cqh" }}
+    >
+      <img src="/logo-white.png" alt="" className="w-[7cqh] h-auto opacity-90" draggable={false} />
+      <span className="mt-[0.4cqh] text-[0.9cqh] font-semibold tracking-[0.35em] text-white/75 pl-[0.35em]">MERKUTECH</span>
     </div>
   );
 }

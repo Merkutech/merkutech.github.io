@@ -509,8 +509,6 @@
   justify-content: space-between;
   gap: 16px;
   margin-top: 40px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
   font-size: 14px;
   color: #d1d5db;
 }
@@ -520,88 +518,45 @@
   .site-footer-grid > :first-child { grid-column: 1 / -1; }
 }
 
-/* Hero: marka odaklı tipografi */
-.hero-brand {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(20px, 4.5vh, 48px);
-  min-height: 100svh;
-  padding: 92px max(clamp(20px, 3.4vw, 48px), calc((100vw - 1280px) / 2)) 28px;
-  overflow: hidden;
-  background: var(--background);
+/* Hero posteri: Spline gibi yüksekliğe göre ölçeklenir, geçişte robot yerinde kalır */
+.hero-poster { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; -webkit-mask-image: linear-gradient(#000 84%, transparent); mask-image: linear-gradient(#000 84%, transparent); }
+.home-hero h1 { font-size: clamp(44px, min(6.6vw, 11.5vh), 96px); line-height: 1; }
+.hero-poster img { height: 100%; width: auto; max-width: none; flex: none; }
+.hero-poster-light { display: none; }
+html.light .hero-poster-light { display: block; }
+html.light .hero-poster-dark { display: none; }
+
+/* Spline canvas: temaya duyarlı arka plan */
+.spline-scene-container canvas {
+  background-color: transparent !important;
+  image-rendering: auto;
 }
-.hero-brand-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 48px;
-}
-.hero-brand-intro { max-width: 720px; }
-.hero-brand-subtitle { font-size: clamp(26px, min(2.8vw, 5.4vh), 40px); font-weight: 600; line-height: 1.12; letter-spacing: -0.03em; color: var(--theme-ink); }
-.hero-brand-text { margin-top: 12px; max-width: 600px; font-size: 17px; line-height: 1.5; color: var(--theme-muted-text); }
-.hero-brand-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
-.hero-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 22px;
-  border: 1px solid var(--theme-border-soft);
-  border-radius: 999px;
-  color: var(--theme-ink);
-  font-size: 15px;
-  font-weight: 600;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-.hero-btn:hover { border-color: var(--theme-ink); }
-.hero-btn-primary { background: var(--theme-ink); border-color: var(--theme-ink); color: var(--background); }
-.hero-btn-primary:hover { opacity: 0.88; }
-.hero-brand-mark { flex: none; align-self: center; width: min(clamp(160px, 23vw, 360px), 42vh); animation: hero-mark 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-brand-mark img { width: 100%; height: auto; }
-.mark-on-dark { display: none; }
-html:not(.light) .mark-on-light { display: none; }
-html:not(.light) .mark-on-dark { display: block; }
-.hero-wordmark {
-  flex: none;
-  overflow: hidden;
-  container-type: inline-size;
-  font-weight: 700;
-  line-height: 0.86;
-  letter-spacing: -0.055em;
-  white-space: nowrap;
-  color: var(--theme-ink);
-}
-.hero-wordmark span { display: block; width: max-content; padding-bottom: 0.03em; font-size: 16.1cqw; animation: hero-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0 32px;
-  margin-top: 0;
-  border-top: 1px solid var(--theme-border-soft);
-  list-style: none;
-}
-.hero-stats li { padding-top: 18px; }
-.hero-stats b { display: block; display: block; font-size: clamp(20px, 1.9vw, 26px); font-weight: 700; line-height: 1.15; letter-spacing: -0.05em; color: var(--theme-ink); }
-.hero-stats span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.35; color: var(--theme-muted-text); }
-@media (min-width: 768px) and (max-height: 780px) {
-  .hero-brand { gap: 14px; padding-top: 80px; padding-bottom: 16px; }
-  .hero-brand-subtitle { font-size: 28px; }
-  .hero-brand-text { margin-top: 6px; font-size: 15px; }
-  .hero-brand-actions { margin-top: 14px; }
-  .hero-brand-intro > div:first-child { margin-bottom: 10px; }
-  .hero-stats li { padding-top: 10px; }
-}
-@keyframes hero-rise { from { transform: translateY(102%); } }
-@keyframes hero-mark { from { opacity: 0; transform: translate(-24px, 16px); } }
-@media (max-width: 767px) {
-  .hero-brand { padding-top: 96px; }
-  .hero-brand-top { flex-direction: column-reverse; align-items: flex-start; justify-content: flex-end; gap: 28px; }
-  .hero-brand-mark { width: 150px; }
-  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0 16px; }
-  .hero-stats li { padding-bottom: 12px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-wordmark span, .hero-brand-mark { animation: none; }
+
+/* Spline watermark gizleme */
+a[href*="spline.design"],
+a[href*="spline.software"],
+a[href*="spline"],
+body a[href*="spline"],
+[class*="spline-watermark"],
+[class*="spline-logo"],
+[class*="watermark"],
+[id*="watermark"],
+canvas ~ a,
+canvas ~ div a,
+canvas ~ div ~ a,
+canvas + div,
+body > a[href*="spline"],
+body > div > a[href*="spline"],
+body > div > div > a[href*="spline"],
+a[target="_blank"][href*="spline"],
+div:has(> a[href*="spline"]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 .seg-control {
