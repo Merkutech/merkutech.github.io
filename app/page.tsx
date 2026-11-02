@@ -87,32 +87,86 @@ export default function Home() {
       {/* SPONSORLAR */}
       <SponsorsSection />
 
-      {/* BİZ KİMİZ */}
+      {/* BİZ KİMİZ: Ana Sayfa */}
       <section className="home-section cv-auto">
         <div className="home-wrap">
-          <BlurFade>
-            <p className="eyebrow mb-3">{t.home.about.label}</p>
-            <h2 className="home-title">{t.home.about.title}</h2>
-          </BlurFade>
-          <div className="home-about">
-            <BlurFade delay={0.1} className="home-about-text">
-              <p>{t.home.about.p1}</p>
-              <p>{t.home.about.p2}</p>
-            </BlurFade>
-            <BlurFade delay={0.2}>
-              <p className="home-about-caption">{t.home.about.achievements}</p>
-              <ul className="home-about-list">
-                {t.home.about.achievementsList.map((item) => {
-                  const { Icon, text } = achievementParts(item);
-                  return (
-                    <li key={item}>
-                      <Icon className="h-5 w-5 shrink-0" />
-                      <span>{text}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </BlurFade>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <motion.span
+                initial={{ opacity: 0, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, ease: easeOut }}
+                className="eyebrow"
+              >
+                {t.home.about.label}
+              </motion.span>
+              <motion.h2
+                initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
+                whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
+                className="home-title mt-4 mb-8"
+              >
+                {t.home.about.title}
+              </motion.h2>
+              <div className="space-y-5 text-neutral-400 leading-relaxed">
+                <motion.p
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: 0.25 }}
+                >
+                  {t.home.about.p1}
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
+                >
+                  {t.home.about.p2}
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 15 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: 0.55 }}
+                >
+                  <p className="mb-4 text-sm font-medium text-foreground">{t.home.about.achievements}</p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {t.home.about.achievementsList.map((item) => {
+                      const { Icon, text } = achievementParts(item);
+                      return (
+                        <li key={item} className="flex items-start gap-3 rounded-xl bg-foreground/[0.03] px-3.5 py-3 text-sm text-foreground/85">
+                          <Icon className="mt-0.5 h-4 w-4 shrink-0 text-foreground/60" />
+                          <span className="leading-snug">{text}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </motion.div>
+              </div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, ease: easeOut, delay: 0.2 }}
+            >
+              <div className="aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-2xl bg-foreground/[0.03]">
+                <img
+                  src="/4.jpg"
+                  alt="Merkutech Ekibi"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
