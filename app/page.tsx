@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ArrowUpRight, Users, Trophy, Plane, Award } from "lucide-react";
+import { ArrowUpRight, Users } from "lucide-react";
 import { projects } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
 import { applicationTeams } from "@/lib/applications";
@@ -12,7 +12,6 @@ import { AreaAnimation } from "@/components/ui/area-animations";
 import { teamMembers } from "@/lib/team";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { achievementParts, stripEmoji } from "@/lib/achievements";
-import { HeroDrone } from "@/components/ui/hero-drone";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -42,73 +41,47 @@ export default function Home() {
         <ScrollProgressDriver />
       </div>
 
-      {/* HERO */}
-      <section className="home-hero relative w-full min-h-screen overflow-hidden bg-background">
-        <div className="relative z-10 mx-auto px-5 sm:px-8 lg:px-12 min-h-screen grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-6 lg:gap-6 items-center pt-20 pb-10 sm:py-24 lg:py-0">
-          {/* Sol: Başlık ve açıklama */}
+      {/* HERO: yalnızca marka ve dereceler; kişi fotoğrafı içermez */}
+      <section className="hero-brand">
+        <div className="hero-brand-top">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: easeOut }}
-            className="order-2 lg:order-1 flex flex-col items-start max-w-xl text-center sm:text-left mx-auto lg:mx-0"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: easeOut }}
+            className="hero-brand-intro"
           >
             <RecruitingBadge />
-
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-semibold text-foreground tracking-[-0.045em] leading-[0.92]">
-              {t.home.brand}
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 mt-5 sm:mt-6 max-w-md">
-              {t.home.subtitle}
-            </p>
-            <p className="text-sm md:text-base text-muted-foreground mt-3 leading-relaxed max-w-md">
-              {t.home.description}
-            </p>
-
-            {/* Hızlı erişim */}
-            <div className="flex items-center gap-3 mt-8 w-full sm:w-auto">
-              <Link
-                href="/projelerimiz"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-foreground text-background text-sm font-semibold hover:bg-foreground/85 transition-colors"
-              >
+            <p className="hero-brand-subtitle">{t.home.subtitle}</p>
+            <p className="hero-brand-text">{t.home.description}</p>
+            <div className="hero-brand-actions">
+              <Link href="/projelerimiz" className="hero-btn hero-btn-primary">
                 {t.home.heroCta.projects}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
-              <Link
-                href="/iletisim"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-foreground/[0.06] text-foreground text-sm font-semibold hover:bg-foreground/[0.1] transition-colors"
-              >
+              <Link href="/iletisim" className="hero-btn">
                 {t.home.heroCta.contact}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
-
-            {/* Öne çıkan başarılar */}
-            <ul className="mt-10 grid w-full gap-2.5 text-left">
-              {t.home.highlights.map((item, i) => {
-                const Icon = [Trophy, Plane, Award][i] ?? Award;
-                return (
-                  <motion.li
-                    key={item}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, ease: easeOut, delay: 0.7 + i * 0.1 }}
-                    className="flex items-center gap-3 text-sm text-muted-foreground"
-                  >
-                    <Icon className="h-4 w-4 shrink-0 text-foreground/60" />
-                    {item}
-                  </motion.li>
-                );
-              })}
-            </ul>
           </motion.div>
-
-          {/* Sağ: İHA animasyonu */}
-          <div className="order-1 lg:order-2 relative h-[42vh] sm:h-[55vh] lg:h-screen lg:py-24">
-            <HeroDrone />
+          <div className="hero-brand-mark" aria-hidden="true">
+            <img className="mark-on-light" src="/mark-on-light.svg" alt="" width="540" height="390" />
+            <img className="mark-on-dark" src="/mark-on-dark.svg" alt="" width="540" height="390" />
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+        <h1 className="hero-wordmark" aria-label={t.home.brand}>
+          <span aria-hidden="true">MERKUTECH</span>
+        </h1>
+
+        <ul className="hero-stats">
+          {t.home.heroStats.map((stat) => (
+            <li key={stat.label}>
+              <b>{stat.value}</b>
+              <span>{stat.label}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* MARQUEE */}
@@ -513,7 +486,7 @@ function RecruitingBadge() {
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: easeOut, delay: 0.4 }}
-      className="mb-6 sm:mb-8 self-center sm:self-start"
+      className="mb-5 self-start"
     >
       <Link
         href="/basvuru/"

@@ -25,6 +25,12 @@ export const translations = {
         contact: "İletişim",
       },
       highlights: ["Teknofest Şampiyonlar Ligi Şampiyonu", "AUVSI SUAS 2024, USA", "3x Teknofest Finali"],
+      heroStats: [
+        { value: "1.", label: "TEKNOFEST 2024 Şampiyonlar Ligi" },
+        { value: "2.", label: "TEKNOFEST KKTC 2025 Turizm Teknolojileri" },
+        { value: "3.", label: "TEKNOFEST 2024 İnsanlık Yararına Teknoloji" },
+        { value: "3×", label: "TEKNOFEST finalisti" },
+      ],
       marquee: [
         "🏆 Teknofest Şampiyonlar Ligi Şampiyonu",
         "🥈 Teknofest 2025 Turizm",
@@ -133,6 +139,12 @@ export const translations = {
         contact: "Contact",
       },
       highlights: ["Teknofest Champions League Champion", "AUVSI SUAS 2024, USA", "3x Teknofest Finalist"],
+      heroStats: [
+        { value: "1st", label: "TEKNOFEST 2024 Champions League" },
+        { value: "2nd", label: "TEKNOFEST TRNC 2025 Tourism Technologies" },
+        { value: "3rd", label: "TEKNOFEST 2024 Technology for the Benefit of Humanity" },
+        { value: "3×", label: "TEKNOFEST finalist" },
+      ],
       marquee: [
         "🏆 Teknofest Champions League Champion",
         "🥈 Teknofest 2025 Tourism",

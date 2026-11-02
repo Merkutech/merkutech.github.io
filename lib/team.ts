@@ -33,17 +33,17 @@ export const teamMembers: TeamMember[] = [
     bio: { tr: "", en: "" },
   },
   {
-    id: "eren-cakar",
-    name: "Eren ÇAKAR",
-    image: "/team/erencakar.png",
-    role: { tr: "Yazılım Kaptanı", en: "Software Captain" },
-    bio: { tr: "", en: "" },
-  },
-  {
     id: "ahmet-yusuf-can",
     name: "Ahmet Yusuf CAN",
     image: "/team/ahmet-yusuf-can.png",
     role: { tr: "Mekanik Kaptanı", en: "Mechanical Captain" },
+    bio: { tr: "", en: "" },
+  },
+  {
+    id: "eren-cakar",
+    name: "Eren ÇAKAR",
+    image: "/team/erencakar.png",
+    role: { tr: "Yazılım Kaptanı", en: "Software Captain" },
     bio: { tr: "", en: "" },
   },
   {
