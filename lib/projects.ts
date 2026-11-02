@@ -263,3 +263,11 @@ export const projects: Project[] = [
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
+
+/* Ana sayfadaki "Öne Çıkanlar" bölümü, bu sırayla */
+const featuredSlugs = ["warscope", "f-rone-iha", "aquavista"];
+
+export const featuredProjects: Project[] = featuredSlugs.flatMap((slug) => {
+  const project = getProjectBySlug(slug);
+  return project ? [project] : [];
+});

@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { ArrowUpRight, Users, Trophy, Plane, Award } from "lucide-react";
 import type { SplineObject, SplineRuntime } from "@/components/ui/splite";
 import { isLowPowerDevice } from "@/lib/device";
-import { projects } from "@/lib/projects";
+import { featuredProjects, type Project } from "@/lib/projects";
 import { sponsors } from "@/lib/sponsors";
 import { applicationTeams } from "@/lib/applications";
 import { TeamApplyCard } from "@/components/ui/team-apply-card";
@@ -228,7 +228,7 @@ export default function Home() {
           </BlurFade>
 
           <div className="mobile-rail flex gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 md:gap-4">
-            {projects.slice(0, 3).map((project, i) => (
+            {featuredProjects.map((project, i) => (
               <MaskCard key={project.slug} project={project} index={i} />
             ))}
           </div>
@@ -761,7 +761,7 @@ function AreaCard({ item, index }: {
 }
 
 /* Öne çıkan proje kartı: Projelerimiz sayfasıyla aynı dil */
-function MaskCard({ project, index }: { project: typeof projects[0]; index: number }) {
+function MaskCard({ project, index }: { project: Project; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
   const { t, language } = useLanguage();
